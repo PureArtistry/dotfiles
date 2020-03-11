@@ -113,6 +113,9 @@ command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
 " goyo mode
 nmap <leader>g :Goyo<cr>
 
+" enable spellcheck
+nmap <leader>h :set spell spelllang=en_gb<cr>
+
 " toggle markdown preview
 nmap <leader>p <Plug>MarkdownPreviewToggle
 

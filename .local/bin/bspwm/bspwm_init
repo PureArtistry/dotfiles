@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# this is still being worked on
+# script to manage startup applications/environment
 
 restore_colors(){
 	# restore colours to all running kitty terminals to fix issues
@@ -13,7 +13,7 @@ restore_colors(){
 
 start_bg_apps(){
 	# setup initial desktops
-	bspc monitor -d $BSPWM_DESKTOPS
+	bspc monitor -d $BSPWM_DESKTOPS_1
 	bspc desktop 10 -f
 
 	# spin up the essentials

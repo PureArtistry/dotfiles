@@ -32,6 +32,10 @@ super + o
 super + i
     launch_newsboat
 
+#: pulsemixer
+super + shift + F6
+    launch_kitty --name "pulsemixer" --class "pulsemixer" --title "pulsemixer" pulsemixer
+
 #: }}}
 
 #: rofi/dmenu related {{{
@@ -70,9 +74,11 @@ super + p
 super + shift + p
     private_script 2
 
-#: steam
+#: games
 super + l
     steam
+super + shift + l
+    lutris
 
 #: }}}
 
@@ -172,6 +178,10 @@ super + shift + F3
 #: clipboard monitor toggle
 super + shift + y
     ace_toggle
+
+#: toggle external display
+super + F3
+    display_toggle
 
 #: }}}
 

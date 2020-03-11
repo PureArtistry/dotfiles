@@ -16,7 +16,7 @@ enter_fullscreen(){
 
 exit_fullscreen(){
 	bspc node -d $(head -n1 /tmp/breadcrumbs) --follow
-	bspc monitor -d $BSPWM_DESKTOPS
+	bspc monitor -d $BSPWM_DESKTOPS_1
 	bspc wm -r
 	rm /tmp/breadcrumbs
 	exit

@@ -5,7 +5,8 @@ export MUSIC=$HOME/music
 export VIDEO=$HOME/video
 export WPG_TEMPLATES=$XDG_CONFIG_HOME/wpg/templates
 export DOTFILES=$HOME/working/git/dotfiles
-export BSPWM_DESKTOPS="1 2 3 4 8 9 10"
+export BSPWM_DESKTOPS_1="1 2 3 4 8 9 10"
+export BSPWM_DESKTOPS_2="6"
 
 # home folder cleanup
 export XAUTHORITY=$XDG_RUNTIME_DIR/Xauthority

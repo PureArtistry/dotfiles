@@ -19,7 +19,7 @@ launch_polybar(){
 # main config options
 
 bspc config focus_follows_pointer	true
-bspc config pointer_follows_monitor	true
+bspc config pointer_follows_monitor	false
 
 bspc config normal_border_color		"$nbc"
 bspc config active_border_color		"$abc"
@@ -54,6 +54,8 @@ bspc rule -a "fancy writing" desktop=1 state=floating rectangle=650x200+1252+60 
 bspc rule -a "Gimp" desktop=4 follow=on
 bspc rule -a "Dragon-drag-and-drop" state=floating rectangle=188x33+4+30 layer=above sticky=on
 bspc rule -a "Steam" desktop=9
+bspc rule -a "Lutris" desktop=9
+bspc rule -a "pulsemixer" state=floating rectangle=800x600+0+0 center=true sticky=on layer=above
 
 # startup
 h_name=$(head -n 1 /etc/hostname)
