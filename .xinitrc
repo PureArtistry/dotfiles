@@ -13,7 +13,6 @@
 [ -f /tmp/ace_temp_buffer ] && rm -f /tmp/ace_temp_buffer
 [ -d /tmp/startup.lock ] && rm -rf /tmp/startup.lock
 [ -d /tmp/the.lock ] && rm -rf /tmp/the.lock
-[ -d /tmp/art.lock ] && rm -rf /tmp/art.lock
 [ -d /tmp/kitty_control ] && rm -rf /tmp/kitty_control/* || mkdir /tmp/kitty_control
 
 h_name=$(head -n 1 /etc/hostname)

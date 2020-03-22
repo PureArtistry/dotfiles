@@ -183,6 +183,10 @@ super + shift + y
 super + F3
     display_toggle
 
+#: macro toggle
+super + x
+    macro_toggle
+
 #: }}}
 
 #: }}}

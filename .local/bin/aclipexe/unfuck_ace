@@ -6,5 +6,6 @@ STOP_KILLING_RANDOM_SHIT "aclipexe"
 STOP_KILLING_RANDOM_SHIT "ace_trigger"
 [ -f /tmp/ace_temp_buffer ] && rm -f /tmp/ace_temp_buffer
 aclipexe &
+sleep 0.1
 ace_trigger "UniqueString4ncmpcpp2TriggerUpdate"
 return
