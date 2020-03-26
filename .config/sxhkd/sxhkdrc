@@ -14,7 +14,7 @@ super + shift + Return
 
 #: gotop
 super + shift + BackSpace
-    launch_gotop
+    goyo_launch gotop
 
 #: ncmpcpp visualizer
 super + ctrl + m
@@ -22,15 +22,15 @@ super + ctrl + m
 
 #: vim
 super + k
-    launch_vim
+    goyo_launch vim
 
 #: tremc (transmission front-end)
 super + o
-    launch_tremc
+    goyo_launch tremc
 
 #: newsboat
 super + i
-    launch_newsboat
+    goyo_launch newsboat
 
 #: pulsemixer
 super + shift + F6
@@ -66,19 +66,23 @@ super + j
 
 #: open transmission web interface
 super + shift + o
-    qutebrowser localhost:9091
+    $BROWSER localhost:9091
 
 #: private
 super + p
     private_script 1
 super + shift + p
     private_script 2
+super + alt + p
+    qutebrowser ':open -p'
 
 #: games
 super + l
-    steam
+    game_launcher
 super + shift + l
     lutris
+super + alt + l
+    steam
 
 #: }}}
 

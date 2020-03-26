@@ -11,7 +11,7 @@ take_dunst_with_you(){
 }
 
 goyo(){
-	bspc node $(head -n1 /tmp/big_cat_id) -g hidden=on
+	bspc node $big_cat_id -g hidden=on
 	bspc rule -a vim -o desktop=1 state=floating rectangle=900x920+87+89
 	if [ $1 = "main" ]; then
 		kitty --listen-on unix:/tmp/kitty_control/$(gen_kitty_id) --class "vim" --name "vim" --title "vim" vim $HOME/$bar &
@@ -25,8 +25,8 @@ goyo(){
 		kitty @ --to unix:/tmp/kitty_control/$(ls -1t /tmp/kitty_control) set-colors "$XDG_CONFIG_HOME"/kitty/kitty_colors.conf
 		wait
 	fi
-	bspc node $(head -n1 /tmp/big_cat_id) -g hidden=off
-	bspc node $(head -n1 /tmp/big_cat_id) -f
+	bspc node $big_cat_id -g hidden=off
+	bspc node $big_cat_id -f
 	exit
 }
 
@@ -35,7 +35,7 @@ scripts(){
 	choice=$(find $SCRIPTS/ -type f -printf "%f\n" | sort | rofi -dmenu -i)
 	[ ! $choice ] && take_dunst_with_you cya
 	take_dunst_with_you
-	[ $home_desktop = '"1"' ] && goyo other || launch_kitty vim $(whereis $choice | awk {'print $2'}) &
+	[ $home_desktop = '"1"' ] && [ $big_cat_state = '"floating"' ] && goyo other || launch_kitty vim $(whereis $choice | awk {'print $2'}) &
 	exit
 }
 
@@ -44,11 +44,14 @@ killall -q dunst
 dunst -config $XDG_CONFIG_HOME/dunst/dunst.mini &
 
 home_desktop=$(bspc query -d focused -T | jq '.name')
-bottom=`expr $(wc -l $ARTISTRY/config_menu) - 1`
+big_cat_id=$(head -n1 /tmp/big_cat_id)
+big_cat_state=$(bspc query -T -n "$big_cat_id" | jq '.client.state')
+bottom=`expr $(wc -l $ARTISTRY/config_menu | awk '{print $1}') - 1`
+
 dunstify -r 996633 -t 6000000 "what needs fiddling with?"
-foo=$(cat $ARTISTRY/config_menu | awk {'print $1'} | rofi -dmenu -i -format d)
+foo=$(awk {'print $1'} $ARTISTRY/config_menu | rofi -dmenu -i -format d)
 [ ! $foo ] || [ $foo = 2 ] || [ $foo = $bottom ] && take_dunst_with_you cya
 [ $foo = 1 ] && scripts
 bar=$(sed -n "$foo"p $ARTISTRY/config_menu | awk {'print $2'})
 take_dunst_with_you
-[ $home_desktop = '"1"' ] && goyo main || launch_kitty vim $HOME/$bar &
+[ $home_desktop = '"1"' ] && [ $big_cat_state = '"floating"' ] && goyo main || launch_kitty vim $HOME/$bar &

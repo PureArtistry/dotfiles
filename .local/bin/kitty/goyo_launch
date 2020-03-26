@@ -1,0 +1,17 @@
+#!/bin/sh
+
+big_cat_id=$(head -n1 /tmp/big_cat_id)
+big_cat_state=$(bspc query -T -n "$big_cat_id" | jq '.client.state')
+home_desktop=$(bspc query -d focused -T | jq '.name')
+if [ $home_desktop = '"1"' ] && [ $big_cat_state = '"floating"' ]; then
+	bspc rule -a $1 -o desktop=1 state=floating rectangle=900x920+87+89
+	bspc node $big_cat_id -g hidden=on
+	kitty --listen-on unix:/tmp/kitty_control/$(gen_kitty_id) --class $1 --name $1 --title $1 $@ &
+	sleep 0.1
+	kitty @ --to unix:/tmp/kitty_control/$(ls -1t /tmp/kitty_control) set-colors "$XDG_CONFIG_HOME"/kitty/kitty_colors.conf
+	wait
+	bspc node $big_cat_id -g hidden=off
+	bspc node $big_cat_id -f
+else
+	launch_kitty $@
+fi

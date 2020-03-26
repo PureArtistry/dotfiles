@@ -52,7 +52,7 @@ hi StatusLineTerm         cterm=none  ctermfg=12   ctermfg=0
 hi StatusLineTermNC       cterm=none  ctermbg=8    ctermfg=15
 hi CursorLine             ctermbg=0   cterm=none
 hi Visual                 ctermbg=14  ctermfg=0    cterm=none
-hi CursorLineNr           ctermfg=15 ctermbg=6
+hi CursorLineNr           ctermfg=15 ctermbg=5
 hi LineNr                 ctermfg=15  ctermbg=1
 hi VertSplit              ctermfg=0   ctermbg=8    cterm=none
 hi Specialkey             ctermfg=13  ctermbg=0
@@ -86,7 +86,7 @@ highlight Type       ctermfg=13       cterm=italic term=none
 highlight Ignore     ctermfg=0       guifg=bg
 highlight Error      ctermfg=0       ctermbg=4 guifg=White guibg=Red
 highlight Todo       ctermfg=15      ctermbg=1 guifg=Blue  guibg=Yellow
-highlight SignColumn ctermbg=8       ctermfg=12
+highlight SignColumn ctermbg=2       ctermfg=15
 
 " Change the highlight of search matches (for use with :set hls).
 highlight Search                    ctermfg=0      ctermbg=12  guifg=Black    guibg=Yellow
