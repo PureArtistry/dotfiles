@@ -56,6 +56,7 @@ bspc rule -a "Dragon-drag-and-drop" state=floating rectangle=188x33+4+30 layer=a
 bspc rule -a "Steam" desktop=9
 bspc rule -a "Lutris" desktop=9
 bspc rule -a "pulsemixer" state=floating rectangle=800x600+0+0 center=true sticky=on layer=above
+bspc rule -a "Ripcord" desktop=8
 
 # startup
 h_name=$(head -n 1 /etc/hostname)

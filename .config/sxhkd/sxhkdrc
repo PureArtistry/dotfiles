@@ -84,6 +84,10 @@ super + shift + l
 super + alt + l
     steam
 
+#: ripcord
+super + u
+    ripcord
+
 #: }}}
 
 #: }}}

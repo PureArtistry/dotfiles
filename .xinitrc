@@ -56,7 +56,7 @@ sxhkd &
 aclipexe &
 unclutter &
 picom -b --config $XDG_CONFIG_HOME/compton/compton.conf
-theme_change
+theme_change ellie.jpg
 
 # }}}
 

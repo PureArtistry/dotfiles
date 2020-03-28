@@ -18,7 +18,6 @@
 
 call plug#begin('~/.config/nvim/plugged')
 
-    Plug 'tpope/vim-surround'
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-endwise'
     Plug 'tpope/vim-sleuth'
@@ -140,6 +139,8 @@ let g:mkdp_browser = 'qute_markdown'
 
 " theme config {{{
 "
+
+" set termguicolors " colour scheme needs editing first
 colorscheme mood
 set noshowmode
 set cursorline

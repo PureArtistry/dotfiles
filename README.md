@@ -14,6 +14,7 @@ https://www.youtube.com/watch?v=FKaFDkBuQUc
 ~/.local/share/localweb/startpage/index.html
 ~/.local/share/localweb/startpage/script/script.js
 ~/.local/share/localweb/startpage/style/style.css
+~/.local/share/Ripcord/custom_theme.json
 ```
 the files in the .config/wpg/templates folder are backups, don't copy them (probably shouldn't have included them)
 

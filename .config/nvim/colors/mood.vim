@@ -1,6 +1,6 @@
 "s Vim colorscheme file
 
-" fiddled with by PureArtistry, tweaked to better match my colour scheme.
+" fiddled with by PureArtistry, tweaked to better match my colour scheme. (this needs a complete refactor)
 
 " Maintainer:   Fernando Vásquez <fmorataya.04@gmail.com>
 " Last Change:  2001-09-25 07:48:15 Mountain Daylight Time
@@ -39,28 +39,28 @@ endif
 let g:colors_name = "mood"
 
 
-hi Normal                 ctermfg=15  ctermbg=0
-hi User1                  cterm=none  ctermbg=6    ctermfg=15
-hi User2		  cterm=none  ctermbg=8    ctermfg=15
-hi Title                  cterm=none  ctermbg=none ctermfg=DarkGrey
+hi Normal                             ctermfg=15   ctermbg=0               guifg=15   guibg=0
+hi User1                  cterm=none  ctermfg=15   ctermbg=6    gui=none   guifg=15   guibg=6
+hi User2		  cterm=none  ctermfg=15   ctermfg=8    gui=none   guifg=15   guifg=8
+hi Title                  cterm=none  ctermfg=8    ctermbg=0    gui=none   guifg=8    guibg=0
 hi TabLineFill            cterm=none  ctermbg=8    ctermfg=15
 hi TabLine                cterm=none  ctermbg=8    ctermfg=15
 hi TabLineSel             cterm=none  ctermbg=14   ctermfg=0
-hi StatusLine             cterm=none  ctermbg=2    ctermfg=15
+hi StatusLine             cterm=none  ctermfg=15   ctermbg=2    gui=none   guifg=15   guibg=2
 hi StatusLineNC           cterm=none  ctermbg=8    ctermfg=15
 hi StatusLineTerm         cterm=none  ctermfg=12   ctermfg=0
 hi StatusLineTermNC       cterm=none  ctermbg=8    ctermfg=15
-hi CursorLine             ctermbg=0   cterm=none
+hi CursorLine             ctermbg=0   cterm=none    guibg=0     gui=none
 hi Visual                 ctermbg=14  ctermfg=0    cterm=none
-hi CursorLineNr           ctermfg=15 ctermbg=5
-hi LineNr                 ctermfg=15  ctermbg=1
+hi CursorLineNr           ctermfg=15  ctermbg=5    guifg=15    guibg=5
+hi LineNr                 ctermfg=15  ctermbg=1    guifg=15    guibg=1
 hi VertSplit              ctermfg=0   ctermbg=8    cterm=none
 hi Specialkey             ctermfg=13  ctermbg=0
 hi ErrorMsg               ctermfg=0   ctermbg=9
 hi Pmenu                  ctermbg=3   ctermfg=15
 hi PmenuSel               ctermbg=1   ctermfg=15   cterm=bold
 hi SpellBad               ctermfg=8   ctermbg=9    term=none
-hi Comment                ctermfg=4   ctermbg=0    cterm=italic
+hi Comment                ctermfg=4   ctermbg=0    cterm=italic    gui=italic guifg=4 guibg=0
 hi MatchParen             ctermfg=12  ctermbg=8   cterm=none
 hi DiffAdd				  ctermfg=0
 hi DiffDelete			  ctermfg=0
@@ -74,7 +74,7 @@ hi Directory              ctermfg=11
 hi Folded                 ctermfg=15  ctermbg=3
 hi Underlined             term=underline ctermfg=12
 
-highlight Constant   cterm=none      ctermfg=11   guifg=#ffa0a0
+highlight Constant   cterm=none      ctermfg=11   guifg=11
 "highlight Number   	 term=underline ctermfg=DarkGrey                     guifg=Yellow
 highlight Identifier ctermfg=12       cterm=none guifg=#40ffff
 highlight Statement  ctermfg=10  gui=bold  guifg=#ffff60
@@ -86,7 +86,7 @@ highlight Type       ctermfg=13       cterm=italic term=none
 highlight Ignore     ctermfg=0       guifg=bg
 highlight Error      ctermfg=0       ctermbg=4 guifg=White guibg=Red
 highlight Todo       ctermfg=15      ctermbg=1 guifg=Blue  guibg=Yellow
-highlight SignColumn ctermbg=2       ctermfg=15
+highlight SignColumn ctermbg=2       ctermfg=15   guifg=15 guibg=2
 
 " Change the highlight of search matches (for use with :set hls).
 highlight Search                    ctermfg=0      ctermbg=12  guifg=Black    guibg=Yellow
@@ -98,7 +98,7 @@ highlight Exception      ctermfg=10 ctermbg=0 guifg=Red   guibg=White
 highlight Function       ctermfg=14
 highlight Typedef        ctermfg=10  ctermbg=8   gui=italic  guifg=White guibg=Blue
 highlight SpecialChar    ctermfg=15 ctermbg=4   guifg=Black guibg=White
-highlight Delimiter      ctermfg=15 ctermbg=1   guifg=White guibg=Black
+highlight Delimiter      ctermfg=15 ctermbg=1   guifg=15 guibg=1
 highlight SpecialComment ctermfg=11 ctermbg=8   guifg=Black guibg=Green
 
 " Common groups that link to default highlighting.
