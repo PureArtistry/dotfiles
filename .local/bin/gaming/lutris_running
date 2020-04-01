@@ -15,4 +15,4 @@ running_check(){
 pgrep picom && pkill picom
 running_check
 tail --pid=$launcher -f /dev/null
-kill -HUP $(head -n1 ~/.steampid)
+pgrep steam && kill -HUP $(head -n1 ~/.steampid)
