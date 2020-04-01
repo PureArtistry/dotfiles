@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# kills stuff when you stop gaming
+
+running_check(){
+	launcher=$(ps aux | grep -e 'steamapps' -e 'lutris/games' | grep -v grep | awk '{print $2}' | head -n1)
+	if [ ! $launcher ]; then
+		sleep 3
+		running_check
+	else
+		return
+	fi
+}
+
+pgrep picom && pkill picom
+running_check
+tail --pid=$launcher -f /dev/null
+kill -HUP $(head -n1 ~/.steampid)

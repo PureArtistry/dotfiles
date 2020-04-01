@@ -1,5 +1,4 @@
 .config/gtk-2.0/gtkfilechooser.ini
-.local/bin/misc/private_script
 .local/bin/misc/testscript
-.local/bin/gaming
+.local/bin/private
 .local/share/artistry/bookmarks

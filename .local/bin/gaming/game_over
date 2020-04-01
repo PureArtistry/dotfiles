@@ -1,0 +1,3 @@
+#!/bin/sh
+
+xdotool key "super+shift+F3"
