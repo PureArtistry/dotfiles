@@ -94,8 +94,10 @@ super + u
 
 #: function binds {{{
 
-#: volume controls {{{
+#: brightness/volume controls {{{
 
+super + {F4,F5}
+    xbacklight {-dec,-inc} 5
 super + F6
     pactl set-sink-mute @DEFAULT_SINK@ toggle
 super + {F7,F8}

@@ -8,7 +8,7 @@ https://www.youtube.com/watch?v=FKaFDkBuQUc
 ~/.config/dunst/dunstrc
 ~/.config/dunst/dunst.mini
 ~/.config/kitty/kitty_colors.conf
-~/.config/polybar/config
+~/.config/polybar/colours
 ~/.config/qutebrowser/config.py
 ~/.config/rofi/config.rasi
 ~/.local/share/localweb/startpage/index.html

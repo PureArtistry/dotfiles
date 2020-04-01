@@ -1,3 +1,4 @@
 #!/bin/sh
 
 pgrep picom && killall -q picom || picom -b --config ~/.config/compton/compton.conf
+exit

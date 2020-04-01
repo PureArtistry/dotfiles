@@ -1,10 +1,5 @@
 [colors]
-background = {color0}
-foreground = {color15}
-active = {active}
-inactive = {inactive}
-highlight = {color1}
-error = {color4}
+include-file = ~/.config/polybar/colours
 
 [bar/main]
 override-redirect = false
@@ -17,7 +12,7 @@ radius = 0.0
 fixed-center = true
 
 background = #00000000
-foreground = {color15}
+foreground = ${colors.color15}
 
 line-size = 0
 label-line-color = #00000000
@@ -40,11 +35,61 @@ enable-ipc = true
 
 modules-left = time date gap mood
 modules-center = bspwm gap xwindow
-modules-right = battery gap wlan eth netact gap mpd volume
+modules-right = battery gap wlan eth netact gap memory cpu temperature gap backlight volume
 
 tray-position = none
 tray-padding = 10
-tray-background = ${{colors.inactive}}
+tray-background = ${colors.inactive}
+
+[module/memory]
+type = internal/memory
+interval = 1
+
+format = <label>
+label =  %percentage_used%%
+label-padding = 1
+label-foreground = ${colors.foreground}
+label-background = ${colors.color1}
+
+[module/cpu]
+type = internal/cpu
+interval = 1
+
+format = <label>
+label =  %percentage%%
+label-padding = 1
+label-foreground = ${colors.foreground}
+label-background = ${colors.color5}
+
+[module/temperature]
+type = internal/temperature
+interval = 1
+
+thermal-zone = 0
+base-temperature = 35
+warn-temperature = 80
+
+format = <label>
+units = false
+format-warn = <label-warn>
+
+label = 糖 %temperature-c%
+label-padding = 1
+label-foreground = ${colors.foreground}
+label-background = ${colors.color2}
+label-warn = 糖 %temperature-c%
+label-warn-foreground = ${colors.foreground}
+label-warn-background = ${colors.error}
+
+[module/backlight]
+type = internal/backlight
+card = intel_backlight
+
+format = <label>
+label = 嗀 %percentage%%
+label-padding = 1
+label-background = ${colors.inactive}
+label-foreground = ${colors.foreground}
 
 [module/bspwm]
 type = internal/bspwm
@@ -88,8 +133,8 @@ ws-icon-2 = 3;    
 ws-icon-3 = 4;    
 ws-icon-4 = 5;    
 ws-icon-5 = 7;  華  
-ws-icon-6 = 8;    
-ws-icon-7 = 9;    
+ws-icon-7 = 8;    
+ws-icon-6 = 9;    
 ws-icon-8 = 10;    
 ws-icon-default =     
 
@@ -112,7 +157,7 @@ label-monitor = %name%
 ;   label-dimmed-occupied
 ;   label-dimmed-urgent
 ;   label-dimmed-empty
-label-dimmed-foreground = {inactive}
+label-dimmed-foreground = ${colors.inactive}
 label-dimmed-background = #00000000
 
 ; Available tokens:
@@ -121,8 +166,8 @@ label-dimmed-background = #00000000
 ;   %index%
 ; Default: %icon%  %name%
 label-focused = %icon%
-label-focused-foreground = {color15}
-label-focused-background = {color2}
+label-focused-foreground = ${colors.color15}
+label-focused-background = ${colors.color2}
 
 ; Available tokens:
 ;   %name%
@@ -130,8 +175,8 @@ label-focused-background = {color2}
 ;   %index%
 ; Default: %icon%  %name%
 label-occupied = %icon%
-label-occupied-foreground = {color15}
-label-occupied-background= {active}
+label-occupied-foreground = ${colors.color15}
+label-occupied-background= ${colors.active}
 
 ; Available tokens:
 ;   %name%
@@ -139,8 +184,8 @@ label-occupied-background= {active}
 ;   %index%
 ; Default: %icon%  %name%
 label-urgent = %icon%
-label-urgent-foreground = {color15}
-label-urgent-background = {color4}
+label-urgent-foreground = ${colors.color15}
+label-urgent-background = ${colors.color4}
 
 ; Available tokens:
 ;   %name%
@@ -148,8 +193,8 @@ label-urgent-background = {color4}
 ;   %index%
 ; Default: %icon%  %name%
 label-empty = %icon%
-label-empty-foreground = {color15}
-label-empty-background = {inactive}
+label-empty-foreground = ${colors.color15}
+label-empty-background = ${colors.inactive}
 
 ; The following labels will be used to indicate the layout/mode
 ; for the focused workspace. Requires <label-mode>
@@ -185,41 +230,27 @@ type = custom/script
 exec = head -n1 ~/.config/polybar/mood
 interval = 1
 format = <label>
-format-background = {color2}
-format-foreground = {color15}
+format-background = ${colors.color2}
+format-foreground = ${colors.color15}
 format-padding = 1
 label =  %output:0:25:...%
 click-left = theme_selector
 
 [module/xwindow]
 type = internal/xwindow
-format-background = ${{colors.highlight}}
+format-background = ${colors.highlight}
 format-padding = 1
 label = %title:0:20: ...%
 
-[module/mpd]
-type = internal/mpd
-format-online = <label-song>
-
-label-song = " %title%"
-label-song-maxlen = 20
-label-song-ellipsis = true
-
-format-playing-padding = 1
-format-playing-background = ${{colors.highlight}}
-format-paused-padding = 1
-format-paused-background = ${{colors.inactive}}
-
 [module/netact]
 type = internal/network
-interface = ${{file:~/.config/polybar/netadpt}}
-;accumulate-stats = true
+interface = ${file:~/.config/polybar/netadpt}
 interval = 1.0
 
 format-connected = <label-connected>
 format-connected-padding = 1
-format-connected-background = ${{colors.active}}
-format-connected-foreground = ${{colors.foreground}}
+format-connected-background = ${colors.active}
+format-connected-foreground = ${colors.foreground}
 
 format-disconnected =
 
@@ -233,12 +264,12 @@ interval = 3.0
 format-connected-padding = 1
 format-connected = <ramp-signal> <label-connected>
 label-connected = %essid%
-format-connected-background = {color2}
+format-connected-background = ${colors.color4}
 
 format-disconnected =
 
 ramp-signal-0 = 
-ramp-signal-foreground = ${{colors.foreground}}
+ramp-signal-foreground = ${colors.foreground}
 
 [module/eth]
 type = internal/network
@@ -247,7 +278,7 @@ interval = 3.0
 
 format-connected = <label-connected>
 format-connected-padding = 1
-format-connected-background = ${{colors.inactive}}
+format-connected-background = ${colors.inactive}
 label-connected = ""
 
 [module/time]
@@ -257,7 +288,7 @@ interval = 5
 time = " %I:%M %p"
 
 format-padding = 1
-format-background = {active}
+format-background = ${colors.active}
 
 label = %time%
 
@@ -268,7 +299,7 @@ interval = 5
 date = " %A, %d %B"
 
 format-padding = 1
-format-background = {inactive}
+format-background = ${colors.inactive}
 
 label = %date%
 
@@ -277,16 +308,16 @@ type = internal/alsa
 
 format-volume = <ramp-volume> <label-volume>
 format-volume-padding = 1
-format-volume-background = ${{colors.active}}
+format-volume-background = ${colors.active}
 ramp-volume-0 = 
 ramp-volume-1 = 
 ramp-volume-2 = 
 ramp-volume-3 = 
-ramp-volume-foreground = ${{colors.foreground}}
+ramp-volume-foreground = ${colors.foreground}
 
 format-muted-prefix = " "
-format-muted-foreground = {color15}
-format-muted-background = ${{colors.error}}
+format-muted-foreground = ${colors.color15}
+format-muted-background = ${colors.error}
 label-muted = MUTE
 format-muted-padding = 1
 
@@ -294,32 +325,30 @@ format-muted-padding = 1
 type = internal/battery
 battery = BAT1
 adapter = ACAD
-full-at = 98
+full-at = 97
 
-format-charging =   <animation-charging> <label-charging>
+format-charging = <animation-charging> <label-charging>
 format-charging-padding = 1
 format-discharging-padding = 1
 format-discharging = <ramp-capacity> <label-discharging>
-format-full =  <ramp-capacity>
-format-full-padding = 1
-format-full-background = ${{colors.inactive}}
+format-full =
 
 ramp-capacity-0 = 
 ramp-capacity-1 = 
 ramp-capacity-2 = 
 ramp-capacity-3 = 
 ramp-capacity-4 = 
-ramp-capacity-foreground = ${{colors.foreground}}
+ramp-capacity-foreground = ${colors.foreground}
 
-animation-charging-foreground = ${{colors.foreground}}
+animation-charging-foreground = ${colors.foreground}
 animation-charging-framerate = 500
 animation-charging-0 = 
 animation-charging-1 = 
 animation-charging-2 = 
 animation-charging-3 = 
 animation-charging-4 = 
-format-charging-background = ${{colors.inactive}}
-format-discharging-background = ${{colors.active}}
+format-charging-background = ${colors.inactive}
+format-discharging-background = ${colors.active}
 
 [settings]
 screenchange-reload = true
