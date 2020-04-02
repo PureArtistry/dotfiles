@@ -8,6 +8,7 @@ catch_signal_usr1(){
         sleep 0.1
 	fi
 	rmdir /tmp/the.lock 2> /dev/null
+	return
 }
 trap catch_signal_usr1 USR1
 
