@@ -149,9 +149,11 @@ super + alt + n
 
 #: {{{ screen capture
 
-#: scrot
+#: scrot (+timer)
 Print
     scrot
+shift + Print
+    scrot timer
 
 #: screen cast
 super + Print

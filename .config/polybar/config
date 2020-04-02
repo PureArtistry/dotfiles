@@ -70,16 +70,16 @@ base-temperature = 35
 warn-temperature = 80
 
 format = <label>
-units = false
+units = true
 format-warn = <label-warn>
 
-label = 糖 %temperature-c%
+label =  %temperature-c%
 label-padding = 1
 label-foreground = ${colors.foreground}
 label-background = ${colors.color2}
-label-warn = 糖 %temperature-c%
+label-warn =  %temperature-c%
 label-warn-foreground = ${colors.foreground}
-label-warn-background = ${colors.error}
+label-warn-background = ${colors.color2}
 
 [module/backlight]
 type = internal/backlight
