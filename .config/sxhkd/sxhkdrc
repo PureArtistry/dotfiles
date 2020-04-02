@@ -32,6 +32,10 @@ super + o
 super + i
     goyo_launch newsboat
 
+#: tuir (terminal reddit)
+super + shift + i
+    goyo_launch tuir --theme custom
+
 #: pulsemixer
 super + shift + F6
     launch_kitty --name "pulsemixer" --class "pulsemixer" --title "pulsemixer" pulsemixer
