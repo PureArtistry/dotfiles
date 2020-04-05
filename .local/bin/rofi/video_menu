@@ -14,8 +14,8 @@ mtv(){
 	[ -n $paused ] && mpc pause
 	bspc desktop 1 -f
 	bspc rule -a mpv:\* -o desktop=1 state=floating rectangle=897x505+1005+287 center=false
-	mpv $VIDEO/$catagory/"$choice" &
-	sleep 0.3
+	mpv "$file" &
+	sleep 0.4
 	xdotool mousemove 400 400
 	bspc node pointed -f
 	exit
@@ -29,8 +29,10 @@ catagory=$(ls -1 $VIDEO | rofi -dmenu -i -format s)
 [ ! $catagory ] && begone_too cya
 
 dunstify -r 336699 -t 6000000 "pick a title..."
-choice=$(find $VIDEO/$catagory -type f -printf "%f\n" | rofi -dmenu -i -format s)
+list=$(find $VIDEO/$catagory -type f -printf "%f|%h\n")
+choice=$(echo "$list" | awk -F "|" '{print $1}' | rofi -dmenu -i -format d)
 [ ! $choice ] && begone_too cya
+file=$(echo "$list" | awk -F "|" '{print $2"/"$1}' | sed -n ${choice}p)
 
 dunstify -r 336699 -t 6000000 "viewing experience?"
 experience=$(echo "fullscreen\nmusic video\nstandard" | rofi -dmenu -i -format d)
@@ -39,9 +41,9 @@ experience=$(echo "fullscreen\nmusic video\nstandard" | rofi -dmenu -i -format d
 need_mute=$(mpc current)
 [ -n $need_mute ] && paused=$(mpc | sed -n 2p | awk '{print $1}' | grep "paused")
 case $experience in
-	1) bspc desktop 10 -f && mpv $VIDEO/$catagory/"$choice" --fs & ;;
+	1) bspc desktop 10 -f && mpv "$file" --fs & ;;
 	2) mtv ;;
-	3) mpv $VIDEO/$catagory/"$choice" & ;;
+	3) mpv "$file" & ;;
 esac
 [ -n $paused ] && mpc pause
 begone_too cya

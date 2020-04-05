@@ -11,8 +11,8 @@ main(){
 		[ ! "$selection" ] || [ "$selection" = "$processed" ] && main
 		case "$selection" in
 			UniqueString4ncmpcpp2TriggerUpdate) mpd_trigger ;;
-			*youtube.com/watch*) youtube ;;
-			*youtu.be/watch*) youtube ;;
+			https://*.youtube.com/watch*) youtube ;;
+			https://*.youtu.be/watch*) youtube ;;
 			*magnet*tracker*) torrent ;;
 			*twitch.tv/*) twitch ;;
 			https://*.redd*/*) reddit ;;
@@ -56,8 +56,18 @@ torrent(){
 
 twitch(){
 	processed=$selection
-	streamlink -p mpv $(xclip -selection clipboard -o) best &
 	dunstify -t 3000 "loading stream" "$(xclip -selection clipboard -o)" -i $XDG_CONFIG_HOME/dunst/icons/twitch.svg
+	bspc rule -a mpv:\* -o desktop=10 state=tiled
+	streamlink -p mpv $(xclip -selection clipboard -o) best &
+	bspc subscribe node_add -c 1
+	need_mute=$(mpc current)
+	[ -n $need_mute ] && paused=$(mpc | sed -n 2p | awk '{print $1}' | grep "paused")
+	[ -n $paused ] && mpc pause
+	bspc desktop 10 -f
+	bspc node -p east
+	bspc node -o 0.74
+	chat=$(xclip -selection clipboard -o | awk -F "/" '{print $4}')
+	qutebrowser --target window https://www.twitch.tv/popout/"$chat"/chat?popout= &
 	xclip -selection clipboard /dev/null
 	cleanup
 }

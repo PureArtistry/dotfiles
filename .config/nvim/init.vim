@@ -152,8 +152,7 @@ autocmd! User GoyoLeave Limelight!
 map <silent> <leader><cr> :noh<cr>
 
 set number
-" Add a bit extra margin to the left
-set foldcolumn=1
+" set foldcolumn=1
 
 " airline config
 let g:airline_theme='mood'

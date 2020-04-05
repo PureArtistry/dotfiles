@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/sh
 
 # quick & dirty game launcher
 
@@ -12,7 +12,7 @@ games=$(lutris -l)
 killall -q dunst
 dunst -config $XDG_CONFIG_HOME/dunst/dunst.mini &
 dunstify -r 881166 -t 600000 "Jack is not dull!"
-choice=$(echo -e $games | sort | awk -F "|" '{print $2}' | sed 's/[[:blank:]]*$//' | rofi -dmenu -i -format d)
+choice=$(echo -e "$games" | sort | awk -F "|" '{print $2}' | sed 's/[[:blank:]]*$//' | rofi -dmenu -i -format d)
 [ ! $choice ] && the_usual
 dunstify -C 881166
 killall -q dunst

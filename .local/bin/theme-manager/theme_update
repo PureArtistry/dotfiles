@@ -23,12 +23,14 @@ xrdb -merge $HOME/.Xresources
 h_name=$(head -n 1 /etc/hostname)
 state_check=$(head -n 1 $XDG_CACHE_HOME/$h_name.state)
 [ $state_check = "startup" ] && exit
+restart_ripcord=$(pgrep ripcord)
+[ ! $restart_ripcord ] || pkill -HUP ripcord
 pkill fancy_writing --signal=USR1
 pgrep qutebrowser > /dev/null 2>&1 && qutebrowser :config-source :reload > /dev/null 2>&1 &
 reinit_desktop
 pkill zsh --signal=USR1
 sleep 0.3
-wait
+[ ! $restart_ripcord ] || ripcord &
 bspc desktop $(head -n1 /tmp/breadcrumbs) -f -a
 home_desktop=$(bspc query -d focused -T | jq '.name')
 [ $home_desktop = '"1"' ] && feng_shui

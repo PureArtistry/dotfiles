@@ -19,6 +19,7 @@ start_bg_apps(){
 	# spin up the essentials
 	bspc rule -a qutebrowser -o desktop=2
 	qutebrowser &
+	ripcord &
 	launch_kitty --class "file manager" --name "file manager" --title "file manager" ranger
 	launch_kitty --name "fancy writing" --class "fancy writing" --title "fancy writing" fancy_writing
 

@@ -78,6 +78,7 @@ label-padding = 1
 label-foreground = ${colors.foreground}
 label-background = ${colors.color2}
 label-warn =  %temperature-c%
+label-warn-padding = 1
 label-warn-foreground = ${colors.foreground}
 label-warn-background = ${colors.color2}
 
@@ -325,7 +326,7 @@ format-muted-padding = 1
 type = internal/battery
 battery = BAT1
 adapter = ACAD
-full-at = 97
+full-at = 96
 
 format-charging = <animation-charging> <label-charging>
 format-charging-padding = 1
