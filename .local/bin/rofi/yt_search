@@ -11,17 +11,28 @@ this_is_getting_silly(){
 mtv(){
 	this_is_getting_silly
 	distraction_toggle video
-	[ -n $paused ] && mpc pause
-	bspc desktop 1 -f
 	bspc rule -a mpv:\* -o desktop=1 state=floating rectangle=897x505+1005+287 center=false
 	mpv https://www.youtube.com/watch?v="${watch}" &
-	sleep 0.4
+	bspc subscribe node_add -c 1
+	[ -n $paused ] && mpc pause
+	bspc desktop 1 -f
+	sleep 0.1
 	xdotool mousemove 400 400
 	bspc node pointed -f
 	exit
 }
 
-search=$(rofi -dmenu -i -p "search: " -no-fixed-num-lines -format s \
+fullscreen(){
+	this_is_getting_silly
+	bspc rule -a mpv:\* -o desktop=10
+	mpv https://www.youtube.com/watch?v="${watch}" --fs &
+	bspc subscribe node_add -c 1
+	[ -n $paused ] && mpc pause
+	bspc desktop 10 -f
+	exit
+}
+
+search=$(rofi -dmenu -i -p "‎‎ youtube: " -no-fixed-num-lines -format s \
 	-config $XDG_CONFIG_HOME/rofi/config-mini.rasi | sed  s'/ /+/g')
 [ ! $search ] && exit
 list=$(curl https://www.youtube.com/results?search_query="${search}")
@@ -37,15 +48,14 @@ choice=$(echo "$list" | grep -Po '(?<=title=")(.*?)(?=" rel="spf)' | \
 
 dunstify -r 929293 -t 6000000 "viewing experience?"
 experience=$(echo "fullscreen\nmusic video\nstandard" | rofi -dmenu -i -format d)
-[ ! $experience ] && this_is_getting_silly bleh
+[ ! $experience ] && this_is_getting_silly bleh || this_is_getting_silly
 watch=$(echo "$list" | grep -Po '(?<=a href="/watch\?v=)(.*?)(?=" class)' | sed -n ${choice}p)
-
 need_mute=$(mpc current)
 [ -n $need_mute ] && paused=$(mpc | sed -n 2p | awk '{print $1}' | grep "paused")
 case $experience in
-	1) bspc desktop 10 -f && mpv https://www.youtube.com/watch?v="${watch}" --fs & ;;
+	1) fullscreen ;;
 	2) mtv ;;
 	3) mpv https://www.youtube.com/watch?v="${watch}" & ;;
 esac
+bspc subscribe node_add -c 1
 [ -n $paused ] && mpc pause
-this_is_getting_silly bleh

@@ -15,7 +15,8 @@ mtv(){
 	bspc desktop 1 -f
 	bspc rule -a mpv:\* -o desktop=1 state=floating rectangle=897x505+1005+287 center=false
 	mpv "$file" &
-	sleep 0.4
+	bspc subscribe node_add -c 1
+	sleep 0.1
 	xdotool mousemove 400 400
 	bspc node pointed -f
 	exit
