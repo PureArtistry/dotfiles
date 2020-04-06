@@ -42,11 +42,7 @@ super + shift + F6
 
 #: }}}
 
-#: rofi/dmenu related {{{
-
-#: dmenu
-super + d
-    my_dmenu
+#: misc {{{
 
 #: rofi
 super + Tab
@@ -55,10 +51,6 @@ super + Tab
 #: config menu
 super + BackSpace
     config_menu
-
-#: }}}
-
-#: misc {{{
 
 #: browser
 super + alt + Return

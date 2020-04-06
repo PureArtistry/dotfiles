@@ -12,7 +12,7 @@ echo $new_theme > $XDG_CONFIG_HOME/polybar/mood
 
 # tweak some configs post generation
 
-global_bg=$(sed -n 1p "$XDG_CACHE_HOME"/wal/colors)
+global_bg=$(sed -n 8p $XDG_CONFIG_HOME/kitty/kitty_colors.conf | awk '{print $2}')
 sxiv_foreground=$(sed -n 2p "$XDG_CACHE_HOME"/wal/colors)
 sed -i "1s/.*/*background: $global_bg/g" $HOME/.Xresources
 sed -i "2s/.*/*foreground: $sxiv_foreground/g" $HOME/.Xresources

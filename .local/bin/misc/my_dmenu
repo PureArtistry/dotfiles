@@ -1,6 +1,0 @@
-#!/bin/sh
-
-# dmenu with my colours
-
-fg=$(sed -n 16p "$XDG_CACHE_HOME"/wal/colors)
-dmenu_run -fn 'Iosevka Nerd Font-11' -nb "$(sed -n 8p "$XDG_CONFIG_HOME"/kitty/kitty_colors.conf | awk '{print $2}')" -nf "$fg" -sb "$(sed -n 2p "$XDG_CACHE_HOME"/wal/colors)" -sf "$fg" -h 24 $@
