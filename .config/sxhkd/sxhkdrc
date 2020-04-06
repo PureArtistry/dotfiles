@@ -195,6 +195,10 @@ super + F3
 super + x
     macro_toggle
 
+#: search scripts
+super + shift + f
+    yt_search
+
 #: }}}
 
 #: }}}

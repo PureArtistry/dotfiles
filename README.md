@@ -11,6 +11,7 @@ https://www.youtube.com/watch?v=FKaFDkBuQUc
 ~/.config/polybar/colours
 ~/.config/qutebrowser/config.py
 ~/.config/rofi/config.rasi
+~/.config/rofi/config-mini.rasi
 ~/.local/share/localweb/startpage/index.html
 ~/.local/share/localweb/startpage/script/script.js
 ~/.local/share/localweb/startpage/style/style.css

@@ -43,4 +43,5 @@ export FILE="launch_litty ranger"
 export QT_QPA_PLATFORMTHEME="qt5ct"
 export QT_QPA_PLATFORM_PLUGIN_PATH=/usr/lib/qt/plugins
 export FZF_DEFAULT_COMMAND='find .'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
+export SUDO_ASKPASS=$HOME/.local/bin/rofi/askpass
