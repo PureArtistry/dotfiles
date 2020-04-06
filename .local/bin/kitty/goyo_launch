@@ -13,5 +13,11 @@ if [ $home_desktop = '"1"' ] && [ $big_cat_state = '"floating"' ]; then
 	bspc node $big_cat_id -g hidden=off
 	bspc node $big_cat_id -f
 else
-	launch_kitty $@
+	if [ $1 = "newsboat" ]; then
+		bspc node -p east
+		bspc node -o 0.70
+		launch_kitty $@
+	else
+		launch_kitty $@
+	fi
 fi
