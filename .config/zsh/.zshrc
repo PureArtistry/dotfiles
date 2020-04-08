@@ -12,7 +12,7 @@ catch_signal_usr1(){
 }
 trap catch_signal_usr1 USR1
 
-[ "$(tty)" = "/dev/tty1" ] && ! pgrep -x bspwm >/dev/null && source $XDG_CACHE_HOME/wal/colors-tty.sh || source $XDG_CACHE_HOME/wal/colors.sh
+! pgrep -x bspwm >/dev/null && source $XDG_CACHE_HOME/wal/colors-tty.sh || source $XDG_CACHE_HOME/wal/colors.sh
 
 autoload -U colors && colors
 autoload -U promptinit; promptinit

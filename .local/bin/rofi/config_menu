@@ -12,7 +12,7 @@ take_dunst_with_you(){
 
 goyo(){
 	bspc node $big_cat_id -g hidden=on
-	bspc rule -a vim -o desktop=1 state=floating rectangle=900x920+87+89
+	bspc rule -a vim -o desktop=1 state=floating rectangle=975x1026+12+36
 	if [ $1 = "main" ]; then
 		kitty --listen-on unix:/tmp/kitty_control/$(gen_kitty_id) --class "vim" --name "vim" --title "vim" vim $HOME/$bar &
 		sleep 0.1

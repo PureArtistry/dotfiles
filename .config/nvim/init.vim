@@ -106,10 +106,6 @@ nmap <leader>w :w!<cr>
 " quick reload
 nmap <leader>e :e<cr>
 
-" :W sudo saves the file
-" (useful for handling the permission-denied error)
-command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
-
 " goyo mode
 nmap <leader>g :Goyo<cr>
 
