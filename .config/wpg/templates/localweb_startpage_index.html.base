@@ -7,7 +7,6 @@
   <script>
       (function () {{
       'use strict';
-      /*globals location, XMLHttpRequest, setTimeout*/
       var loc     = location;
       var host    = loc.hostname + (loc.port ? ':' + loc.port : '');
       var timeout = setTimeout;

@@ -417,7 +417,7 @@ c.colors.tabs.selected.odd.fg = '{color7}'
 ## Background color for webpages if unset (or empty to use the theme's
 ## color).
 ## Type: QtColor
-c.colors.webpage.bg = ''
+c.colors.webpage.bg = '{color8}'
 
 ## Number of commands to save in the command history. 0: no history / -1:
 ## unlimited
@@ -501,7 +501,7 @@ c.completion.shrink = True
 ##   - multiple-tabs: Show a confirmation if multiple tabs are opened.
 ##   - downloads: Show a confirmation if downloads are running
 ##   - never: Never show a confirmation.
-# c.confirm_quit = ['never']
+c.confirm_quit = ['downloads']
 
 ## Automatically start playing `<video>` elements. Note: On Qt < 5.11,
 ## this option needs a restart and does not support URL patterns.
@@ -841,7 +841,7 @@ c.downloads.location.prompt = False
 ## handler is used. Any `{{}}` in the string will be expanded to the
 ## filename, else the filename will be appended.
 ## Type: String
-c.downloads.open_dispatcher = 'openffs'
+c.downloads.open_dispatcher = 'xdg-open'
 
 ## Where to show the downloaded files.
 ## Type: VerticalPosition
@@ -862,7 +862,7 @@ c.downloads.remove_finished = 3
 ## `{{line0}}`: Same as `{{line}}`, but starting from index 0. * `{{column0}}`:
 ## Same as `{{column}}`, but starting from index 0.
 ## Type: ShellCommand
-c.editor.command = ['urxvtc', '-e', 'micro', '-startpos', '{{line}},{{column0}}', '{{file}}']
+c.editor.command = ['kitty', '-e', 'vim', '-f', '{{file}}', '-c', 'normal {{line}}G{{column0}}l']
 
 ## Encoding to use for the editor.
 ## Type: Encoding
@@ -1367,7 +1367,7 @@ c.tabs.indicator.width = 0
 ##   - startpage: Load the start page.
 ##   - default-page: Load the default page.
 ##   - close: Close the window.
-c.tabs.last_close = 'startpage'
+c.tabs.last_close = 'close'
 
 ## Maximum width (in pixels) of tabs (-1 for no maximum). This setting
 ## only applies when tabs are horizontal. This setting does not apply to
