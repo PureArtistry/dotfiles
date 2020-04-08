@@ -49,8 +49,8 @@ bspc rule -a "my playlist" state=floating rectangle=640x480+0+0 center=true hidd
 bspc rule -a "companion" state=floating rectangle=800x600+0+0 center=true hidden=on sticky=on layer=above
 bspc rule -a "file manager" desktop=3
 bspc rule -a "big cat" desktop=1 state=floating rectangle=975x1026+12+36
-bspc rule -a "pretty colours" desktop=1 state=floating rectangle=440x410+1462+652
-bspc rule -a "fancy writing" desktop=1 state=floating rectangle=650x200+1252+60 hidden=on
+bspc rule -a "pretty colours" desktop=1 state=floating rectangle=440x420+1462+642
+bspc rule -a "fancy writing" desktop=1 state=floating rectangle=650x200+1252+36 hidden=on
 bspc rule -a "Gimp" desktop=4 follow=on
 bspc rule -a "Dragon-drag-and-drop" state=floating rectangle=188x33+4+30 layer=above sticky=on
 bspc rule -a "Steam" desktop=9
