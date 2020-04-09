@@ -5,14 +5,14 @@
 running_check(){
 	launcher=$(ps aux | grep -e 'steamapps' -e 'lutris/games' | grep -v grep | awk '{print $2}' | head -n1)
 	if [ ! $launcher ]; then
-		sleep 3
+		sleep 1
 		running_check
 	else
 		return
 	fi
 }
 
-pgrep picom && pkill picom
+pgrep picom >/dev/null && pkill picom
 running_check
 tail --pid=$launcher -f /dev/null
-pgrep steam && kill -HUP $(head -n1 ~/.steampid)
+pgrep steam >/dev/null && kill -HUP $(head -n1 ~/.steampid)

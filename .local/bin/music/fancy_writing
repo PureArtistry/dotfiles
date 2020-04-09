@@ -15,10 +15,6 @@ main(){
         ocycle=0
         mcycle=0
         state="running"
-        song=$(mpc current -f "%title%")
-        artist=$(mpc current -f "%artist%")
-        album=$(mpc current -f "%album%")
-        date=$(mpc current -f "%date%")
         now_playing=$(mpc | sed -n 2p | awk '{print $1}')
         [ ! $now_playing ] && other_info
         case $now_playing in
@@ -28,20 +24,22 @@ main(){
 }
 
 other_info(){
-        [ -f /tmp/fancy_message ] && general="$(head -n1 /tmp/fancy_message)" || general="Hello Dave. You're looking well today."
-        # general="‎שּ‎ ‎‎   hi reddit!"
+        [ -f /tmp/fancy_message ] && general="$(head -n1 /tmp/fancy_message)" || \
+                general="Hello Dave. You're looking well today."
+                # general="‎שּ‎ ‎‎   hi reddit!"
         until [ $state = "update" ]; do
                 if [ $1 = "pause" ]; then
+                        song=$(mpc current -f "%title%")
                         if [ $count = 20 ]; then
                                 count=0
                                 [ $mcycle = 1 ] && mcycle=0 || mcycle=`expr $mcycle + 1`
                         fi
                         if [ $mcycle = 0 ]; then
-                                message="$general"
+                                message="  $song"
                                 display_text
                                 loop
                         elif [ $mcycle = 1 ]; then
-                                message="  $song"
+                                message="$general"
                                 display_text
                                 loop
                         fi
@@ -56,6 +54,10 @@ other_info(){
 }
 
 song_info(){
+        song=$(mpc current -f "%title%")
+        artist=$(mpc current -f "%artist%")
+        album=$(mpc current -f "%album%")
+        date=$(mpc current -f "%date%")
         until [ $state = "update" ]; do
                 if [ $count = 20 ]; then
                         count=0
@@ -94,11 +96,9 @@ display_text(){
         bspc node $(head -n 1 /tmp/fancy_writing_id) --flag hidden=on
         sleep 0.2
         fg_color=$(sed -n 8p $XDG_CACHE_HOME/wal/colors)
-
-        # this bit would be cleaner if this were a bash script
         length_check=$(echo -n "$message" | wc -c)
-        [ $length_check -gt 39 ] && final_message=$(echo "$message" | cut -c 1-36 | sed 's/$/.../g') || final_message="$message"
-
+        [ $length_check -gt 39 ] && final_message=$(echo "$message" | cut -c 1-36 | \
+                sed 's/$/.../g') || final_message="$message"
 	convert -size 650x200 xc:"transparent" \
                 -gravity center \
                 -pointsize 32 \

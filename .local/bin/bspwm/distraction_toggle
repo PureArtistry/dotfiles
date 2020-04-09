@@ -11,6 +11,8 @@ dazzle_me(){
 	touch /tmp/pretty_colours_id
 	echo "$pretty_colours_id" > /tmp/pretty_colours_id
 	launch_kitty --name "fancy writing" --class "fancy writing" --title "fancy writing" fancy_writing
+	sleep 0.1
+	feng_shui
 	exit
 }
 
