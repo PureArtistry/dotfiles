@@ -8,20 +8,6 @@ begone_too(){
 	[ $1 = "cya" ] && exit || return
 }
 
-mtv(){
-	begone_too
-	distraction_toggle video
-	[ -n $paused ] && mpc pause
-	bspc desktop 1 -f
-	bspc rule -a mpv:\* -o desktop=1 state=floating rectangle=897x505+1005+287 center=false
-	mpv "$file" &
-	bspc subscribe node_add -c 1
-	sleep 0.1
-	xdotool mousemove 400 400
-	bspc node pointed -f
-	exit
-}
-
 killall -q dunst
 dunst -config $XDG_CONFIG_HOME/dunst/dunst.mini &
 
@@ -37,14 +23,25 @@ file=$(echo "$list" | awk -F "|" '{print $2"/"$1}' | sed -n ${choice}p)
 
 dunstify -r 336699 -t 6000000 "viewing experience?"
 experience=$(echo "fullscreen\nmusic video\nstandard" | rofi -dmenu -i -format d)
-[ ! $experience ] && begone_too cya
-
+[ ! $experience ] && begone_too cya || begone_too
 need_mute=$(mpc current)
-[ -n $need_mute ] && paused=$(mpc | sed -n 2p | awk '{print $1}' | grep "paused")
+[ -n "$need_mute" ] && paused=$(mpc | sed -n 2p | awk '{print $1}' | grep "paused")
+[ -n "$need_mute" ] && [ ! "$paused" ] && need_mute=yes
 case $experience in
-	1) bspc desktop 10 -f && mpv "$file" --fs & ;;
-	2) mtv ;;
-	3) mpv "$file" & ;;
+	1) mpv "$file" --fs &
+		bspc subscribe node_add -c 1
+		bspc desktop 10 -f
+		[ "$need_mute" = "yes" ] && mpc pause ;;
+	2) distraction_toggle off
+		bspc rule -a mpv:\* -o desktop=1 state=floating rectangle=897x505+1005+287 center=false
+		mpv "$file" &
+		bspc subscribe node_add -c 1
+		[ "$need_mute" = "yes" ] && mpc pause
+		bspc desktop 1 -f
+		sleep 0.1
+		xdotool mousemove 400 400
+		bspc node pointed -f ;;
+	3) mpv "$file" &
+		bspc subscribe node_add -c 1
+		[ "$need_mute" = "yes" ] && mpc pause ;;
 esac
-[ -n $paused ] && mpc pause
-begone_too cya

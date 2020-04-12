@@ -11,13 +11,13 @@ offset-y = 0
 radius = 0.0
 fixed-center = true
 
-background = #00000000
+background = ${colors.transparent}
 foreground = ${colors.color15}
 
 line-size = 0
-label-line-color = #00000000
+label-line-color = ${colors.transparent}
 
-border-color = #00000000
+border-color = ${colors.transparent}
 border-top-size = 0
 border-left-size = 0
 border-right-size = 0
@@ -159,7 +159,7 @@ label-monitor = %name%
 ;   label-dimmed-urgent
 ;   label-dimmed-empty
 label-dimmed-foreground = ${colors.inactive}
-label-dimmed-background = #00000000
+label-dimmed-background = ${colors.transparent}
 
 ; Available tokens:
 ;   %name%
@@ -217,13 +217,13 @@ label-empty-background = ${colors.inactive}
 
 ; Separator in between workspaces
 label-separator-padding = 0
-label-separator-foreground = #00000000
+label-separator-foreground = ${colors.transparent}
 
 [module/gap]
 type = custom/text
 content = -
-content-background = #00000000
-content-foreground = #00000000
+content-background = ${colors.transparent}
+content-foreground = ${colors.transparent}
 content-padding = 0
 
 [module/mood]

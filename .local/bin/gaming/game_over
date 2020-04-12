@@ -1,3 +1,5 @@
 #!/bin/sh
 
 xdotool key "super+shift+F3"
+sleep 0.1
+distraction_toggle

@@ -60,10 +60,10 @@ SPACESHIP_TIME_FORMAT=%*
 SPACESHIP_DIR_TRUNC_PREFIX=".../"
 
 HISTFILE=$ZDOTDIR/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=10000
+SAVEHIST=10000
 
-setopt incappendhistory autocd beep extendedglob nomatch aliases correctall #COMPLETE_ALIASES
+setopt HIST_IGNORE_ALL_DUPS HIST_REDUCE_BLANKS EXTENDED_HISTORY INC_APPEND_HISTORY_TIME autocd beep extendedglob nomatch aliases correctall #COMPLETE_ALIASES
 unsetopt notify
 
 bindkey -e

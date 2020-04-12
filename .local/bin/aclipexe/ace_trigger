@@ -4,6 +4,5 @@
 # for safety, if a temp file already exists then the script waits to prevent data loss
 
 [ -f /tmp/ace_temp_buffer ] && exit || touch /tmp/ace_temp_buffer
-xclip -selection clipboard -o > /tmp/ace_temp_buffer 2>/dev/null
+xclip -selection clipboard -o > /tmp/ace_temp_buffer
 echo "$1" | xclip -selection clipboard
-exit

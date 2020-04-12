@@ -24,6 +24,6 @@ plz_stop(){
 	exit
 }
 
-[ $1 = "video" ] && plz_stop
+[ $1 = "off" ] && plz_stop
 check=$(pgrep fancy_writing)
 [ ! $check ] && dazzle_me || plz_stop

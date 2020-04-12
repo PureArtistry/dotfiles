@@ -18,6 +18,7 @@ export TASKRC=$XDG_CONFIG_HOME/taskwarrior/taskrc
 export TASKDATA=$XDG_CONFIG_HOME/taskwarrior
 #export RECOLL_CONFDIR=$XDG_CONFIG_HOME/recoll
 export ASPELL_CONF="per-conf $XDG_CONFIG_HOME/aspell/aspell.conf; personal $XDG_CONFIG_HOME/aspell/en.pws; repl $XDG_CONFIG_HOME/aspell/en.prepl"
+export CARGO_HOME=$XDG_DATA_HOME/cargo
 
 # brighten up commands
 export GREP_COLOR="4;36"
