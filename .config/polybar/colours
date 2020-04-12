@@ -4,6 +4,7 @@ active = {active}
 inactive = {inactive}
 highlight = {color1}
 error = {color4}
+transparent = {color0}00
 
 color0 = {color0}
 color1 = {color1}

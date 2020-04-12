@@ -1,7 +1,5 @@
 # a wild demo has appeared...
 https://www.youtube.com/watch?v=FKaFDkBuQUc
-##### install script up next
-
 
 ### these files are wpg templates, use wpg -ta /path/to/file to add:
 ```
