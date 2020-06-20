@@ -60,7 +60,7 @@ hi ErrorMsg               ctermfg=0   ctermbg=9
 hi Pmenu                  ctermbg=3   ctermfg=15
 hi PmenuSel               ctermbg=1   ctermfg=15  cterm=bold
 hi SpellBad               ctermfg=8   ctermbg=9   cterm=none
-hi Comment                ctermfg=4   ctermbg=0   cterm=italic
+hi Comment                ctermfg=8   ctermbg=0   cterm=italic
 hi MatchParen             ctermfg=0   ctermbg=3   cterm=none
 hi DiffAdd                ctermfg=0
 hi DiffDelete             ctermfg=0

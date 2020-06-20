@@ -15,6 +15,7 @@ main(){
         ocycle=0
         mcycle=0
         state="running"
+        [ -f /tmp/fancy_message ] && other_info fancy_message
         now_playing=$(mpc | sed -n 2p | awk '{print $1}')
         [ ! $now_playing ] && other_info
         case $now_playing in
@@ -24,13 +25,13 @@ main(){
 }
 
 other_info(){
-        [ -f /tmp/fancy_message ] && general="$(head -n1 /tmp/fancy_message)" || \
+        [ $1 = "fancy_message" ] && general="$(head -n1 /tmp/fancy_message)" || \
                 general="Hello Dave. You're looking well today."
                 # general="‎שּ‎ ‎‎   hi reddit!"
         until [ $state = "update" ]; do
                 if [ $1 = "pause" ]; then
                         song=$(mpc current -f "%title%")
-                        if [ $count = 20 ]; then
+                        if [ $count = 100 ]; then
                                 count=0
                                 [ $mcycle = 1 ] && mcycle=0 || mcycle=`expr $mcycle + 1`
                         fi
@@ -44,7 +45,7 @@ other_info(){
                                 loop
                         fi
                 else
-                        [ $count = 20 ] && count=0
+                        [ $count = 100 ] && count=0
                         message="$general"
                         display_text
                         loop
@@ -59,7 +60,7 @@ song_info(){
         album=$(mpc current -f "%album%")
         date=$(mpc current -f "%date%")
         until [ $state = "update" ]; do
-                if [ $count = 20 ]; then
+                if [ $count = 100 ]; then
                         count=0
                         [ $mcycle = 3 ] && mcycle=0 || mcycle=`expr $mcycle + 1`
                 fi
@@ -85,8 +86,8 @@ song_info(){
 }
 
 loop(){
-        while [ $count -lt 20 ] && [ $state != "update" ]; do
-                sleep 1
+        while [ $count -lt 100 ] && [ $state != "update" ]; do
+                sleep 0.2
                 count=`expr $count + 1`
         done
         return
@@ -110,7 +111,7 @@ display_text(){
         sleep 0.2
         bspc node $(head -n 1 /tmp/fancy_writing_id) --flag hidden=off
         if [ -f /tmp/fancy_message ]; then
-                rm /tmp/fancy_message
+                rm -f /tmp/fancy_message
                 loop
                 main
         fi
@@ -118,6 +119,5 @@ display_text(){
 }
 
 fancy_writing_id=$(xwininfo -root -children | grep -w "fancy writing" | awk '{print $1}')
-[ -f /tmp/fancy_writing_id ] || touch /tmp/fancy_writing_id
 echo "$fancy_writing_id" > /tmp/fancy_writing_id
 main

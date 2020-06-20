@@ -13,6 +13,9 @@ running_check(){
 }
 
 pgrep picom >/dev/null && pkill picom
+distraction_toggle off
+[ -f /tmp/ace_pause ] || touch /tmp/ace_pause
+killall -q aclipexe
 running_check
 tail --pid=$launcher -f /dev/null
 pgrep steam >/dev/null && kill -HUP $(head -n1 ~/.steampid)

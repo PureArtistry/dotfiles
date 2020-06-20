@@ -1,70 +1,74 @@
 # vim:foldmethod=marker
 
-#: launch binds {{{
+# launch binds {{{
 
-#: terminal applications {{{
+# terminal applications {{{
 
-#: kitty
+# kitty
 super + Return
     launch_kitty
 
-#: ranger
+# ranger
 super + shift + Return
     launch_kitty ranger
 
-#: gotop
+# ytop
 super + shift + BackSpace
-    goyo_launch gotop
+    goyo_launch ytop
 
-#: ncmpcpp visualizer
+# ncmpcpp visualizer
 super + ctrl + m
     launch_kitty ncmpcpp -c $XDG_CONFIG_HOME/ncmpcpp/config.viz
 
-#: vim
+# vim
 super + k
     goyo_launch vim
 
-#: tremc (transmission front-end)
-super + o
-    goyo_launch tremc
+# vit (taskwarrior)
+super + u
+    goyo_launch vit
 
-#: newsboat
+# newsboat
 super + i
     goyo_launch newsboat
 
-#: tuir (terminal reddit)
+# tuir (terminal reddit)
 super + shift + i
     goyo_launch tuir --theme custom
 
-#: pulsemixer
+# tremc
+super + o
+    goyo_launch tremc
+
+# pulsemixer
 super + shift + F6
     launch_kitty --name "pulsemixer" --class "pulsemixer" --title "pulsemixer" pulsemixer
 
-#: }}}
+# }}}
 
-#: misc {{{
+# misc {{{
 
-#: rofi
+# rofi
 super + Tab
     my_rofi
 
-#: config menu
+# config menu
 super + BackSpace
     config_menu
 
-#: browser
+# browser
 super + alt + Return
     $BROWSER
 
-#: run the testscript
+# run the testscript
 super + j
     testscript
 
-#: open transmission web interface
+# open transmission web interface
 super + shift + o
     $BROWSER localhost:9091
 
-#: private
+# private
 super + p
     private_script 1
 super + shift + p
@@ -72,7 +76,7 @@ super + shift + p
 super + alt + p
     qutebrowser ':open -p'
 
-#: games
+# games
 super + l
     game_launcher
 super + shift + l
@@ -80,17 +84,17 @@ super + shift + l
 super + alt + l
     steam
 
-#: ripcord
-super + u
+# ripcord
+super + alt + i
     ripcord
 
-#: }}}
+# }}}
 
-#: }}}
+# }}}
 
-#: function binds {{{
+# function binds {{{
 
-#: brightness/volume controls {{{
+# brightness/volume controls {{{
 
 super + {F4,F5}
     xbacklight {-dec,-inc} 5
@@ -99,143 +103,147 @@ super + F6
 super + {F7,F8}
     pactl set-sink-volume @DEFAULT_SINK@ {-,+}5%
 
-#: }}}
+# }}}
 
-#: music {{{
+# music {{{
 
-#: rinse (rofi song select)
+# rinse (rofi song select)
 super + m
     rinse
 
-#: my playlist
+# my playlist
 super + alt + m
     toggle_hidden playlist
 
-#: song info notification
+# song info notification
 super + shift + m
     song_info
 
-#: better random (bypass mpd bias)
+# better random (bypass mpd bias)
 super + shift + F12
     better_mpd_random
 
-#: mpd controls
+# mpd controls
 super + {F9,F10,F11,F12}
     mpc -q {toggle,stop,prev,next}
 super + shift + F11
     mpc -q seek 0
 
-#: }}}
+# }}}
 
-#: themes {{{
+# themes {{{
 
-#: random theme
+# random theme
 super + n
     theme_change
 
-#: theme selector
+# theme selector
 super + shift + n
     theme_selector
 
-#: cycle colour palette
+# cycle colour palette
 super + alt + n
     wpg -z $(wpg -c) && theme_change $(wpg -c)
 
-#: }}}
+# }}}
 
-#: {{{ screen capture
+# {{{ screen capture
 
-#: scrot (+timer)
+# scrot (+timer)
 Print
     scrot
 shift + Print
     scrot timer
 
-#: screen cast
+# screen cast
 super + Print
     scast
 
-#: end screen cast
+# end screen cast
 super + shift + Print
     kill-scast
 
-#: }}}
+# }}}
 
-#: misc {{{
+# misc {{{
 
-#: toggle companion kitty
+# toggle companion kitty
 super + shift + Tab
     toggle_hidden companion
 
-#: rofi video menu
+# rofi video menu
 super + v
     video_menu
 
-#: toggle visualizer & album art
+# toggle visualizer & album art
 super + shift + v
     distraction_toggle
 
-#: wifi toggle
+# wifi toggle
 super + F2
     wifi_toggle
 
-#: compton toggle
+# compton toggle
 super + shift + F3
     compton_toggle
 
-#: clipboard monitor toggle
+# game mode toggle
+super + alt + F3
+    game_mode
+
+# clipboard monitor toggle
 super + shift + y
     ace_toggle
 
-#: toggle external display
+# toggle external display
 super + F3
     display_toggle
 
-#: macro toggle
+# macro toggle
 super + x
     macro_toggle
 
-#: search scripts
+# search scripts
 super + shift + f
     yt_search
 
-#: }}}
+# }}}
 
-#: }}}
+# }}}
 
-#: bspwm binds {{{
+# bspwm binds {{{
 
-#: misc {{{
+# misc {{{
 
-#: rofi logout/reboot menu
+# rofi logout/reboot menu
 super + shift + q
     exit_menu
 
-#: reinit desktop
+# reinit desktop
 super + Escape
     reinit_desktop
 
-#: close/kill
+# close/kill
 super + {w,q}
     bspc node -{c,k}
 
-#: }}}
+# }}}
 
-#: workspace {{{
+# workspace {{{
 
-#: focus home workspace and layer everything correctly
+# focus home workspace and layer everything correctly
 super + 1
     feng_shui
 
-#: focus or send to the given desktop
+# focus or send to the given desktop
 super + {_,shift + }{2-9,0}
     bspc {desktop -f,node -d} '{2-9,10}'
 
-#: }}}
+# }}}
 
-#: window {{{
+# window {{{
 
-#: resize {{{
+# resize {{{
 
 # expand a window by moving one of its side outward
 super + alt + {Left,Down,Up,Right}
@@ -249,37 +257,37 @@ super + alt + shift + {Left,Down,Up,Right}
 super + ctrl + shift {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
 
-#: }}}
+# }}}
 
 # focus/move the node in the given direction
 super + {_,shift + }{Left,Down,Up,Right}
 	bspc node -{f,s} {west,south,north,east}
 
-#: focus main window or make focused main window
+# focus main window or make focused main window
 super + {_,alt + } space
     bspc node -{f,s} biggest.local
 
-#: focus floating layer
+# focus floating layer
 super + c
-    bspc node next.local.floating -f
+    bspc node next.local -f
 
-#: fullscreen toggle
+# fullscreen toggle
 super + shift + space
     alt_fullscreen
 
-#: toggle tiling modes
+# toggle tiling modes
 super + {_,shift + } t
     bspc node -t {tiled,pseudo_tiled}
 
-#: toggle floating mode
+# toggle floating mode
 super + f
     bspc node -t floating
 
-#: }}}
+# }}}
 
-#: }}}
+# }}}
 
-#: old config (still to be sorted through) {{{
+# old config (still to be sorted through) {{{
 
 #
 # bspwm hotkeys
@@ -342,4 +350,4 @@ super + f
 #super + ctrl + shift + space
 #	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
 
-#: }}}
+# }}}

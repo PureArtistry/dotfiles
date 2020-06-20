@@ -11,20 +11,33 @@ dunst               	Customizable and lightweight notification-daemon
 e2fsprogs           	Ext2/3/4 filesystem utilities
 exfat-utils         	Utilities for exFAT file system
 expac               	pacman database extraction utility
+fzf                 	Command-line fuzzy finder
 gimp                	GNU Image Manipulation Program
 git                 	the fast distributed version control system
-go                  	Core compiler tools for the Go programming language
 gtk-engine-murrine  	GTK2 engine to make your desktop look like a 'murrina', an italian word meaning the art glass works done by Venicians glass blowers.
 gucharmap           	Gnome Unicode Charmap
 highlight           	Fast and flexible source code highlighter (CLI version)
 intel-ucode         	Microcode update files for Intel CPUs
 jq                  	Command-line JSON processor
+lib32-giflib        	Library for reading and writing gif images
+lib32-gst-plugins-base-libs	GStreamer Multimedia Framework Base Plugin libraries (32-bit)
+lib32-gtk3          	GObject-based multi-platform GUI toolkit
+lib32-libpulse      	A featureful, general-purpose sound server (32-bit client libraries)
+lib32-libva         	Video Acceleration (VA) API for Linux (32-bit)
+lib32-libxslt       	XML stylesheet transformation library (32-bit)
 lib32-mesa          	An open-source implementation of the OpenGL specification (32-bit)
+lib32-mpg123        	A console based real time MPEG Audio Player for Layer 1, 2 and 3 (32-bit)
 lib32-nvidia-utils  	NVIDIA drivers utilities (32-bit)
+lib32-ocl-icd       	OpenCL ICD Bindings (32-bit)
+lib32-openal        	Cross-platform 3D audio library, software implementation (32-bit)
+lib32-v4l-utils     	Userspace tools and conversion library for Video 4 Linux (32-bit)
+lib32-vkd3d         	Direct3D 12 to Vulkan translation library By WineHQ
+lib32-vulkan-icd-loader	Vulkan Installable Client Driver (ICD) Loader (32-bit)
 libcaca             	Color AsCii Art library
 libnotify           	Library for sending desktop notifications
 linux-firmware      	Firmware files for Linux
 linux               	The Linux kernel and modules
+lutris              	Open Gaming Platform
 lxappearance        	Feature-rich GTK+ theme switcher of the LXDE Desktop
 man-db              	A utility for reading man pages
 man-pages           	Linux man pages
@@ -38,9 +51,12 @@ neofetch            	A CLI system information tool written in BASH that supports
 neovim              	Fork of Vim aiming to improve user experience, plugins, and GUIs
 networkmanager      	Network connection manager and user applications
 newsboat            	An RSS/Atom feed reader for text terminals
+nodejs              	Evented I/O for V8 javascript
+npm                 	A package manager for javascript
 ntfs-3g             	NTFS filesystem driver and utilities
 nvidia              	NVIDIA drivers for linux
 nvidia-settings     	Tool for configuring the NVIDIA graphics driver
+ocl-icd             	OpenCL ICD Bindings
 p7zip               	Command-line file archiver with high compression ratio
 pacman-contrib      	Contributed scripts and tools for pacman systems
 pbzip2              	Parallel implementation of the bzip2 block-sorting file compressor
@@ -55,8 +71,12 @@ python2             	A high-level scripting language
 python-chardet      	Python3 module for character encoding auto-detection
 python-fonttools    	A library to manipulate font files from Python
 python-pynvim       	Python client for Neovim
+python-setproctitle 	Allows a python process to change its process title
 qt5ct               	Qt5 Configuration Utility
-qt5-styleplugins    	Additional style plugins for Qt5
+qt5-imageformats    	Plugins for additional image formats: TIFF, MNG, TGA, WBMP
+qt5-multimedia      	Classes for audio, video, radio and camera functionality
+qt5-websockets      	Provides WebSocket communication compliant with RFC 6455
+qt5-x11extras       	Provides platform-specific APIs for X11
 qutebrowser         	A keyboard-driven, vim-like browser based on PyQt5
 reflector           	A Python 3 module and script to retrieve and filter the latest Pacman mirror list.
 rofi                	A window switcher, application launcher and dmenu replacement
@@ -68,16 +88,21 @@ transmission-cli    	Fast, easy, and free BitTorrent client (CLI tools, daemon a
 unace               	An extraction tool for the proprietary ace archive format
 unrar               	The RAR uncompression program
 unzip               	For extracting and viewing files in .zip archives
+vkd3d               	Direct3D 12 to Vulkan translation library By WineHQ
+wine-staging        	A compatibility layer for running Windows programs - Staging branch
 xclip               	Command line interface to the X11 clipboard
 xcursor-comix       	Comix X Cursor Theme
 xcursor-simpleandsoft	A simple and soft X cursor theme
 xdotool             	Command-line X11 automation tool
 xorg-xdpyinfo       	Display information utility for X
+xorg-xev            	Print contents of X events
 xorg-xinit          	X.Org initialisation program
 xorg-xsetroot       	Classic X utility to set your root window background to a given pattern or color
 xorg-xwininfo       	Command-line utility to print information about windows on an X server
 xsettingsd          	Provides settings to X11 applications via the XSETTINGS specification
 youtube-dl          	A small command-line program to download videos from YouTube.com and a few more sites
+zathura             	Minimalistic document viewer
+zathura-pdf-poppler 	Adds pdf support to zathura by using the poppler engine
 zip                 	Compressor/archiver for creating and modifying zipfiles
 zsh                 	A very advanced and programmable command interpreter (shell) for UNIX
 zsh-syntax-highlighting	Fish shell like syntax highlighting for Zsh
@@ -90,20 +115,27 @@ dragon-drag-and-drop	Simple drag-and-drop source/sink for X
 feh-git             	Fast and light imlib2-based image viewer
 fontconfig-infinality-remix	A library for configuring and customizing font access, optimized for Infinality Remix.
 freetype2-infinality-remix	TrueType font rendering library with Infinality Remix patches
-fzf-git             	Command-line fuzzy finder
-gotop               	A terminal based graphical activity monitor inspired by gtop and vtop
 kitty-git           	A modern, hackable, featureful, OpenGL based terminal emulator
+kmon                	Linux kernel manager and activity monitor
 neovim-symlinks     	Runs neovim if vi or vim is called
 optimus-manager     	Management utility to handle GPU switching for Optimus laptops
 polybar             	A fast and easy-to-use status bar
+pyfa                	EVE Online Fitting Assistant
 python-bidi         	BIDI algorithm related functions
+python-discord      	An API wrapper for Discord written in Python
+python-markdown2-git	A fast and complete implementation of Markdown in Python 3
+python-pypresence   	A complete Discord RPC and Rich Presence wrapper library in Python
 python-ueberzug     	ueberzug is an python script which aims to replace w3mimgdisplay
 pywal-git           	Generate and change color-schemes on the fly.
+qt5-styleplugins    	Additional style plugins for Qt5
 ranger-git          	A simple, vim-like file manager.
+ripcord             	Qt-based Discord and Slack client
 spaceship-prompt-git	A Zsh prompt for Astronauts
 steam-fonts         	Fonts to fix scrambled or missing text in steam menus
 sxhkd-git           	A simple X hotkey daemon
 tremc-git           	Curses interface for transmission - python3 fork of transmission-remote-cli
+tuir                	Terminal UI for Reddit, forked from discontinued rtv
 unclutter-xfixes-git	unclutter-xfixes is a rewrite of unclutter using the x11-xfixes extension.
 wpgtk-git           	A gui wallpaper chooser that changes your Openbox theme, GTK theme and Tint2 theme
 yay                 	Yet another yogurt. Pacman wrapper and AUR helper written in go.
+ytop                	A TUI system monitor written in Rust

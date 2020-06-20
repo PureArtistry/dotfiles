@@ -3,15 +3,19 @@
 # toggle distraction windows on home workspace
 
 dazzle_me(){
+	bspc subscribe node_add -c 1 &
 	art_show
+	wait
 	[ -f /tmp/pretty_colours_id ] && rm -f /tmp/pretty_colours_id
-	launch_kitty --class "pretty colours" --name "pretty colours" --title "pretty colours" ncmpcpp -c $XDG_CONFIG_HOME/ncmpcpp/config.viz
-	sleep 0.2
+	bspc subscribe node_add -c 1 &
+	launch_kitty --class "pretty colours" --name "pretty colours" --title "pretty colours" \
+		ncmpcpp -c $XDG_CONFIG_HOME/ncmpcpp/config.viz
+	wait
 	pretty_colours_id=$(xwininfo -root -children | grep -w "pretty colours" | awk '{print $1}')
-	touch /tmp/pretty_colours_id
-	echo "$pretty_colours_id" > /tmp/pretty_colours_id
+	echo $pretty_colours_id > /tmp/pretty_colours_id
+	bspc subscribe node_add -c 1 &
 	launch_kitty --name "fancy writing" --class "fancy writing" --title "fancy writing" fancy_writing
-	sleep 0.1
+	wait
 	feng_shui
 	exit
 }
@@ -19,11 +23,12 @@ dazzle_me(){
 plz_stop(){
 	STOP_KILLING_RANDOM_SHIT "pretty colours"
 	STOP_KILLING_RANDOM_SHIT "fancy writing"
-	rm -f /tmp/fancy_writing_id
 	kill $(head -n1 /tmp/art_show_id)
+	rm -f /tmp/fancy_writing_id
+	rm -f /tmp/pretty_colours_id
+	rm -f /tmp/art_show_id
 	exit
 }
 
-[ $1 = "off" ] && plz_stop
-check=$(pgrep fancy_writing)
-[ ! $check ] && dazzle_me || plz_stop
+[ "$1" = "off" ] && plz_stop
+[ -f /tmp/fancy_writing_id ] && plz_stop || dazzle_me

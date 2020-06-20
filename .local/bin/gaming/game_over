@@ -1,5 +1,9 @@
 #!/bin/sh
 
 xdotool key "super+shift+F3"
+sleep 0.2
+[ -f /tmp/ace_pause ] && rm -f /tmp/ace_pause
+[ -f /tmp/ace_temp_buffer ] && rm -f /tmp/ace_temp_buffer
+xdotool key "super+shift+y"
 sleep 0.1
-distraction_toggle
+xdotool key "super+shift+v"

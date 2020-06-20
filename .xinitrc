@@ -3,17 +3,7 @@
 
 # prep {{{
 
-[ -f /tmp/albumart.png ] && rm -f /tmp/albumart.png
-[ -f /tmp/my_companion_id ] && rm -f /tmp/my_companion_id
-[ -f /tmp/my_playlist_id ] && rm -f /tmp/my_playlist_id
-[ -f /tmp/big_cat_id ] && rm -f /tmp/big_cat_id
-[ -f /tmp/pretty_colours_id ] && rm -f /tmp/pretty_colours_id
-[ -f /tmp/art_show_id ] && rm -f /tmp/art_show_id
-[ -f /tmp/fancy_writing_id ] && rm -f /tmp/fancy_writing_id
-[ -f /tmp/ace_temp_buffer ] && rm -f /tmp/ace_temp_buffer
-[ -d /tmp/startup.lock ] && rm -rf /tmp/startup.lock
-[ -d /tmp/the.lock ] && rm -rf /tmp/the.lock
-[ -d /tmp/kitty_control ] && rm -rf /tmp/kitty_control/* || mkdir /tmp/kitty_control
+fresh_start
 
 h_name=$(head -n 1 /etc/hostname)
 [ -f $XDG_CACHE_HOME/$h_name.state ] || touch $XDG_CACHE_HOME/$h_name.state
@@ -44,6 +34,7 @@ fi
 
 # display setup & daemon startup {{{
 
+prime-offload
 systemctl --user import-environment DISPLAY
 xrandr --auto
 xrandr --dpi 96

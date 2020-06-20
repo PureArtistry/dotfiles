@@ -10,8 +10,13 @@ you_too(){
 
 killall -q dunst
 dunst -config $XDG_CONFIG_HOME/dunst/dunst.mini &
-up_next=$(mpc queued)
-dunstify -r 202020 -t 600000 "  $up_next"
+now_playing=$(mpc | sed -n 2p | awk '{print $1}')
+case $now_playing in
+	*paused*) paused=$(mpc current)
+		dunstify -r 202020 -t 600000 "  $paused" ;;
+	*) up_next=$(mpc queued)
+		dunstify -r 202020 -t 600000 "  $up_next" ;;
+esac
 song_selection=$(mpc playlist | rofi -dmenu -i -format d)
 [ ! "$song_selection" ]	&& you_too
 mpc -q play $song_selection

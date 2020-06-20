@@ -16,54 +16,53 @@ start_bg_apps(){
 	bspc monitor -d $BSPWM_DESKTOPS_1
 	bspc desktop 10 -f
 
-	# spin up the essentials
+	# kitty scratch-term
+	bspc subscribe node_add -c 1 &
+	launch_kitty --class "companion" --name "companion" --title "companion"
+	wait
+	my_companion_id=$(xwininfo -root -children | grep -w "companion" | awk '{print $1}')
+	echo "$my_companion_id" > /tmp/my_companion_id
+
+	# ncmpcpp background playlist
+	bspc subscribe node_add -c 1 &
+	launch_kitty --class "my playlist" --name "my playlist" --title "my playlist" ncmpcpp
+	wait
+	my_playlist_id=$(xwininfo -root -children | grep -w "my playlist" | awk '{print $1}')
+	echo "$my_playlist_id" > /tmp/my_playlist_id
+
+	# info window
+	bspc subscribe node_add -c 1 &
+	launch_kitty --name "fancy writing" --class "fancy writing" --title "fancy writing" fancy_writing
+	wait
+
+	# albumart display
+	art_show &
+	bspc subscribe node_add -c 1
+
+	# ncmpcpp visualizer
+	bspc subscribe node_add -c 1 &
+	launch_kitty --class "pretty colours" --name "pretty colours" --title "pretty colours" \
+		ncmpcpp -c $XDG_CONFIG_HOME/ncmpcpp/config.viz
+	wait
+	pretty_colours_id=$(xwininfo -root -children | grep -w "pretty colours" | awk '{print $1}')
+	echo "$pretty_colours_id" > /tmp/pretty_colours_id
+
+	# main terminal window (big cat)
+	touch /tmp/flex
+	bspc subscribe node_add -c 1 &
+	launch_kitty --class "big cat" --name "big cat" --title "big cat"
+	wait
+	big_cat_id=$(xwininfo -root -children | grep -w "big cat" | awk '{print $1}')
+	echo "$big_cat_id" > /tmp/big_cat_id
+
+	# the rest
 	bspc rule -a qutebrowser -o desktop=2
 	qutebrowser &
 	ripcord &
 	launch_kitty --class "file manager" --name "file manager" --title "file manager" ranger
-	launch_kitty --name "fancy writing" --class "fancy writing" --title "fancy writing" fancy_writing
 
-	# start ncmpcpp background playlist
-	[ -f /tmp/my_playlist_id ] && rm -f /tmp/my_playlist_id
-	launch_kitty --class "my playlist" --name "my playlist" --title "my playlist" ncmpcpp
-	sleep 0.2
-	my_playlist_id=$(xwininfo -root -children | grep -w "my playlist" | awk '{print $1}')
-	touch /tmp/my_playlist_id
-	echo "$my_playlist_id" > /tmp/my_playlist_id
-
-	# start albumart display
-	art_show &
-
-	# start kitty scratch-term
-	[ -f /tmp/my_companion_id ] && rm -f /tmp/my_companion_id
-	launch_kitty --class "companion" --name "companion" --title "companion"
-	sleep 0.2
-	my_companion_id=$(xwininfo -root -children | grep -w "companion" | awk '{print $1}')
-	touch /tmp/my_companion_id
-	echo "$my_companion_id" > /tmp/my_companion_id
-
-	# start ncmpcpp visualizer
-	[ -f /tmp/pretty_colours_id ] && rm -f /tmp/pretty_colours_id
-	launch_kitty --class "pretty colours" --name "pretty colours" --title "pretty colours" ncmpcpp -c $XDG_CONFIG_HOME/ncmpcpp/config.viz
-	sleep 0.2
-	pretty_colours_id=$(xwininfo -root -children | grep -w "pretty colours" | awk '{print $1}')
-	touch /tmp/pretty_colours_id
-	echo "$pretty_colours_id" > /tmp/pretty_colours_id
-
-	# start main terminal window (big cat)
-	touch /tmp/time_to && echo "flex" > /tmp/time_to
-	[ -f /tmp/big_cat_id ] && rm -f /tmp/big_cat_id
-	launch_kitty --class "big cat" --name "big cat" --title "big cat"
-	sleep 0.2
-	big_cat_id=$(xwininfo -root -children | grep -w "big cat" | awk '{print $1}')
-	touch /tmp/big_cat_id
-	echo "$big_cat_id" > /tmp/big_cat_id
-
-	#start with big cat focused
-	sleep 0.2
+	# start with big cat focused
 	feng_shui
-	sleep 1
-	rm -f /tmp/time_to
 	exit
 }
 

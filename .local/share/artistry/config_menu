@@ -3,6 +3,7 @@ my scripts -->
 alias list	.local/share/artistry/alias_list
 bspwm		.config/bspwm/bspwmrc
 sxhkd		.config/sxhkd/sxhkdrc
+polybar		.config/polybar/config
 neovim		.config/nvim/init.vim
 kitty		.config/kitty/kitty.conf
 xinitrc		.xinitrc

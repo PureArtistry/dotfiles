@@ -1,5 +1,7 @@
 [[ $- != *i* ]] && return
 
+# colours {{{
+
 catch_signal_usr1(){
 	trap catch_signal_usr1 USR1
 	if mkdir /tmp/the.lock 2> /dev/null
@@ -13,6 +15,9 @@ catch_signal_usr1(){
 trap catch_signal_usr1 USR1
 
 ! pgrep -x bspwm >/dev/null && source $XDG_CACHE_HOME/wal/colors-tty.sh || source $XDG_CACHE_HOME/wal/colors.sh
+
+# }}}
+# prompt {{{
 
 autoload -U colors && colors
 autoload -U promptinit; promptinit
@@ -59,6 +64,9 @@ SPACESHIP_TIME_SHOW=true
 SPACESHIP_TIME_FORMAT=%*
 SPACESHIP_DIR_TRUNC_PREFIX=".../"
 
+# }}}
+# main {{{
+
 HISTFILE=$ZDOTDIR/.histfile
 HISTSIZE=10000
 SAVEHIST=10000
@@ -85,9 +93,15 @@ _comp_options+=(globdots)
 #// -----------------------------------------
 
 kitty + complete setup zsh | source /dev/stdin
-. /etc/profile.d/fzf.zsh
+
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
+source /usr/share/doc/pkgfile/command-not-found.zsh
 
 source $ARTISTRY/alias_list
+
+# }}}
+# keybinds {{{
 
 typeset -g -A key
 
@@ -136,5 +150,18 @@ zle -N down-line-or-beginning-search
 [[ -n "${key[Up]}"   ]] && bindkey -- "${key[Up]}"   up-line-or-beginning-search
 [[ -n "${key[Down]}" ]] && bindkey -- "${key[Down]}" down-line-or-beginning-search
 
+exit_zsh() { exit }
+zle -N exit_zsh
+bindkey '^D' exit_zsh
+
+# }}}
+# bloat {{{
+
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-[ -f /tmp/time_to ] && neofetch
+
+[ -f /tmp/flex ] && neofetch && rm -f /tmp/flex
+
+# }}}
+
+# vim:foldmethod=marker

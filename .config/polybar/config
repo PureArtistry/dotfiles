@@ -305,7 +305,8 @@ format-background = ${colors.inactive}
 label = %date%
 
 [module/volume]
-type = internal/alsa
+type = internal/pulseaudio
+use-ui-max = false
 
 format-volume = <ramp-volume> <label-volume>
 format-volume-padding = 1
@@ -326,7 +327,7 @@ format-muted-padding = 1
 type = internal/battery
 battery = BAT1
 adapter = ACAD
-full-at = 96
+full-at = 95
 
 format-charging = <animation-charging> <label-charging>
 format-charging-padding = 1

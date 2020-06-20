@@ -110,7 +110,7 @@ twitch(){
 	processed=$selection
 	new_face_in_town
 	dunstify -r 010101 -t 6000000 "viewing experience?"
-	bar=$(echo "interactive\ndistraction" | rofi -dmenu -i -format d)
+	bar=$(echo "interactive\ndistraction\nfullscreen" | rofi -dmenu -i -format d)
 	[ ! $bar ] && and_the_horse_you_rode_in_on passthrough || and_the_horse_you_rode_in_on
 	case $bar in
 		1) listening
@@ -137,6 +137,14 @@ twitch(){
 			sleep 0.1
 			xdotool mousemove 400 400
 			bspc node pointed -f ;;
+		3) listening
+			dunstify -t 3000 "loading stream" "$selection" \
+				-i $XDG_CONFIG_HOME/dunst/icons/twitch.svg
+			bspc rule -a mpv:\* -o desktop=10 state=fullscreen
+			streamlink -p mpv "$selection" best &
+			bspc subscribe node_add -c 1
+			[ "$need_mute" = "yes" ] && mpc pause
+			bspc desktop 10 -f ;;
 	esac
 	xclip -selection clipboard /dev/null
 	cleanup

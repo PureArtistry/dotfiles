@@ -3,6 +3,7 @@
 # backup current buffer then send trigger to ace, buffer is restored & temp file deleted in ace
 # for safety, if a temp file already exists then the script waits to prevent data loss
 
+[ -f /tmp/ace_pause ] && exit
 [ -f /tmp/ace_temp_buffer ] && exit || touch /tmp/ace_temp_buffer
 xclip -selection clipboard -o > /tmp/ace_temp_buffer
 echo "$1" | xclip -selection clipboard

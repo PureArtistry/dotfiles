@@ -26,5 +26,7 @@ exit_fullscreen(){
 	exit
 }
 
+need_focus=$(bspc query -D --names | grep "fs")
 fullscreen_check=$(bspc query -d focused -T | jq '.name')
-[ $fullscreen_check = '"fs"' ] && exit_fullscreen || enter_fullscreen
+[ ! "$need_focus" ] && enter_fullscreen
+[ "$fullscreen_check" = '"fs"' ] && exit_fullscreen || bspc desktop fs -f

@@ -1,8 +1,8 @@
 #!/bin/sh
 
 bspc desktop 1 -f
-pgrep mpv && xdotool mousemove 400 400 && bspc node pointed -f
-pgrep sxiv || exit
+pgrep mpv > /dev/null && xdotool mousemove 400 400 && bspc node pointed -f
+pgrep sxiv > /dev/null || exit
 visibility=$(xdotool search --all --onlyvisible --class "companion")
 if [ ! $visibility ]; then
 	xdotool mousemove 400 400

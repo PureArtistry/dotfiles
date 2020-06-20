@@ -28,7 +28,8 @@ need_mute=$(mpc current)
 [ -n "$need_mute" ] && paused=$(mpc | sed -n 2p | awk '{print $1}' | grep "paused")
 [ -n "$need_mute" ] && [ ! "$paused" ] && need_mute=yes
 case $experience in
-	1) mpv "$file" --fs &
+	1) bspc rule -a mpv:\* -o desktop=10
+		mpv "$file" --fs &
 		bspc subscribe node_add -c 1
 		bspc desktop 10 -f
 		[ "$need_mute" = "yes" ] && mpc pause ;;
