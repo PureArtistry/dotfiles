@@ -200,7 +200,7 @@ current_item_inactive_column_prefix = $b
 #
 current_item_inactive_column_suffix = $/b$(end)
 #
-now_playing_prefix = "$2$9$(white_red) --> $(end)$2$9 "
+now_playing_prefix = "$9$(white_red) --> $(end)$9 "
 #
 now_playing_suffix =
 #

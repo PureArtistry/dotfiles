@@ -4,7 +4,7 @@
 include "/home/dave/.gtkrc-2.0.mine"
 gtk-theme-name="FlatColor"
 gtk-icon-theme-name="flattrcolor"
-gtk-font-name="Iosevka 12"
+gtk-font-name="VictorMono Nerd Font Medium 11"
 gtk-cursor-theme-name="ComixCursors-Blue"
 gtk-cursor-theme-size=0
 gtk-toolbar-style=GTK_TOOLBAR_BOTH

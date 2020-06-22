@@ -16,12 +16,25 @@ sed -i "1s/.*/*background: $global_bg/g" $HOME/.Xresources
 sed -i "2s/.*/*foreground: $sxiv_foreground/g" $HOME/.Xresources
 xrdb -merge $HOME/.Xresources
 
+ripcord_check=$(pidof ripcord)
+[ ! $ripcord_check ] && sed -i '/preset_name=custom/d' $XDG_DATA_HOME/Ripcord/settings.ini
+
 # force apps to use new theme, except on startup to prevent doubling up
 
 h_name=$(head -n 1 /etc/hostname)
 state_check=$(head -n 1 $XDG_CACHE_HOME/$h_name.state)
 [ $state_check = "startup" ] && exit
-pgrep ripcord > /dev/null && pkill -HUP ripcord && restart_ripcord=yes
+
+if [ -n "$ripcord_check" ]; then
+	kill $ripcord_check
+	while kill -0 $ripcord_check 2> /dev/null
+	do
+		sleep 0.1
+	done
+	sed -i '/preset_name=custom/d' $XDG_DATA_HOME/Ripcord/settings.ini
+	restart_ripcord=yes
+fi
+
 pgrep fancy_writing > /dev/null && pkill fancy_writing --signal=USR1
 pgrep qutebrowser > /dev/null && qutebrowser :config-source :reload > /dev/null 2>&1
 reinit_desktop

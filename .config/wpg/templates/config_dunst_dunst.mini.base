@@ -90,7 +90,7 @@
 
     ### Text ###
 
-    font = Iosevka 12
+    font = VictorMono Nerd Font 11
 
     # The spacing between lines.  If the height is smaller than the
     # font height, it will get raised to the font height.
@@ -130,7 +130,7 @@
     #   %n  progress value if set without any extra characters
     #   %%  Literal %
     # Markup is allowed
-    format = "%s\n%b"
+    format = "<i>%s</i>"
 
     # Alignment of message text.
     # Possible values are "left", "center" and "right".
@@ -184,7 +184,7 @@
     ### Misc/Advanced ###
 
     # dmenu path.
-    dmenu = my_dmenu -p dunst:
+    dmenu = /usr/bin/rofi -dmenu -p dunst:
 
     # Browser for opening urls in context menu.
     browser = /usr/bin/qutebrowser

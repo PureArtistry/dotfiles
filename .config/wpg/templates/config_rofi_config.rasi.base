@@ -7,7 +7,7 @@
     location: south west;
 }}
 #window {{
-    font: "Iosevka Nerd Font 12";
+    font: "VictorMono Nerd Font 11";
     width: 346px;
     transparency: "real";
     background-color: {color0}00;
@@ -113,7 +113,7 @@
 }}
 #textbox-prompt-colon {{
     expand:     false;
-    str:        "";
+    str:        " ";
     margin:     0px 0.3em 0em 0em ;
     text-color: {color15};
 }}

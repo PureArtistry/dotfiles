@@ -12,8 +12,8 @@ nsong=$(mpc queued -f "%title%")
 nartist=$(mpc queued -f "%artist%")
 nalbum=$(mpc queued -f "%album%")
 
-dunstify -r 2001 "" "\n$song \n$artist ‎ﴁ‎\n$album ‎‎" -i "/tmp/dartc.png"
+dunstify -r 2001 -a mpdunst "now playing " "\n$song \n$artist ‎ﴁ‎\n$album ‎‎" -i "/tmp/dartc.png"
 sleep 3
-dunstify -r 2001 "" "\n$nsong \n$nartist ‎ﴁ‎\n$nalbum ‎‎" -i "/tmp/dartn.png"
+dunstify -r 2001 -a mpdunst "up next " "\n$nsong \n$nartist ‎ﴁ‎\n$nalbum ‎‎" -i "/tmp/dartn.png"
 sleep 3
 dunstify -C 2001

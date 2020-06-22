@@ -5,11 +5,11 @@
   --clockcolor: {color7};
 
   /* fonts */
-  --font-family: Iosevka;
+  --font-family: "VictorMono Nerd Font";
   --base-font-size: 18px;
   --font-weight-normal: 400;
   --font-weight-bold: 700;
-  --font-weight-date: 450;
+  --font-weight-date: 550;
 }}
 
 * {{

@@ -417,7 +417,7 @@ c.colors.tabs.selected.odd.fg = '{color7}'
 ## Background color for webpages if unset (or empty to use the theme's
 ## color).
 ## Type: QtColor
-c.colors.webpage.bg = '{color8}'
+# c.colors.webpage.bg = '{color8}'
 
 ## Number of commands to save in the command history. 0: no history / -1:
 ## unlimited
@@ -870,79 +870,79 @@ c.editor.command = ['kitty', '-e', 'vim', '-f', '{{file}}', '-c', 'normal {{line
 
 ## Font used in the completion categories.
 ## Type: Font
-c.fonts.completion.category = 'bold 11pt Iosevka'
+c.fonts.completion.category = 'bold italic 11pt VictorMono Nerd Font'
 
 ## Font used in the completion widget.
 ## Type: Font
-c.fonts.completion.entry = '10pt Iosevka'
+c.fonts.completion.entry = '10pt VictorMono Nerd Font'
 
 ## Font used for the debugging console.
 ## Type: QtFont
-c.fonts.debug_console = '10pt Iosevka'
+c.fonts.debug_console = '10pt VictorMono Nerd Font'
 
 ## Font used for the downloadbar.
 ## Type: Font
-c.fonts.downloads = '10pt Iosevka'
+c.fonts.downloads = '10pt VictorMono Nerd Font'
 
 ## Font used for the hints.
 ## Type: Font
-c.fonts.hints = 'bold 11pt Iosevka'
+c.fonts.hints = 'bold 11pt VictorMono Nerd Font'
 
 ## Font used in the keyhint widget.
 ## Type: Font
-c.fonts.keyhint = '10pt Iosevka'
+c.fonts.keyhint = '10pt VictorMono Nerd Font'
 
 ## Font used for error messages.
 ## Type: Font
-c.fonts.messages.error = '10pt Iosevka'
+c.fonts.messages.error = '10pt VictorMono Nerd Font'
 
 ## Font used for info messages.
 ## Type: Font
-c.fonts.messages.info = '10pt Iosevka'
+c.fonts.messages.info = '10pt VictorMono Nerd Font'
 
 ## Font used for warning messages.
 ## Type: Font
-c.fonts.messages.warning = '10pt Iosevka'
+c.fonts.messages.warning = '10pt VictorMono Nerd Font'
 
 ## New default font family setting.
 ## Type: Font
-c.fonts.default_family = 'Iosevka'
+c.fonts.default_family = 'VictorMono Nerd Font'
 
 ## Font used for prompts.
 ## Type: Font
-c.fonts.prompts = '10pt Iosevka'
+c.fonts.prompts = '10pt VictorMono Nerd Font'
 
 ## Font used in the statusbar.
 ## Type: Font
-c.fonts.statusbar = '10pt Iosevka'
+c.fonts.statusbar = '10pt VictorMono Nerd Font'
 
 ## Font used in the tab bar.
 ## Type: QtFont
-c.fonts.tabs = '10pt Iosevka'
+c.fonts.tabs = 'italic 10pt VictorMono Nerd Font'
 
 ## Font family for cursive fonts.
 ## Type: FontFamily
-c.fonts.web.family.cursive = 'Iosevka'
+c.fonts.web.family.cursive = 'VictorMono Nerd Font'
 
 ## Font family for fantasy fonts.
 ## Type: FontFamily
-c.fonts.web.family.fantasy = 'Iosevka'
+c.fonts.web.family.fantasy = 'VictorMono Nerd Font'
 
 ## Font family for fixed fonts.
 ## Type: FontFamily
-c.fonts.web.family.fixed = 'Iosevka'
+c.fonts.web.family.fixed = 'VictorMono Nerd Font'
 
 ## Font family for sans-serif fonts.
 ## Type: FontFamily
-c.fonts.web.family.sans_serif = 'Iosevka'
+c.fonts.web.family.sans_serif = 'VictorMono Nerd Font'
 
 ## Font family for serif fonts.
 ## Type: FontFamily
-c.fonts.web.family.serif = 'Iosevka'
+c.fonts.web.family.serif = 'VictorMono Nerd Font'
 
 ## Font family for standard fonts.
 ## Type: FontFamily
-c.fonts.web.family.standard = 'Iosevka'
+c.fonts.web.family.standard = 'VictorMono Nerd Font'
 
 ## Default font size (in pixels) for regular text.
 ## Type: Int
@@ -981,7 +981,7 @@ c.hints.border = '1px solid {color0}'
 
 ## Characters used for hint strings.
 ## Type: UniqueCharString
-# c.hints.chars = 'asdfghjkl'
+c.hints.chars = 'asdfgqwer'
 
 ## Dictionary file to be used by the word hints.
 ## Type: File

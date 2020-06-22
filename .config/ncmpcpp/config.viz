@@ -82,7 +82,8 @@ visualizer_sync_interval = 60
 ##
 visualizer_type = wave_filled
 #
-#visualizer_look = ●▮
+visualizer_look = ●⌧
+# visualizer_look = ●▮
 #
 #visualizer_color = blue, cyan, green, yellow, magenta, red
 #
@@ -317,7 +318,7 @@ visualizer_type = wave_filled
 ## Note: You can specify third character which will be used to build 'empty'
 ## part of progressbar.
 ##
-progressbar_look = "ﮋﮋﮋ"
+progressbar_look = "▃▃▃"
 #
 ## Available values: database, playlist.
 ##
@@ -526,9 +527,9 @@ mouse_support = yes
 #
 #color2 = green
 #
-progressbar_color = black:b
+progressbar_color = black
 #
-progressbar_elapsed_color = green:b
+progressbar_elapsed_color = green
 #
 #statusbar_color = default
 #

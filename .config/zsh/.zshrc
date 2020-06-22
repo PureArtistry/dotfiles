@@ -24,6 +24,7 @@ autoload -U promptinit; promptinit
 prompt spaceship
 SPACESHIP_PROMPT_ORDER=(
   time          # Time stamps section
+  exec_time     # Execution time
   user          # Username section
   dir           # Current directory section
   host          # Hostname section
@@ -56,9 +57,7 @@ SPACESHIP_PROMPT_ORDER=(
   exit_code     # Exit code section
   char          # Prompt character
 )
-SPACESHIP_RPROMPT_ORDER=(
-  exec_time     # Execution time
-)
+SPACESHIP_RPROMPT_ORDER=()
 SPACESHIP_CHAR_SYMBOL=" "
 SPACESHIP_TIME_SHOW=true
 SPACESHIP_TIME_FORMAT=%*

@@ -2,7 +2,7 @@
     background-color: {inactive};
     text-color: {color15};
     border-color: {color0};
-    font: "Iosevka Nerd Font 14";
+    font: "VictorMono Nerd Font 14";
 }}
 
 #window {{

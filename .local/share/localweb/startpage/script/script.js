@@ -186,7 +186,7 @@ const CONFIGObj = {{
    * The delimiter between a command key and your search query. For example,
    * to search GitHub for potatoes, you'd type "g:potatoes".
    */
-  searchDelimiter: ':',
+  searchDelimiter: ';',
 
   /**
    * The delimiter between a command key and a path. For example, you'd type
@@ -303,7 +303,7 @@ class Clock {{
 //    }}
 
 //    const minutes = $.pad(date.getMinutes());
-    this._el.innerHTML = `${{utime}}<span class="am-pm"><p>{loldate}</p></span>`;
+    this._el.innerHTML = `${{utime}}<span class="am-pm"><p><i>{loldate}</i></p></span>`;
 //    this._el.innerHTML = `${{hours}}${{this._delimiter}}${{minutes}}${{amPm}}`;
 //    this._el.setAttribute('datetime', date.toTimeString());
   }}

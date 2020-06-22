@@ -6,7 +6,7 @@ enter_fullscreen(){
 	[ -f /tmp/breadcrumbs ] || touch /tmp/breadcrumbs
 	echo $(bspc query -d focused -T | jq '.name') | sed 's/\"//g' > /tmp/breadcrumbs
 	state=$(bspc query -N -n any.\!floating.focused)
-	pgrep polybar > /dev/null 2>&1 && killall -q polybar
+	polybar-msg cmd hide
 	bspc config ignore_ewmh_struts true
 	bspc config top_padding 0
 	bspc monitor -a fs

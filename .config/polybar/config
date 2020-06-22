@@ -28,7 +28,9 @@ padding-right = 0
 module-margin-left = 0
 module-margin-right = 0
 
-font-0 = Iosevka Nerd Font:size=10
+font-0 = Iosevka Nerd Font:size=10;1
+font-1 = Victor Mono Nerd Font:size=10:weight=Medium;1
+font-2 = Victor Mono Nerd Font:size=10:style=Italic:weight=Medium;1
 
 locale = en_GB.UTF-8
 enable-ipc = true
@@ -46,8 +48,9 @@ type = internal/memory
 interval = 1
 
 format = <label>
-label =  %percentage_used%%
+label =   %percentage_used%%
 label-padding = 1
+label-font = 2
 label-foreground = ${colors.foreground}
 label-background = ${colors.color1}
 
@@ -56,8 +59,9 @@ type = internal/cpu
 interval = 1
 
 format = <label>
-label =  %percentage%%
+label =   %percentage%%
 label-padding = 1
+label-font = 2
 label-foreground = ${colors.foreground}
 label-background = ${colors.color5}
 
@@ -75,6 +79,7 @@ format-warn = <label-warn>
 
 label =  %temperature-c%
 label-padding = 1
+label-font = 2
 label-foreground = ${colors.foreground}
 label-background = ${colors.color2}
 label-warn =  %temperature-c%
@@ -87,46 +92,20 @@ type = internal/backlight
 card = intel_backlight
 
 format = <label>
-label = 嗀 %percentage%%
+label =   %percentage%%
 label-padding = 1
+label-font = 2
 label-background = ${colors.inactive}
 label-foreground = ${colors.foreground}
 
 [module/bspwm]
 type = internal/bspwm
-
-; Only show workspaces defined on the same output as the bar
-; NOTE: The bspwm and XRandR monitor names must match, which they do by default.
-; But if you rename your bspwm monitors with bspc -n this option will no longer
-; behave correctly.
-; Default: true
 pin-workspaces = true
-
-; Output mode flags after focused state label
-; Default: false
 inline-mode = false
-
-; Create click handler used to focus workspace
-; Default: true
 enable-click = true
-
-; Create scroll handlers used to cycle workspaces
-; Default: true
 enable-scroll = true
-
-; Set the scroll cycle direction
-; Default: true
 reverse-scroll = true
-
-; Use fuzzy (partial) matching on labels when assigning
-; icons to workspaces
-; Example: code;♚ will apply the icon to all workspaces
-; containing 'code' in the label
-; Default: false
 fuzzy-match = false
-
-; ws-icon-[0-9]+ = label;icon
-; Note that the label needs to correspond with the bspwm workspace name
 
 ws-icon-0 = 1;    
 ws-icon-1 = 2;    
@@ -139,83 +118,28 @@ ws-icon-6 = 9;    
 ws-icon-8 = 10;    
 ws-icon-default =     
 
-; Available tags:
-;   <label-monitor>
-;   <label-state> - gets replaced with <label-(focused|urgent|occupied|empty)>
-;   <label-mode> - gets replaced with <label-(monocle|tiled|fullscreen|floating|locked|sticky|private)>
-; Default: <label-state>
 format = <label-state>
-
-; Available tokens:
-;   %name%
-; Default: %name%
 label-monitor = %name%
 
-; If any values for label-dimmed-N are defined, the workspace/mode
-; colors will get overridden with those values if the monitor is out of focus
-; To only override workspaces in a specific state, use:
-;   label-dimmed-focused
-;   label-dimmed-occupied
-;   label-dimmed-urgent
-;   label-dimmed-empty
 label-dimmed-foreground = ${colors.inactive}
 label-dimmed-background = ${colors.transparent}
 
-; Available tokens:
-;   %name%
-;   %icon%
-;   %index%
-; Default: %icon%  %name%
 label-focused = %icon%
 label-focused-foreground = ${colors.color15}
 label-focused-background = ${colors.color2}
 
-; Available tokens:
-;   %name%
-;   %icon%
-;   %index%
-; Default: %icon%  %name%
 label-occupied = %icon%
 label-occupied-foreground = ${colors.color15}
 label-occupied-background= ${colors.active}
 
-; Available tokens:
-;   %name%
-;   %icon%
-;   %index%
-; Default: %icon%  %name%
 label-urgent = %icon%
 label-urgent-foreground = ${colors.color15}
 label-urgent-background = ${colors.color4}
 
-; Available tokens:
-;   %name%
-;   %icon%
-;   %index%
-; Default: %icon%  %name%
 label-empty = %icon%
 label-empty-foreground = ${colors.color15}
 label-empty-background = ${colors.inactive}
 
-; The following labels will be used to indicate the layout/mode
-; for the focused workspace. Requires <label-mode>
-;
-; Available tokens:
-;   None
-;label-monocle = 
-;label-tiled = 
-;label-fullscreen = 
-;label-floating = 
-;label-pseudotiled = P
-;label-locked = 
-;label-locked-foreground = #bd2c40
-;label-sticky = 
-;label-sticky-foreground = #fba922
-;label-private = 
-;label-private-foreground = #bd2c40
-;label-marked = M
-
-; Separator in between workspaces
 label-separator-padding = 0
 label-separator-foreground = ${colors.transparent}
 
@@ -234,14 +158,16 @@ format = <label>
 format-background = ${colors.color2}
 format-foreground = ${colors.color15}
 format-padding = 1
-label =  %output:0:25:...%
+label =   %output:0:30:...%
+label-font = 3
 click-left = theme_selector
 
 [module/xwindow]
 type = internal/xwindow
 format-background = ${colors.highlight}
 format-padding = 1
-label = %title:0:20: ...%
+label = %title:0:30: ...%
+label-font = 3
 
 [module/netact]
 type = internal/network
@@ -255,17 +181,19 @@ format-connected-foreground = ${colors.foreground}
 
 format-disconnected =
 
-label-connected = " %downspeed%  %upspeed%"
+label-connected = "  %downspeed%    %upspeed%"
+label-connected-font = 2
 
 [module/wlan]
 type = internal/network
 interface = wlp4s0
-interval = 3.0
+interval = 1
 
 format-connected-padding = 1
 format-connected = <ramp-signal> <label-connected>
 label-connected = %essid%
-format-connected-background = ${colors.color4}
+label-connected-font = 2
+format-connected-background = ${colors.color5}
 
 format-disconnected =
 
@@ -280,34 +208,38 @@ interval = 3.0
 format-connected = <label-connected>
 format-connected-padding = 1
 format-connected-background = ${colors.inactive}
-label-connected = ""
+label-connected = " "
+label-connected-font = 2
 
 [module/time]
 type = internal/date
-interval = 5
+interval = 1
 
-time = " %I:%M %p"
+time = "  %I:%M %p"
 
 format-padding = 1
 format-background = ${colors.active}
 
 label = %time%
+label-font = 2
 
 [module/date]
 type = internal/date
-interval = 5
+interval = 1
 
-date = " %A, %d %B"
+date = "  %A, %d %B"
 
 format-padding = 1
 format-background = ${colors.inactive}
 
 label = %date%
+label-font = 2
 
 [module/volume]
 type = internal/pulseaudio
 use-ui-max = false
 
+label-volume-font = 2
 format-volume = <ramp-volume> <label-volume>
 format-volume-padding = 1
 format-volume-background = ${colors.active}
@@ -321,6 +253,7 @@ format-muted-prefix = " "
 format-muted-foreground = ${colors.color15}
 format-muted-background = ${colors.error}
 label-muted = MUTE
+label-muted-font = 2
 format-muted-padding = 1
 
 [module/battery]
@@ -334,6 +267,8 @@ format-charging-padding = 1
 format-discharging-padding = 1
 format-discharging = <ramp-capacity> <label-discharging>
 format-full =
+label-charging-font = 2
+label-discharging-font = 2
 
 ramp-capacity-0 = 
 ramp-capacity-1 = 

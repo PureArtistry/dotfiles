@@ -8,7 +8,7 @@ this_is_getting_silly(){
 	[ $1 = "bleh" ] && exit || return
 }
 
-search=$(rofi -dmenu -i -p "‎‎ youtube: " -no-fixed-num-lines -format s \
+search=$(rofi -dmenu -i -p "‎‎  youtube: " -no-fixed-num-lines -format s \
 	-config $XDG_CONFIG_HOME/rofi/config-mini.rasi | sed  s'/ /+/g')
 [ ! $search ] && exit
 list=$(curl https://www.youtube.com/results?search_query="${search}")

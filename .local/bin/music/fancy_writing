@@ -37,16 +37,21 @@ other_info(){
                         fi
                         if [ $mcycle = 0 ]; then
                                 message="  $song"
+                                fancy_font="Victor-Mono-Medium-Nerd-Font-Complete"
                                 display_text
                                 loop
                         elif [ $mcycle = 1 ]; then
                                 message="$general"
+                                fancy_font="Victor-Mono-Medium-Nerd-Font-Complete"
+                                # fancy_font="Victor-Mono-Medium-Italic-Nerd-Font-Complete"
                                 display_text
                                 loop
                         fi
                 else
                         [ $count = 100 ] && count=0
                         message="$general"
+                        fancy_font="Victor-Mono-Medium-Nerd-Font-Complete"
+                        # fancy_font="Victor-Mono-Medium-Italic-Nerd-Font-Complete"
                         display_text
                         loop
                 fi
@@ -66,18 +71,22 @@ song_info(){
                 fi
                 if [ $mcycle = 0 ]; then
                         message="  $song"
+                        fancy_font="Victor-Mono-Medium-Nerd-Font-Complete"
                         display_text
                         loop
                 elif [ $mcycle = 1 ]; then
                         message="‎ﴁ‎  $artist"
+                        fancy_font="Victor-Mono-Medium-Nerd-Font-Complete"
                         display_text
                         loop
                 elif [ $mcycle = 2 ]; then
                         message="  $album"
+                        fancy_font="Victor-Mono-Medium-Nerd-Font-Complete"
                         display_text
                         loop
                  elif [ $mcycle = 3 ]; then
                         message="‎ﮮ‎  $date"
+                        fancy_font="Victor-Mono-Medium-Nerd-Font-Complete"
                         display_text
                         loop
              fi
@@ -102,8 +111,8 @@ display_text(){
                 sed 's/$/.../g') || final_message="$message"
 	convert -size 650x200 xc:"transparent" \
                 -gravity center \
-                -pointsize 32 \
-                -font "Iosevka-Light-Italic-Nerd-Font-Complete" \
+                -pointsize 31 \
+                -font "$fancy_font" \
                 -fill "$fg_color" \
                 -annotate +0+65 "$final_message" \
                 /tmp/fancy_writing.png > /dev/null 2>&1

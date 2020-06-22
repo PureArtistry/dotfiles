@@ -171,9 +171,9 @@ fun! CleanExtraSpaces()
     call setreg('/', old_query)
 endfun
 
-if has("autocmd")
-    autocmd BufWritePre * :call CleanExtraSpaces()
-endif
+" if has("autocmd")
+"     autocmd BufWritePre * :call CleanExtraSpaces()
+" endif
 
 set complete-=i
 

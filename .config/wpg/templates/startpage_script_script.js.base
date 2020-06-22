@@ -303,7 +303,7 @@ class Clock {{
 //    }}
 
 //    const minutes = $.pad(date.getMinutes());
-    this._el.innerHTML = `${{utime}}<span class="am-pm"><p>{loldate}</p></span>`;
+    this._el.innerHTML = `${{utime}}<span class="am-pm"><p><i>{loldate}</i></p></span>`;
 //    this._el.innerHTML = `${{hours}}${{this._delimiter}}${{minutes}}${{amPm}}`;
 //    this._el.setAttribute('datetime', date.toTimeString());
   }}

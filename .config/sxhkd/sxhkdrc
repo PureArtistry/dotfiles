@@ -10,7 +10,7 @@ super + Return
 
 # ranger
 super + shift + Return
-    launch_kitty ranger
+    goyo_launch ranger
 
 # ytop
 super + shift + BackSpace
