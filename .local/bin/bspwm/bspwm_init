@@ -32,7 +32,8 @@ start_bg_apps(){
 
 	# info window
 	bspc subscribe node_add -c 1 &
-	launch_kitty --name "fancy writing" --class "fancy writing" --title "fancy writing" fancy_writing
+	launch_kitty --name "fancy writing" --class "fancy writing" \
+		--title "fancy writing" fancy_writing
 	wait
 
 	# albumart display
@@ -41,10 +42,11 @@ start_bg_apps(){
 
 	# ncmpcpp visualizer
 	bspc subscribe node_add -c 1 &
-	launch_kitty --class "pretty colours" --name "pretty colours" --title "pretty colours" \
-		ncmpcpp -c $XDG_CONFIG_HOME/ncmpcpp/config.viz
+	launch_kitty --class "pretty colours" --name "pretty colours" \
+		--title "pretty colours" ncmpcpp -c $XDG_CONFIG_HOME/ncmpcpp/config.viz
 	wait
-	pretty_colours_id=$(xwininfo -root -children | grep -w "pretty colours" | awk '{print $1}')
+	pretty_colours_id=$(xwininfo -root -children | \
+		grep -w "pretty colours" | awk '{print $1}')
 	echo "$pretty_colours_id" > /tmp/pretty_colours_id
 
 	# main terminal window (big cat)

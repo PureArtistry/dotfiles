@@ -54,7 +54,8 @@ youtube(){
 	processed="$selection"
 	new_face_in_town
 	dunstify -r 010101 -t 6000000 "viewing experience?"
-	foo=$(echo "download\nfullscreen\nmusic video\nstandard" | rofi -dmenu -i -format d)
+	foo=$(echo "download\nfullscreen\nmusic video\nstandard" \
+		| rofi -dmenu -i -format d)
 	[ ! $foo ] && and_the_horse_you_rode_in_on passthrough || and_the_horse_you_rode_in_on
 	case $foo in
 		1) youtube-dl "$selection" &
@@ -72,7 +73,8 @@ youtube(){
 			dunstify -r 3001 -t 3000 "loading video" "$selection" \
 				-i $XDG_CONFIG_HOME/dunst/icons/ytdl_sml.png
 			distraction_toggle off
-			bspc rule -a mpv:\* -o desktop=1 state=floating rectangle=897x505+1005+287 center=false
+			bspc rule -a mpv:\* -o desktop=1 state=floating \
+				rectangle=897x505+1005+287 center=false
 			mpv "$selection" &
 			bspc subscribe node_add -c 1
 			[ "$need_mute" = "yes" ] && mpc pause
@@ -93,7 +95,8 @@ youtube(){
 
 listening(){
 	need_mute=$(mpc current)
-	[ -n "$need_mute" ] && paused=$(mpc | sed -n 2p | awk '{print $1}' | grep "paused")
+	[ -n "$need_mute" ] && paused=$(mpc | sed -n 2p \
+		| awk '{print $1}' | grep "paused")
 	[ -n "$need_mute" ] && [ ! "$paused" ] && need_mute=yes
 	return
 }
@@ -101,7 +104,8 @@ listening(){
 torrent(){
 	processed=$selection
 	transmission-remote -a "$selection"
-	dunstify -t 3000 "torrent added" -i $XDG_CONFIG_HOME/dunst/icons/transmission.svg
+	dunstify -t 3000 "torrent added" \
+		-i $XDG_CONFIG_HOME/dunst/icons/transmission.svg
 	xclip -selection clipboard /dev/null
 	cleanup
 }
@@ -124,12 +128,14 @@ twitch(){
 			bspc node -p east
 			bspc node -o 0.74
 			chat=$(echo "$selection" | awk -F "/" '{print $4}')
-			qutebrowser --target window https://www.twitch.tv/popout/"$chat"/chat?popout= & ;;
+			qutebrowser --target window \
+				https://www.twitch.tv/popout/"$chat"/chat?popout= & ;;
 		2) listening
 			dunstify -t 3000 "loading stream" "$selection" \
 				-i $XDG_CONFIG_HOME/dunst/icons/twitch.svg
 			distraction_toggle off
-			bspc rule -a mpv:\* -o desktop=1 state=floating rectangle=897x505+1005+287 center=false
+			bspc rule -a mpv:\* -o desktop=1 state=floating \
+				rectangle=897x505+1005+287 center=false
 			streamlink -p mpv "$selection" best &
 			bspc subscribe node_add -c 1
 			[ "$need_mute" = "yes" ] && mpc pause
