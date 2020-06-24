@@ -1,5 +1,5 @@
 my scripts -->
-▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰	do not edit this line or above!
+▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰	do not edit this line or above!
 alias list	.local/share/artistry/alias_list
 bspwm		.config/bspwm/bspwmrc
 sxhkd		.config/sxhkd/sxhkdrc
@@ -9,5 +9,5 @@ kitty		.config/kitty/kitty.conf
 xinitrc		.xinitrc
 zshenv		.config/zsh/.zshenv
 zshrc		.config/zsh/.zshrc
-▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰	do not edit this line or below!
+▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰	do not edit this line or below!
 <-- this menu	.local/share/artistry/config_menu
