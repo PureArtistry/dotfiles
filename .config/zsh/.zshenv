@@ -6,8 +6,8 @@ export VIDEO=$HOME/video
 export GAMES=$XDG_DATA_HOME/games
 export WPG_TEMPLATES=$XDG_CONFIG_HOME/wpg/templates
 export DOTFILES=$HOME/working/git/dotfiles
-export BSPWM_DESKTOPS_1="1 2 3 4 8 9 10"
-export BSPWM_DESKTOPS_2="6"
+export BSPWM_DESKTOPS_1="1 2 3 4 5 6 7 8 9 10"
+export BSPWM_DESKTOPS_2="ext"
 
 # home folder cleanup
 export XAUTHORITY=$XDG_RUNTIME_DIR/Xauthority
@@ -23,6 +23,7 @@ export ASPELL_CONF="per-conf $XDG_CONFIG_HOME/aspell/aspell.conf; personal $XDG_
 export CARGO_HOME=$XDG_DATA_HOME/cargo
 
 # brighten up commands
+export BAT_THEME="base16"
 export GREP_COLOR="4;36"
 export LESSHISTFILE=$XDG_DATA_HOME/less.hist
 export LESSHISTSIZE=1000

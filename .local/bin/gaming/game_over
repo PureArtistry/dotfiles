@@ -1,7 +1,9 @@
 #!/bin/sh
 
+neocover &
 xdotool key "super+shift+F3"
 sleep 0.2
+wait
 [ -f /tmp/ace_pause ] && rm -f /tmp/ace_pause
 [ -f /tmp/ace_temp_buffer ] && rm -f /tmp/ace_temp_buffer
 xdotool key "super+shift+y"

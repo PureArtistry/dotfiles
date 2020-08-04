@@ -167,7 +167,7 @@ type = internal/xwindow
 format-background = ${colors.highlight}
 format-padding = 1
 label = %title:0:30: ...%
-label-font = 3
+label-font = 2
 
 [module/netact]
 type = internal/network

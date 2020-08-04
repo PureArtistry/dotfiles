@@ -9,9 +9,8 @@ bye_d(){
 }
 
 close_stuff(){
-	# pgrep qutebrowser > /dev/null 2>&1 && qutebrowser :quit > /dev/null 2>&1 &
-	# killall qutebrowser
-	dunstify -C 449944
+	pgrep qutebrowser > /dev/null 2>&1 && qutebrowser :quit > /dev/null 2>&1
+	killall -q dunst
 	sleep 0.1
 	case "$1" in
 		quit) bspc quit ;;

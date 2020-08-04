@@ -9,8 +9,7 @@ sed -i "16s/.*/loldate = $tddate/g" ~/.config/wpg/wpg.conf
 
 # change to selected/random theme
 
-[ -f /tmp/breadcrumbs ] || touch /tmp/breadcrumbs
 echo $(bspc query -d focused -T | jq '.name') | sed 's/\"//g' > /tmp/breadcrumbs
-bspc desktop 10 -f -a
+bspc desktop 7 -f
 sleep 0.1
 [ ! "$1" ] && wpg -m || wpg -s "$1"

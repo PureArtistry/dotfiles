@@ -12,16 +12,16 @@ take_dunst_with_you(){
 
 goyo(){
 	bspc node $big_cat_id -g hidden=on
-	bspc rule -a vim -o desktop=1 state=floating rectangle=975x1026+12+36
+	bspc rule -a vim -o desktop=1 state=floating rectangle=975x1050+12+12
 	if [ $1 = "main" ]; then
 		kitty --listen-on unix:/tmp/kitty_control/$(gen_kitty_id) \
 			--class "vim" --name "vim" --title "vim" vim $HOME/$bar &
 		bspc subscribe node_add -c 1
 		wait
-	fi
-	if [ $1 = "other" ]; then
+	elif [ $1 = "other" ]; then
 		kitty --listen-on unix:/tmp/kitty_control/$(gen_kitty_id) \
-			--class "vim" --name "vim" --title "vim" vim $(whereis $choice | awk {'print $2'}) &
+			--class "vim" --name "vim" --title "vim" \
+			vim $(whereis $choice | awk {'print $2'}) &
 		bspc subscribe node_add -c 1
 		wait
 	fi
@@ -55,4 +55,5 @@ foo=$(awk {'print $1'} $ARTISTRY/config_menu | rofi -dmenu -i -format d)
 [ $foo = 1 ] && scripts
 bar=$(sed -n "$foo"p $ARTISTRY/config_menu | awk {'print $2'})
 take_dunst_with_you
-[ $home_desktop = '"1"' ] && [ $big_cat_state = '"floating"' ] && goyo main || launch_kitty vim $HOME/$bar &
+[ $home_desktop = '"1"' ] && [ $big_cat_state = '"floating"' ] && \
+	goyo main || launch_kitty vim $HOME/$bar &

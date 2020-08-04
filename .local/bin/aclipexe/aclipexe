@@ -3,17 +3,16 @@
 # (a)utomatic (clip)board (exe)cution
 
 processed=""
-[ "$1" = "restart" ] && first_run=0 || first_run=1
 
 main(){
 	while clipnotify; do
 		selection=$(xclip -selection clipboard -o)
 		[ ! "$selection" ] || [ "$selection" = "$processed" ] && main
 		case "$selection" in
-			UniqueString4ncmpcpp2TriggerUpdate) mpd_trigger ;;
 			https://*.youtube.com/watch*) youtube ;;
 			https://*.youtu.be/watch*) youtube ;;
 			*magnet*tracker*) torrent ;;
+			magnet:?*) torrent ;;
 			https://*twitch.tv/*) twitch ;;
 			https://*.redd*/*) reddit ;;
 			*) ignore ;;
@@ -33,19 +32,9 @@ and_the_horse_you_rode_in_on(){
 	[ $1 = passthrough ] && cleanup || return
 }
 
-mpd_trigger(){
-	processed=$(cat /tmp/ace_temp_buffer)
-	xclip -selection clipboard /tmp/ace_temp_buffer
-	rm -f /tmp/ace_temp_buffer
-	neocover
-	[ $first_run = 0 ] && pgrep fancy_writing > /dev/null && pkill fancy_writing --signal=USR1
-	first_run=0
-	cleanup
-}
-
 cleanup(){
 	[ -d $HOME/.w3m ] && rm -rf $HOME/.w3m
-        [ -d $HOME/.nv ] && rm -rf $HOME/.nv
+	[ -d $HOME/.nv ] && rm -rf $HOME/.nv
 	[ -f $HOME/.fehbg ] && rm -f $HOME/.fehbg
 	main
 }

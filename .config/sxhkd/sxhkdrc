@@ -24,10 +24,6 @@ super + ctrl + m
 super + k
     goyo_launch vim
 
-# vit (taskwarrior)
-super + u
-    goyo_launch vit
-
 # newsboat
 super + i
     goyo_launch newsboat
@@ -85,7 +81,7 @@ super + alt + l
     steam
 
 # ripcord
-super + alt + i
+super + u
     ripcord
 
 # }}}
@@ -235,9 +231,13 @@ super + {w,q}
 super + 1
     feng_shui
 
-# focus or send to the given desktop
-super + {_,shift + }{2-9,0}
-    bspc {desktop -f,node -d} '{2-9,10}'
+# focus or send to the given workspace
+super + {_,shift + }{2-9,0,grave}
+    bspc {desktop -f,node -d} '{2-9,10,ext}'
+
+# next/prev workspace
+super + {minus,equal}
+    bspc desktop {next,prev} -f
 
 # }}}
 

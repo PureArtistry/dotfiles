@@ -159,7 +159,7 @@ bindkey '^D' exit_zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-[ -f /tmp/flex ] && neofetch && rm -f /tmp/flex
+[ -f /tmp/startup.tmp ] && neofetch && rm -f /tmp/startup.tmp
 
 # }}}
 

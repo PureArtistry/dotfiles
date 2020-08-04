@@ -3,6 +3,7 @@
 # album art grabber (originally for neofetch)
 
 # prep
+[ -f /tmp/startup.tmp ] && exit
 music_directory=$HOME/music
 now_playing=$(mpc -f %file% current)
 up_next=$(mpc -f %file% queued)
@@ -31,7 +32,7 @@ copy_new(){
 	convert /tmp/neocover.png -resize 500x500^ \
 		-gravity center -extent 500x500 \
 		-flatten /tmp/albumart.png
-	exit
+	return
 }
 
 foo=${now_playing%/*}

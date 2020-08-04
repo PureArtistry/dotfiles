@@ -16,7 +16,7 @@ catagory=$(ls -1 $VIDEO | rofi -dmenu -i -format s)
 [ ! $catagory ] && begone_too cya
 
 dunstify -r 336699 -t 6000000 "pick a title..."
-list=$(find $VIDEO/$catagory -type f -printf "%f|%h\n")
+list=$(find $VIDEO/$catagory -type f -printf "%f|%h\n" | sort)
 choice=$(echo "$list" | awk -F "|" '{print $1}' | rofi -dmenu -i -format d)
 [ ! $choice ] && begone_too cya
 file=$(echo "$list" | awk -F "|" '{print $2"/"$1}' | sed -n ${choice}p)

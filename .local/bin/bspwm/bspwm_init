@@ -13,8 +13,16 @@ restore_colors(){
 
 start_bg_apps(){
 	# setup initial desktops
-	bspc monitor -d $BSPWM_DESKTOPS_1
-	bspc desktop 10 -f
+	bspc monitor eDP-1-1 -d $BSPWM_DESKTOPS_1
+	bspc desktop 7 -f
+
+	# main terminal window (big cat)
+	bspc subscribe node_add -c 1 &
+	launch_kitty --class "big cat" --name "big cat" --title "big cat"
+	wait
+	big_cat_id=$(xwininfo -root -children | grep -w "big cat" | awk '{print $1}')
+	echo "$big_cat_id" > /tmp/big_cat_id
+	while [ -f /tmp/startup.tmp ]; do sleep 0.1; done
 
 	# kitty scratch-term
 	bspc subscribe node_add -c 1 &
@@ -23,48 +31,13 @@ start_bg_apps(){
 	my_companion_id=$(xwininfo -root -children | grep -w "companion" | awk '{print $1}')
 	echo "$my_companion_id" > /tmp/my_companion_id
 
-	# ncmpcpp background playlist
-	bspc subscribe node_add -c 1 &
-	launch_kitty --class "my playlist" --name "my playlist" --title "my playlist" ncmpcpp
-	wait
-	my_playlist_id=$(xwininfo -root -children | grep -w "my playlist" | awk '{print $1}')
-	echo "$my_playlist_id" > /tmp/my_playlist_id
-
-	# info window
-	bspc subscribe node_add -c 1 &
-	launch_kitty --name "fancy writing" --class "fancy writing" \
-		--title "fancy writing" fancy_writing
-	wait
-
-	# albumart display
-	art_show &
-	bspc subscribe node_add -c 1
-
-	# ncmpcpp visualizer
-	bspc subscribe node_add -c 1 &
-	launch_kitty --class "pretty colours" --name "pretty colours" \
-		--title "pretty colours" ncmpcpp -c $XDG_CONFIG_HOME/ncmpcpp/config.viz
-	wait
-	pretty_colours_id=$(xwininfo -root -children | \
-		grep -w "pretty colours" | awk '{print $1}')
-	echo "$pretty_colours_id" > /tmp/pretty_colours_id
-
-	# main terminal window (big cat)
-	touch /tmp/flex
-	bspc subscribe node_add -c 1 &
-	launch_kitty --class "big cat" --name "big cat" --title "big cat"
-	wait
-	big_cat_id=$(xwininfo -root -children | grep -w "big cat" | awk '{print $1}')
-	echo "$big_cat_id" > /tmp/big_cat_id
-
 	# the rest
 	bspc rule -a qutebrowser -o desktop=2
 	qutebrowser &
-	ripcord &
+	# ripcord &
 	launch_kitty --class "file manager" --name "file manager" --title "file manager" ranger
+	distraction_toggle
 
-	# start with big cat focused
-	feng_shui
 	exit
 }
 

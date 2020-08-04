@@ -1,23 +1,16 @@
 #!/bin/sh
 
 # get border colours from wpg
-nbc=$(sed -n 8p $XDG_CONFIG_HOME/kitty/kitty_colors.conf | awk '{print $2}')
-abc=$(sed -n 18p $XDG_CONFIG_HOME/kitty/kitty_colors.conf | awk '{print $2}')
-fbc=$(sed -n 7p $XDG_CONFIG_HOME/kitty/kitty_colors.conf | awk '{print $2}')
-pfc=$(sed -n 24p $XDG_CONFIG_HOME/kitty/kitty_colors.conf | awk '{print $2}')
+list=$(cat $XDG_CONFIG_HOME/kitty/kitty_colors.conf)
+nbc=$(echo "$list" | sed -n 8p | awk '{print $2}')
+abc=$(echo "$list" | sed -n 18p | awk '{print $2}')
+fbc=$(echo "$list" | sed -n 7p | awk '{print $2}')
+pfc=$(echo "$list" | sed -n 24p | awk '{print $2}')
 
 # reset existing config
 bspc rule -r "*"
 
-launch_polybar(){
-	pgrep polybar > /dev/null 2>&1 && killall -q polybar
-	while pgrep -u $UID -x polybar >/dev/null; do sleep 0.2; done
-	polybar main &
-	return
-}
-
 # main config options
-
 bspc config focus_follows_pointer	true
 bspc config pointer_follows_monitor	false
 
@@ -30,7 +23,7 @@ bspc config border_width		3
 bspc config window_gap			12
 
 bspc config automatic_scheme		spiral
-bspc config split_ratio			0.54
+bspc config split_ratio			0.5
 bspc config initial_polarity		first_child
 bspc config ignore_ewmh_focus   	true
 
@@ -48,25 +41,20 @@ bspc rule -a mpv state=floating rectangle=1280x720+0+0 center=true
 bspc rule -a "my playlist" state=floating rectangle=640x480+0+0 center=true hidden=on sticky=on layer=above
 bspc rule -a "companion" state=floating rectangle=800x600+0+0 center=true hidden=on sticky=on layer=above
 bspc rule -a "file manager" desktop=3
-bspc rule -a "big cat" desktop=1 state=floating rectangle=975x1026+12+36
-bspc rule -a "pretty colours" desktop=1 state=floating rectangle=440x420+1462+642
-bspc rule -a "fancy writing" desktop=1 state=floating rectangle=650x200+1252+36 hidden=on
+bspc rule -a "big cat" desktop=1 state=floating rectangle=975x1050+12+12
+bspc rule -a "pretty colours" desktop=1 state=floating rectangle=444x444+1458+618
+bspc rule -a "fancy writing" desktop=1 state=floating rectangle=650x200+1252+12 hidden=on
 bspc rule -a "Gimp" desktop=4 follow=on
-bspc rule -a "Dragon-drag-and-drop" state=floating rectangle=188x33+4+30 layer=above sticky=on
+bspc rule -a "Dragon-drag-and-drop" state=floating rectangle=188x33+4+4 layer=above sticky=on
 bspc rule -a "Steam" desktop=9
 bspc rule -a "Lutris" desktop=9
 bspc rule -a "pulsemixer" state=floating rectangle=800x600+0+0 center=true sticky=on layer=above
 bspc rule -a "Ripcord" desktop=8
 
 # startup
-launch_polybar
-h_name=$(head -n 1 /etc/hostname)
-state_check=$(head -n 1 $XDG_CACHE_HOME/$h_name.state)
-if [ "$state_check" = "startup" ]; then
-    if mkdir /tmp/startup.lock 2> /dev/null
-    then
+if [ -f /tmp/startup.tmp ]; then
+    if mkdir /tmp/startup.lock 2> /dev/null; then
 	bspwm_init startup
-	echo "running" > $XDG_CACHE_HOME/$h_name.state
+	rmdir /tmp/startup.lock 2> /dev/null
     fi
-    rmdir /tmp/startup.lock 2> /dev/null
 fi

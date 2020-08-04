@@ -1,18 +1,12 @@
 #!/bin/sh
 # vim:foldmethod=marker
 
-# prep {{{
-
+# prep
 fresh_start
-
-h_name=$(head -n 1 /etc/hostname)
-[ -f $XDG_CACHE_HOME/$h_name.state ] || touch $XDG_CACHE_HOME/$h_name.state
-echo "startup" > $XDG_CACHE_HOME/$h_name.state
-
-# }}}
+touch /tmp/startup.tmp
+convert -size 500x500 xc:#222222 /tmp/albumart.png
 
 # standard xinitrc stuff {{{
-
 userresources=$HOME/.Xresources
 usermodmap=$XDG_CONFIG_HOME/X11/Xmodmap
 sysresources=/etc/X11/xinit/.Xresources
@@ -29,11 +23,8 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 	done
 	unset f
 fi
-
 # }}}
-
 # display setup & daemon startup {{{
-
 prime-offload
 systemctl --user import-environment DISPLAY
 xrandr --auto
@@ -48,7 +39,6 @@ aclipexe &
 unclutter &
 picom -b --config $XDG_CONFIG_HOME/compton/compton.conf
 theme_change
-
 # }}}
 
 exec bspwm

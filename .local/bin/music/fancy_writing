@@ -12,8 +12,7 @@ trap catch_signal_usr1 USR1
 
 main(){
         count=0
-        ocycle=0
-        mcycle=0
+        cycle=0
         state="running"
         [ -f /tmp/fancy_message ] && other_info fancy_message
         now_playing=$(mpc | sed -n 2p | awk '{print $1}')
@@ -33,14 +32,14 @@ other_info(){
                         song=$(mpc current -f "%title%")
                         if [ $count = 100 ]; then
                                 count=0
-                                [ $mcycle = 1 ] && mcycle=0 || mcycle=`expr $mcycle + 1`
+                                [ $cycle = 1 ] && cycle=0 || cycle=`expr $cycle + 1`
                         fi
-                        if [ $mcycle = 0 ]; then
+                        if [ $cycle = 0 ]; then
                                 message="  $song"
                                 fancy_font="Victor-Mono-Medium-Nerd-Font-Complete"
                                 display_text
                                 loop
-                        elif [ $mcycle = 1 ]; then
+                        elif [ $cycle = 1 ]; then
                                 message="$general"
                                 fancy_font="Victor-Mono-Medium-Italic-Nerd-Font-Complete"
                                 display_text
@@ -67,25 +66,27 @@ song_info(){
         until [ $state = "update" ]; do
                 if [ $count = 100 ]; then
                         count=0
-                        [ $mcycle = 3 ] && mcycle=0 || mcycle=`expr $mcycle + 1`
+                        [ $cycle = 3 ] && cycle=0 || cycle=`expr $cycle + 1`
                 fi
-                if [ $mcycle = 0 ]; then
-                        message="  $song"
+                if [ $cycle = 0 ]; then
+                        [ ! $song ] && message="  missing IDv3 tags" || message="  $song"
                         fancy_font="Victor-Mono-Medium-Nerd-Font-Complete"
                         display_text
                         loop
-                elif [ $mcycle = 1 ]; then
-                        message="‎ﴁ‎  $artist"
+                elif [ $cycle = 1 ]; then
+                        [ ! $artist ] && message="  missing IDv3 tags" || \
+                                message="‎ﴁ‎  $artist"
                         fancy_font="Victor-Mono-Medium-Nerd-Font-Complete"
                         display_text
                         loop
-                elif [ $mcycle = 2 ]; then
-                        message="  $album"
+                elif [ $cycle = 2 ]; then
+                        [ ! $album ] && message="  missing IDv3 tags" || message="  $album"
                         fancy_font="Victor-Mono-Medium-Nerd-Font-Complete"
                         display_text
                         loop
-                 elif [ $mcycle = 3 ]; then
-                        message="‎ﮮ‎  $date"
+                 elif [ $cycle = 3 ]; then
+                        [ ! $date ] && message="  missing IDv3 tags" || \
+                                message="‎ﮮ‎  $date"
                         fancy_font="Victor-Mono-Medium-Nerd-Font-Complete"
                         display_text
                         loop
@@ -105,11 +106,12 @@ loop(){
 display_text(){
         bspc node $(head -n 1 /tmp/fancy_writing_id) --flag hidden=on
         sleep 0.2
+        clear
         fg_color=$(sed -n 8p $XDG_CACHE_HOME/wal/colors)
         length_check=$(echo -n "$message" | wc -c)
         [ $length_check -gt 39 ] && final_message=$(echo "$message" | cut -c 1-36 | \
                 sed 's/$/.../g') || final_message="$message"
-	convert -size 650x200 xc:"transparent" \
+        convert -size 650x200 xc:"transparent" \
                 -gravity center \
                 -pointsize 31 \
                 -font "$fancy_font" \
