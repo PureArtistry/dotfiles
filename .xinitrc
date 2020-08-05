@@ -37,7 +37,7 @@ python3 -m http.server 4088 --bind 127.0.0.1 --directory $XDG_DATA_HOME/localweb
 sxhkd &
 aclipexe &
 unclutter &
-picom -b --config $XDG_CONFIG_HOME/compton/compton.conf
+picom -b --experimental-backends --config $XDG_CONFIG_HOME/compton/compton.conf
 theme_change
 # }}}
 

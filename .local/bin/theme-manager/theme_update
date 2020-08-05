@@ -27,7 +27,6 @@ fi
 pgrep fancy_writing > /dev/null && pkill fancy_writing --signal=USR1
 pgrep qutebrowser > /dev/null && qutebrowser :config-source :reload > /dev/null 2>&1
 reinit_desktop
-pkill zsh --signal=USR1
 [ $restart_ripcord = "yes" ] && sleep 0.2 && ripcord &
 follow=$(head -n1 /tmp/breadcrumbs)
 [ ! $follow ] && bspc desktop 1 -f || bspc desktop $(head -n1 /tmp/breadcrumbs) -f

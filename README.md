@@ -22,9 +22,6 @@ the files in the .config/wpg/templates folder are backups, don't copy them
 #### sxiv
 I use a custom sxiv build, my config.h if you want the same settings
 
-#### ranger
-currently ranger runs like shit in kitty when previewing stuff, these files are from a testing branch of ranger that help somewhat (less lag, more visual glitches)
-
 #### polybar
 I ultimately didn't find having a bar too useful and prefer the extra screen space, leaving my old config here
 

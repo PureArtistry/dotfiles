@@ -1,22 +1,5 @@
 [[ $- != *i* ]] && return
 
-# colours {{{
-
-catch_signal_usr1(){
-	trap catch_signal_usr1 USR1
-	if mkdir /tmp/the.lock 2> /dev/null
-	then
-        source $XDG_CACHE_HOME/wal/colors.sh
-        sleep 0.1
-	fi
-	rmdir /tmp/the.lock 2> /dev/null
-	return
-}
-trap catch_signal_usr1 USR1
-
-! pgrep -x bspwm >/dev/null && source $XDG_CACHE_HOME/wal/colors-tty.sh || source $XDG_CACHE_HOME/wal/colors.sh
-
-# }}}
 # prompt {{{
 
 autoload -U colors && colors
@@ -67,8 +50,8 @@ SPACESHIP_DIR_TRUNC_PREFIX=".../"
 # main {{{
 
 HISTFILE=$ZDOTDIR/.histfile
-HISTSIZE=10000
-SAVEHIST=10000
+HISTSIZE=100000
+SAVEHIST=100000
 
 setopt HIST_IGNORE_ALL_DUPS HIST_REDUCE_BLANKS EXTENDED_HISTORY INC_APPEND_HISTORY_TIME autocd beep extendedglob nomatch aliases correctall #COMPLETE_ALIASES
 unsetopt notify

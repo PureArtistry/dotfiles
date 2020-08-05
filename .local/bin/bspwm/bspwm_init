@@ -37,6 +37,7 @@ start_bg_apps(){
 	# ripcord &
 	launch_kitty --class "file manager" --name "file manager" --title "file manager" ranger
 	distraction_toggle
+	echo "cleanup" | xclip -selection clipboard
 
 	exit
 }
