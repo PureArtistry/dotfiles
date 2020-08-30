@@ -1,6 +1,0 @@
-#!/bin/sh
-
-# launch kitty with remote socket
-
-kitty --listen-on unix:/tmp/kitty_control/$(gen_kitty_id) "$@" &
-# bspc subscribe node_add -c 1

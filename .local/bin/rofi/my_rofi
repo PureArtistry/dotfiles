@@ -1,8 +1,0 @@
-#!/bin/sh
-
-killall -q dunst
-dunst -config $XDG_CONFIG_HOME/dunst/dunst.mini &
-dunstify -r 303132 -t 6000000 "you should be editing your sxhkdrc!"
-rofi -show combi -combi-modi "window,drun,run" -modi combi
-dunstify -C 303132
-killall -q dunst

@@ -1,6 +1,0 @@
-#!/bin/sh
-
-# switch spaces for underscores, on everything (be warned!)
-
-find . -depth -name '* *' \
-| while IFS= read -r f ; do mv -i "$f" "$(dirname "$f")/$(basename "$f"|tr ' ' _)" ; done

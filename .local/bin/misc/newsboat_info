@@ -1,3 +1,0 @@
-#!/bin/sh
-
-dunstify -r 636261 -t 3000 "$1" -i $XDG_CONFIG_HOME/dunst/icons/rss_new.png

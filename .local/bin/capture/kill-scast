@@ -1,6 +1,0 @@
-#!/bin/sh
-
-pgrep ffmpeg && killall -q ffmpeg
-dunstify -r 4088007 "stopped 栗" "rip ffmpeg ﮙ" -i "~/.config/dunst/scast.svg"
-sleep 3
-dunstify -C 4088007

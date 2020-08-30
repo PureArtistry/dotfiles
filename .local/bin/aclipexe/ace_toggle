@@ -1,8 +1,0 @@
-#!/bin/sh
-
-pgrep aclipexe > /dev/null && killall -q aclipexe || aclipexe restart &
-sleep 0.1
-pgrep aclipexe > /dev/null && dunstify -r 1001 -t 3000 "clipboard monitoring:" "enabled" \
-	-i $XDG_CONFIG_HOME/dunst/icons/clipboard.svg || \
-	dunstify -r 1001 -t 3000 "clipboard monitoring:" "disabled" \
-	-i $XDG_CONFIG_HOME/dunst/icons/clipboard.svg

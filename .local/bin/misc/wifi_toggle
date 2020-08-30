@@ -1,4 +1,0 @@
-#!/bin/sh
-
-status=$(nmcli radio wifi)
-[ $status = "enabled" ] && nmcli radio wifi off || nmcli radio wifi on

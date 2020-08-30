@@ -1,7 +1,0 @@
-#!/bin/sh
-
-# use shuf to bypass mpd play history bias
-
-t=$(mpc playlist | wc -l)
-n=$(shuf -i 1-$t -n 1)
-mpc -q play $n

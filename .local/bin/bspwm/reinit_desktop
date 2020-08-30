@@ -1,7 +1,0 @@
-#!/bin/sh
-
-# reload desktop config files and windows
-
-bspc wm -r
-pkill -USR1 -x sxhkd
-bspwm_init reinit
