@@ -1,3 +1,9 @@
+## this setup is soooo six months ago...
+
+#### I've made so many changes since this previous commit that it makes sense to "archive" this branch and start a fresh one
+### check a look @ version3
+
+---
 ### these files are wpg templates, use wpg -ta /path/to/file to add:
 ```
 ~/.config/dunst/dunstrc
