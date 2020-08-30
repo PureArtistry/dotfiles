@@ -1,0 +1,60 @@
+#!/bin/sh
+
+# get border colours from wpg
+list=$(cat $XDG_CONFIG_HOME/kitty/kitty_colors.conf)
+nbc=$(echo "$list" | sed -n 8p | awk '{print $2}')
+abc=$(echo "$list" | sed -n 18p | awk '{print $2}')
+fbc=$(echo "$list" | sed -n 7p | awk '{print $2}')
+pfc=$(echo "$list" | sed -n 24p | awk '{print $2}')
+
+# reset existing config
+bspc rule -r "*"
+
+# main config options
+bspc config focus_follows_pointer true
+bspc config pointer_follows_monitor false
+
+bspc config normal_border_color "$nbc"
+bspc config active_border_color "$abc"
+bspc config focused_border_color "$fbc"
+bspc config presel_feedback_color "$pfc"
+
+bspc config border_width 3
+bspc config window_gap 12
+
+bspc config automatic_scheme spiral
+bspc config split_ratio 0.5
+bspc config initial_polarity first_child
+bspc config ignore_ewmh_focus true
+
+bspc config borderless_monocle true
+bspc config gapless_monocle true
+bspc config top_monocle_padding 0
+bspc config right_monocle_padding 0
+bspc config bottom_monocle_padding 0
+bspc config left_monocle_padding 0
+
+# window rules
+bspc rule -a HideMe hidden=on
+bspc rule -a Sxiv:\* state=floating
+bspc rule -a mpv state=floating rectangle=1280x720+0+0 center=true
+bspc rule -a "my playlist" state=floating rectangle=640x480+0+0 center=true hidden=on sticky=on layer=above
+bspc rule -a "companion" state=floating rectangle=800x600+0+0 center=true hidden=on sticky=on layer=above
+bspc rule -a "file manager" desktop=3
+bspc rule -a "mediumctl" desktop=1 state=floating rectangle=975x1050+12+12
+bspc rule -a "pretty colours" desktop=1 state=floating rectangle=444x444+1458+618
+bspc rule -a "fancy writing" desktop=1 state=floating rectangle=650x200+1252+12 hidden=on
+bspc rule -a "Gimp" desktop=4 follow=on
+bspc rule -a "Dragon-drag-and-drop" state=floating rectangle=188x33+4+4 layer=above sticky=on
+bspc rule -a "Steam" desktop=9
+bspc rule -a "Lutris" desktop=9
+bspc rule -a "pulsemixer" state=floating rectangle=800x600+0+0 center=true sticky=on layer=above
+bspc rule -a "Ripcord" desktop=8
+
+# startup
+if [ -f /tmp/startup.tmp ]; then
+    if mkdir /tmp/startup.lock 2>/dev/null; then
+        bspwm_init
+        rmdir /tmp/startup.lock 2>/dev/null
+    fi
+fi

@@ -1,0 +1,66 @@
+* {
+    background-color: @my-inactive;
+    text-color: @my-colour7;
+    border: 0;
+    padding: 0;
+}
+
+#window {
+    children: [ message, listview, inputbar, prompt ];
+    width: 460px;
+    location: 0;
+}
+
+message {
+    children: [ textbox ];
+    background-color: @my-colour1;
+    padding: 8px 8px 8px 12px;
+}
+
+textbox {
+    font: "VictorMono Nerd Font italic 19";
+    background-color: @my-colour1;
+}
+
+element-text {
+    vertical-align: 0.5;
+    highlight: @hl-style;
+    padding: 3 12 3 0;
+}
+
+element selected {
+    background-color: @my-colour2;
+}
+
+element urgent {
+    background-color: @my-colour4;
+}
+
+element active {
+    background-color: @my-colour1;
+}
+
+inputbar {
+    children: [ entry ];
+    padding: 8px 8px 8px 12px;
+    background-color: @my-active;
+}
+
+entry {
+    font: "VictorMono Nerd Font italic 14";
+    vertical-align: 0.5;
+    horizontal-align: 0.5;
+    padding: 4;
+    background-color: @my-active;
+    placeholder: "need less bugs, not more!";
+    placeholder-color: @my-colour8;
+}
+
+prompt {
+    text-color: @my-colour8;
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
+    padding: 2 6 2 6;
+}
+
+/* vim:ft=css

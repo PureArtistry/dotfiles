@@ -1,0 +1,10 @@
+configuration {
+    font: "Iosevka Nerd Font 13";
+    show-icons: true;
+    icon-theme: "FlattrColor";
+    location: 0;
+    hide-scrollbar: true;
+    terminal: "alacritty";
+//    transparency: "real";
+}
+@import "colours"

@@ -1,0 +1,215 @@
+#!/bin/sh
+SHELL_TYPE=$(readlink /bin/sh)
+case $SHELL_TYPE in
+*dash) utter='echo' ;;
+*) utter='echo -e' ;;
+esac
+
+# (a)utomatic (clip)board (exe)cution
+
+processed=""
+
+main() {
+    while clipnotify; do
+        selection=$(xclip -selection clipboard -o)
+        [ ! "$selection" ] || [ "$selection" = "$processed" ] && main
+        case "$selection" in
+        https://*.youtube.com/watch* | https://*.youtu.be/watch*) youtube ;;
+        magnet:?* | *magnet*tracker*) torrent ;;
+        https://*twitch.tv/*) twitch ;;
+        https://*.redd*/*) reddit ;;
+        https://github.com/*.git) github ;;
+        *) ignore ;;
+        esac
+    done
+}
+
+new_face_in_town() {
+    pgrep dunst >/dev/null && killall -q dunst
+    dunst -shrink -alignment "center" &
+    return
+}
+
+and_the_horse_you_rode_in_on() {
+    dunstify -C 010101
+    killall -q dunst
+    [ "$1" = passthrough ] && main || return
+}
+
+make_icon() {
+    x=$(cat $XDG_CONFIG_HOME/kitty/kitty_colors.conf | awk '{print $2}')
+    b=$(echo "$x" | sed -n 20p)
+    f=$(echo "$x" | sed -n 2p)
+    bd=$(echo "$x" | sed -n 18p)
+
+    convert -size 75x75 xc:"$b" \
+        -gravity center \
+        -pointsize "$1" \
+        -font "Iosevka-Nerd-Font-Complete" \
+        -fill "$f" \
+        -bordercolor "$bd" \
+        -border '5' \
+        -annotate +0+0 "$2" \
+        /tmp/dunst_icon.png >/dev/null 2>&1
+    return
+}
+
+listening() {
+    need_mute=$(mpc current)
+    [ -n "$need_mute" ] && paused=$(mpc | sed -n 2p \
+        | awk '{print $1}' | grep "paused")
+    [ -n "$need_mute" ] && [ ! "$paused" ] && need_mute=yes
+    return
+}
+
+youtube() {
+    processed="$selection"
+    foo=$($utter "download video\nwatch fullscreen\nwatch distraction\nwatch standard" | rofi -theme 'video1' \
+        -p "viewing experience?" \
+        -mesg "  $(echo "$selection" | cut -c 1-40 | sed 's/$/.../')" \
+        -lines 4 -fixed-num-lines 4 -dmenu -i -format d)
+    [ ! "$foo" ] && main
+    case "$foo" in
+    1)
+        youtube-dl "$selection" &
+        ytdl_popup "$selection" 1 &
+        ;;
+    2)
+        listening
+        make_icon '52' ''
+        new_face_in_town
+        dunstify -r 010101 -t 4000 -a 'fancy' "loading video..." "\n$selection" \
+            -i /tmp/dunst_icon.png
+        bspc rule -a mpv:\* -o desktop=10
+        mpv "$selection" --fs &
+        bspc subscribe node_add -c 1
+        and_the_horse_you_rode_in_on
+        [ "$need_mute" = "yes" ] && mpc pause
+        bspc desktop 10 -f
+        ;;
+    3)
+        listening
+        make_icon '52' ''
+        new_face_in_town
+        dunstify -r 010101 -t 4000 -a 'fancy' "loading video..." "\n$selection" \
+            -i /tmp/dunst_icon.png
+        distraction_toggle off
+        bspc rule -a mpv:\* -o desktop=1 state=floating \
+            rectangle=897x505+1005+287 center=false
+        mpv "$selection" &
+        bspc subscribe node_add -c 1
+        and_the_horse_you_rode_in_on
+        [ "$need_mute" = "yes" ] && mpc pause
+        bspc desktop 1 -f
+        sleep 0.1
+        xdotool mousemove 400 400
+        bspc node pointed -f
+        ;;
+    4)
+        listening
+        make_icon '52' ''
+        new_face_in_town
+        dunstify -r 010101 -t 4000 -a 'fancy' "loading video..." "\n$selection" \
+            -i /tmp/dunst_icon.png
+        mpv "$selection" &
+        bspc subscribe node_add -c 1
+        and_the_horse_you_rode_in_on
+        [ "$need_mute" = "yes" ] && mpc pause
+        ;;
+    esac
+    xclip -selection clipboard /dev/null
+    main
+}
+
+torrent() {
+    processed="$selection"
+    transmission-remote -a "$selection"
+    make_icon '52' ''
+    new_face_in_town
+    dunstify -t 3000 -a 'fancy' "torrent added" -i /tmp/dunst_icon.png
+    xclip -selection clipboard /dev/null
+    main
+}
+
+twitch() {
+    processed="$selection"
+    bar=$($utter "interactive\ndistraction\nfullscreen" | rofi -theme 'video1' \
+        -p "viewing experience?" \
+        -mesg "  $(echo "$selection" | cut -c 1-26 | sed 's/$/.../')" \
+        -lines 3 -fixed-num-lines 3 -dmenu -i -format d)
+    [ ! "$bar" ] && main
+    case "$bar" in
+    1)
+        listening
+        make_icon '52' ''
+        new_face_in_town
+        dunstify -r 010101 -t 10000 -a 'fancy' "loading stream..." "\n$selection" \
+            -i /tmp/dunst_icon.png
+        bspc rule -a mpv:\* -o desktop=10 state=tiled
+        streamlink -p mpv "$selection" best &
+        bspc subscribe node_add -c 1
+        and_the_horse_you_rode_in_on
+        [ "$need_mute" = "yes" ] && mpc pause
+        bspc desktop 10 -f
+        bspc node -p east
+        bspc node -o 0.74
+        chat=$($utter "$selection" | awk -F "/" '{print $4}')
+        qutebrowser --target window \
+            https://www.twitch.tv/popout/"$chat"/chat?popout= &
+        ;;
+    2)
+        listening
+        make_icon '52' ''
+        new_face_in_town
+        dunstify -r 010101 -t 10000 -a 'fancy' "loading stream..." "\n$selection" \
+            -i /tmp/dunst_icon.png
+        distraction_toggle off
+        bspc rule -a mpv:\* -o desktop=1 state=floating \
+            rectangle=897x505+1005+287 center=false
+        streamlink -p mpv "$selection" best &
+        bspc subscribe node_add -c 1
+        and_the_horse_you_rode_in_on
+        [ "$need_mute" = "yes" ] && mpc pause
+        bspc desktop 1 -f
+        sleep 0.1
+        xdotool mousemove 400 400
+        bspc node pointed -f
+        ;;
+    3)
+        listening
+        make_icon '52' ''
+        new_face_in_town
+        dunstify -r 010101 -t 10000 -a 'fancy' "loading stream..." "\n$selection" \
+            -i /tmp/dunst_icon.png
+        bspc rule -a mpv:\* -o desktop=10 state=fullscreen
+        streamlink -p mpv "$selection" best &
+        bspc subscribe node_add -c 1
+        and_the_horse_you_rode_in_on
+        [ "$need_mute" = "yes" ] && mpc pause
+        bspc desktop 10 -f
+        ;;
+    esac
+    xclip -selection clipboard /dev/null
+    main
+}
+
+reddit() {
+    processed="$selection"
+    xdg-open "$selection"
+    xclip -selection clipboard /dev/null
+    main
+}
+
+github() {
+    processed="$selection"
+    ace_ghc "$selection" &
+    xclip -selection clipboard /dev/null
+    main
+}
+
+ignore() {
+    processed="$selection"
+    main
+}
+
+main

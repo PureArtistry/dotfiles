@@ -1,0 +1,3 @@
+#!/bin/sh
+
+pgrep picom && killall -q picom || picom -b --experimental-backends --config ~/.config/compton/compton.conf

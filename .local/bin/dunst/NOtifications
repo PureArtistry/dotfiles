@@ -1,0 +1,8 @@
+#!/bin/sh
+
+dunstctl close-all
+dunstctl set-paused true
+pgrep tdw_info >/dev/null 2>&1 && killall -q tdw_info
+pgrep volume_info >/dev/null 2>&1 && killall -q volume_info
+pgrep song_info >/dev/null 2>&1 && killall -q song_info
+killall -q dunst

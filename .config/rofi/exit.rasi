@@ -1,0 +1,58 @@
+* {
+    background-color: @my-inactive;
+    text-color: @my-colour7;
+    border: 0;
+    padding: 0;
+    lines: 3;
+    fixed-num-lines: 3;
+}
+
+#window {
+    children: [ inputbar, listview, message ];
+    width: 460px;
+    location: 0;
+}
+
+textbox {
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
+    padding: 8px;
+}
+
+inputbar {
+    children: [ prompt ];
+    background-color: @my-colour1;
+}
+
+prompt {
+    font: "VictorMono Nerd Font italic 20";
+    background-color: @my-colour1;
+    padding: 8px 8px 8px 12px;
+}
+
+listview {
+}
+
+element-text {
+    font: "Iosevka Nerd Font 16";
+    padding: 6px;
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
+}
+
+element selected {
+    background-color: @my-colour2;
+}
+
+message {
+    children: [ textbox ];
+    font: "Iosevka Nerd Font 7";
+    background-color: @my-inactive;
+}
+
+textbox {
+    text-color: @my-colour8;
+    background-color: @my-inactive;
+}
+
+/* vim:ft=css

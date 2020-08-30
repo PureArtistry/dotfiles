@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# simple askpass helper
+
+rofi -dmenu -password -i -no-fixed-num-lines -p "sudo: "

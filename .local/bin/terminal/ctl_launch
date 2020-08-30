@@ -1,0 +1,15 @@
+#!/bin/sh
+
+mctl_id=$(xwininfo -root -children | grep -w "mediumctl" | awk '{print $1}')
+home_desktop=$(bspc query -d focused -T | jq -r '.name')
+if [ ! "$mctl_id" ] && [ "$home_desktop" = '1' ]; then
+    bspc subscribe node_add -c 1 &
+    touch /tmp/startup.tmp
+    new_term --class 'mediumctl','mediumctl' --title 'mediumctl'
+    wait
+    mctl_id=$(xwininfo -root -children | grep -w "mediumctl" | awk '{print $1}')
+    echo "$mctl_id" >/tmp/mctl_id
+    while [ -f /tmp/startup.tmp ]; do sleep 0.1; done
+else
+    alacritty &
+fi

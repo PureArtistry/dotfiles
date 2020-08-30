@@ -1,0 +1,67 @@
+configuration {
+    window-format: "{icon} [{w}] {t}";
+    display-window: " ";
+}
+
+* {
+    background-color: @my-inactive;
+    text-color: @my-colour7;
+    border: 0;
+    padding: 0;
+}
+
+#window {
+    width: 360;
+    height: 100%;
+    location: west;
+    anchor: west;
+    padding: 0;
+    border: 0 8 0 0;
+    border-color: @my-colour1;
+    children: [ listview, inputbar ];
+}
+
+inputbar {
+    children: [ entry, prompt ];
+    padding: 0 2 0 6;
+}
+
+entry {
+    font: "VictorMono Nerd Font italic 14";
+    horizontal-align: 0.5;
+    vertical-align: 0.6;
+    padding: 0 6 0 6;
+    placeholder: "are you lost?";
+    placeholder-color: @my-colour8;
+}
+
+prompt {
+    font: "Iosevka Nerd Font 28";
+    padding: 0 4 0 4;
+    text-color: @my-colour4;
+}
+
+element-text {
+    vertical-align: 0.5;
+    highlight: @hl-style;
+    padding: 0 12 0 0;
+}
+
+element-icon {
+    size: 40;
+    padding: 6;
+}
+
+element selected {
+    background-color: @my-colour2;
+}
+
+element normal.urgent {
+    background-color: @my-colour4;
+}
+
+element normal.active {
+    background-color: @my-colour1;
+}
+
+/* vim:ft=css

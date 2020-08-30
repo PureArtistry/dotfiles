@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# script to open vim's markdown preview in a new qutebrowser window
+
+bspc node -p east
+qutebrowser --target window "$@"
+sleep 0.2
+bspc node -f biggest.local

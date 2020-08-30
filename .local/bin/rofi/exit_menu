@@ -1,0 +1,24 @@
+#!/bin/sh
+SHELL_TYPE=$(readlink /bin/sh)
+case $SHELL_TYPE in
+*dash) utter='echo' ;;
+*) utter='echo -e' ;;
+esac
+
+# exit menu using rofi
+
+foo=$($utter " logout \n secure \n‎ﰇ‎ reboot " | rofi -theme 'exit' -dmenu -i \
+    -mesg "  $(echo "$USER") |    $(head -n1 /etc/hostname) |   $(uptime -p | sed -e 's/up //g')" \
+    -p 'going somewhere..?' -selected-row 1 -format d)
+[ ! "$foo" ] && exit
+case "$foo" in
+1)
+    pgrep qutebrowser >/dev/null 2>&1 && qutebrowser :quit >/dev/null 2>&1
+    bspc quit
+    ;;
+2) exit ;;
+3)
+    pgrep qutebrowser >/dev/null 2>&1 && qutebrowser :quit >/dev/null 2>&1
+    systemctl reboot
+    ;;
+esac

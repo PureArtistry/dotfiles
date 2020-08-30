@@ -1,0 +1,59 @@
+#!/bin/sh
+
+# mpd now playing notification for dunst
+
+now_playing_check=$(mpc current)
+[ ! "$now_playing_check" ] && exit
+x=$(ps aux | grep 'pretty colours' | grep -v grep)
+[ ! "$x" ] && neocover >/dev/null 2>&1
+
+song=$(mpc current -f "%title%")
+artist=$(mpc current -f "%artist%")
+duration=$(mpc current -f "%time%")
+nsong=$(mpc queued -f "%title%")
+nartist=$(mpc queued -f "%artist%")
+
+calc() {
+    y=$(mpc | sed -n 2p)
+    elapsed=$(echo "$y" | awk '{print $3}' | sed 's/\/.*//')
+    perc=$(echo "$y" | awk '{print $4}')
+    # this bit only works if the song is less than an hour
+    # I don't have anything over an hour to test the output of mpc
+    # I'll re-write this to something less hacky when needed.
+    i=$(echo "$elapsed" | awk -F ':' '{print $1}')
+    j=$(echo "$elapsed" | awk -F ':' '{print $2}')
+    i=$((${i} * 60))
+    i=$((${i} + ${j}))
+    k=$(echo "$duration" | awk -F ':' '{print $1}')
+    l=$(echo "$duration" | awk -F ':' '{print $2}')
+    k=$((${k} * 60))
+    k=$((${k} + ${l}))
+    remain=$((${k} - ${i}))
+    if [ "$remain" -le 1 ]; then
+        dunstify -C 2001
+        killall -q dunst
+        exit
+    else
+        remain=$(date -d@"$remain" -u +%M:%S)
+    fi
+    return
+}
+
+z=0
+c=8
+until [ "$z" = "$c" ]; do
+    calc
+    dunstify -r 2001 -t 6000 -a mpdunst "   now playing" \
+        "\n  $song\n‎ﴁ‎  $artist\n神  $elapsed of $duration $perc" -i "/tmp/dartc.png"
+    sleep 0.5
+    z=$((${z} + 1))
+done
+z=0
+until [ "$z" = "$c" ]; do
+    calc
+    dunstify -r 2001 -t 6000 -a mpdunst "     up next" \
+        "\n  $nsong\n‎ﴁ‎  $nartist\n神  $remain until song begins" -i "/tmp/dartn.png"
+    sleep 0.5
+    z=$((${z} + 1))
+done
+dunstify -C 2001

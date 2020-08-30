@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# use sxiv thumbnail mode to switch wallpaper
+
+theme_path=$(sxiv -otb $XDG_CONFIG_HOME/wpg/wallpapers)
+theme_path=$(echo "$theme_path" | tail -n1)
+[ ! "$theme_path" ] && exit
+new_theme=$(basename "$theme_path")
+theme_change "$new_theme"

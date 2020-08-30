@@ -1,0 +1,23 @@
+* {{
+    hl-style: bold {color6};
+
+    my-active: {active};
+    my-inactive: {inactive};
+
+    my-colour0: {color0};
+    my-colour1: {color1};
+    my-colour2: {color2};
+    my-colour3: {color3};
+    my-colour4: {color4};
+    my-colour5: {color5};
+    my-colour6: {color6};
+    my-colour7: {color7};
+    my-colour8: {color8};
+    my-colour9: {color9};
+    my-colour10: {color10};
+    my-colour11: {color11};
+    my-colour12: {color12};
+    my-colour13: {color13};
+    my-colour14: {color14};
+    my-colour15: {color15};
+}}

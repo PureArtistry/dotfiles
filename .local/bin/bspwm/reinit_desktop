@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# reload desktop config files and windows
+
+bspc wm -r
+pkill -USR1 -x sxhkd
+cat $XDG_CONFIG_HOME/paleta/colours | sed 's/#//g' | paleta >$XDG_CONFIG_HOME/paleta/escapes
+pgrep kitty >/dev/null && kitty @ --to unix:/tmp/kitty_control \
+    set-colors "$XDG_CONFIG_HOME"/kitty/kitty_colors.conf
+tidy_home

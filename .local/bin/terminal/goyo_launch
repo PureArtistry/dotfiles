@@ -1,0 +1,34 @@
+#!/bin/sh
+
+mctl_id=$(head -n1 /tmp/mctl_id)
+mctl_state=$(bspc query -T -n "$mctl_id" | jq -r '.client.state')
+home_desktop=$(bspc query -d focused -T | jq -r '.name')
+if [ "$home_desktop" = '1' ] && [ "$mctl_state" = 'floating' ]; then
+    if [ "$1" = 'size_fix' ]; then
+        bspc rule -a "$2" -o desktop=1 state=floating rectangle=975x1050+12+12
+        bspc node "$mctl_id" -g hidden=on
+        alacritty --class "$2","$2" --title "$2" -e "$@" &
+        bspc subscribe node_add -c 1
+        wait
+        bspc node "$mctl_id" -g hidden=off
+        bspc node "$mctl_id" -f
+    else
+        bspc rule -a "$1" -o desktop=1 state=floating rectangle=975x1050+12+12
+        bspc node "$mctl_id" -g hidden=on
+        alacritty --class "$1","$1" --title "$1" -e "$@" &
+        bspc subscribe node_add -c 1
+        wait
+        bspc node "$mctl_id" -g hidden=off
+        bspc node "$mctl_id" -f
+    fi
+else
+    if [ "$1" = 'newsboat' ] || [ "$1" = 'ncmpcpp' ]; then
+        bspc node -p east
+        bspc node -o 0.70
+        alacritty --class "$1","$1" --title "$1" -e "$@" &
+    elif [ "$1" = 'size_fix' ]; then
+        alacritty --class "$2","$2" --title "$2" -e "$@" &
+    else
+        alacritty --class "$1","$1" --title "$1" -e "$@" &
+    fi
+fi

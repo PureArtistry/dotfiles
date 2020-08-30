@@ -1,0 +1,12 @@
+; DO NOT EDIT ANYTHING BETWEEN THIS LINE AND THE NEXT COMMENT
+Sxiv*background: #0b1011
+Sxiv*foreground: #323C43
+; DO NOT EDIT ABOVE THIS LINE
+
+Xft.autohint: 0
+Xft.lcdfilter: lcddefault
+Xft.hintstyle: hintslight
+Xft.hinting: 1
+Xft.antialias: 1
+Xft.rgba: rgb
+Xft.dpi: 96

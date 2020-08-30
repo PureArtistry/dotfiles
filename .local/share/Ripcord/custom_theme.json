@@ -1,0 +1,18 @@
+{{
+    "alternate_base": "{active}",
+    "base": "{inactive}",
+    "bright_text": "#ffffff",
+    "button": "{color1}",
+    "chat_timestamp": "{color8}",
+    "disabled_button": "{color4}",
+    "disabled_icon": "{color8}",
+    "disabled_text": "{color8}",
+    "highlight": "{color2}",
+    "highlighted_text": "{color15}",
+    "icon": "{color15}",
+    "shadow": "{color0}",
+    "text": "{color15}",
+    "unread_badge": "{color5}",
+    "unread_badge_text": "{color15}",
+    "window": "{color3}"
+}}

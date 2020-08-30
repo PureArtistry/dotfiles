@@ -1,0 +1,49 @@
+#!/bin/sh
+# vim:foldmethod=marker
+
+neocover >/dev/null 2>&1
+
+# tweak some configs post generation {{{
+x=$(cat "$XDG_CONFIG_HOME"/kitty/kitty_colors.conf | awk '{print $2}')
+b=$(echo "$x" | sed -n 8p)
+f=$(echo "$x" | sed -n 2p)
+hl=$(echo "$x" | sed -n 28p)
+
+sed -i -e "2s/.*/Sxiv*background: $(echo "$x" | sed -n 16p)/" \
+    -e "3s/.*/Sxiv*foreground: $(echo "$x" | sed -n 18p)/" "$HOME"/.Xresources
+xrdb -merge "$HOME"/.Xresources
+
+sed -i -e "3s/.*/    background = \"$b\"/" \
+    -e "4s/.*/    foreground = \"$f\"/" \
+    -e "5s/.*/    frame_color = \"$(echo "$x" | sed -n 7p)\"/" \
+    -e "6s/.*/    separator_color = \"$b\"/" \
+    -e "8s/.*/    background = \"$b\"/" \
+    -e "9s/.*/    foreground = \"$f\"/" \
+    -e "12s/.*/    background = \"$b\"/" \
+    -e "13s/.*/    foreground = \"$f\"/" \
+    -e "16s/.*/    background = \"$b\"/" \
+    -e "17s/.*/    foreground = \"$f\"/" \
+    -e "18s/.*/    frame_color = \"$hl\"/" "$XDG_CONFIG_HOME"/dunst/dunstrc
+# }}}
+
+ripcord_check=$(pidof ripcord)
+[ ! "$ripcord_check" ] && sed -i '/preset_name=custom/d' "$XDG_DATA_HOME"/Ripcord/settings.ini
+
+# force apps to use new theme, except on startup to prevent doubling up
+[ -f /tmp/startup.tmp ] && exit
+
+if [ -n "$ripcord_check" ]; then
+    kill "$ripcord_check"
+    while kill -0 "$ripcord_check" 2>/dev/null; do sleep 0.1; done
+    sed -i '/preset_name=custom/d' "$XDG_DATA_HOME"/Ripcord/settings.ini
+    restart_ripcord=yes
+fi
+
+pgrep fancy_writing >/dev/null && pkill fancy_writing --signal=USR1
+pgrep qutebrowser >/dev/null && qutebrowser :config-source :reload >/dev/null 2>&1
+reinit_desktop
+[ "$restart_ripcord" = "yes" ] && sleep 0.2 && ripcord &
+follow=$(head -n1 /tmp/breadcrumbs)
+[ ! "$follow" ] && bspc desktop 1 -f || bspc desktop $(head -n1 /tmp/breadcrumbs) -f
+home_desktop=$(bspc query -d focused -T | jq -r '.name')
+[ "$home_desktop" = '1' ] && feng_shui

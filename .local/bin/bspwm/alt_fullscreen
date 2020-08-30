@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# workaround fullscreen for transparency windows
+
+enter_fullscreen() {
+    [ -f /tmp/breadcrumbs ] || touch /tmp/breadcrumbs
+    echo $(bspc query -d focused -T | jq '.name') | sed 's/\"//g' >/tmp/breadcrumbs
+    state=$(bspc query -N -n any.\!floating.focused)
+    bspc monitor -a fs
+    bspc node -d fs --follow
+    [ ! "$state" ] && bspc node --state tiled && echo "floating" >>/tmp/breadcrumbs
+    bspc desktop -l monocle
+    exit
+}
+
+exit_fullscreen() {
+    state=$(sed -n 2p /tmp/breadcrumbs)
+    [ "$state" = "floating" ] && bspc node --state floating
+    bspc node -d $(head -n1 /tmp/breadcrumbs) --follow
+    bspc monitor -d $BSPWM_DESKTOPS_1
+    bspc wm -r
+    rm /tmp/breadcrumbs
+    exit
+}
+
+need_focus=$(bspc query -D --names | grep "fs")
+fullscreen_check=$(bspc query -d focused -T | jq '.name')
+[ ! "$need_focus" ] && enter_fullscreen
+[ "$fullscreen_check" = '"fs"' ] && exit_fullscreen || bspc desktop fs -f

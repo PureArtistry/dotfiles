@@ -1,0 +1,4 @@
+#!/bin/sh
+
+paccache -rk1 2> /dev/null
+paccache -ruk0 2> /dev/null

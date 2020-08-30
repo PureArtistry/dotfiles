@@ -1,0 +1,41 @@
+#!/bin/sh
+
+timer() {
+    x=$(cat $XDG_CONFIG_HOME/kitty/kitty_colors.conf | awk '{print $2}')
+    b=$(echo "$x" | sed -n 20p)
+    f=$(echo "$x" | sed -n 2p)
+    bd=$(echo "$x" | sed -n 18p)
+
+    convert -size 75x75 xc:"$b" \
+        -gravity center \
+        -pointsize "48" \
+        -font "Iosevka-Nerd-Font-Complete" \
+        -fill "$f" \
+        -bordercolor "$bd" \
+        -border '5' \
+        -annotate +0+0 "" \
+        /tmp/dunst_icon.png >/dev/null 2>&1
+
+    i=$(shuf -i 1-10000 -n 1)
+    c=0
+    j=3
+    z=3
+    pgrep dunst >/dev/null && killall -q dunst
+    dunst -shrink -alignment 'center' &
+    until [ "$c" = "$z" ]; do
+        dunstify -r "$i" -t 6000 -a 'fancy' "$j" "\nuntil scrot" \
+            -i /tmp/dunst_icon.png
+        sleep 1
+        c=$((${c} + 1))
+        j=$((${j} - 1))
+    done
+    dunstify -C "$i"
+    killall -q dunst
+    sleep 1
+    ffmpeg -f x11grab -video_size 1920x1080 -i "$DISPLAY" -vframes 1 \
+        ~/working/scrot_$(date '+%Y%m%d-%H%M%S').png
+    exit
+}
+
+[ "$1" = 'timer' ] && timer || ffmpeg -f x11grab -video_size 1920x1080 -i "$DISPLAY" -vframes 1 \
+    ~/working/scrot_$(date '+%Y%m%d-%H%M%S').png

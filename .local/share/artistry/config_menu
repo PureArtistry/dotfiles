@@ -1,0 +1,13 @@
+my scripts -->
+alias list	.local/share/artistry/alias_list
+bspwm		.config/bspwm/bspwmrc
+sxhkd		.config/sxhkd/sxhkdrc
+dunst 		.config/dunst/dunstrc
+neovim		.config/nvim/init.vim
+qutebrowser	.config/qutebrowser/config.py
+neofetch	.config/neofetch/config.conf
+newsboat URLs	.config/newsboat/urls
+xinitrc		.xinitrc
+zshenv		.config/zsh/.zshenv
+zshrc		.config/zsh/.zshrc
+<-- this menu	.local/share/artistry/config_menu

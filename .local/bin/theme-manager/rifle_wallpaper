@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# used in ranger, add/set wallpaper or open in sxiv if already done
+
+wallpaper=$(basename "$1")
+already_done=$(wpg -l | grep "$wallpaper")
+
+if [ ! "$already_done" ]; then
+    wpg -a "$1"
+    theme_change "$wallpaper"
+else
+    sxiv "$1"
+fi

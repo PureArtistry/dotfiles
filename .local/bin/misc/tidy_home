@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# [ -d $HOME/.w3m ] && rm -rf $HOME/.w3m
+# [ -d $HOME/.nv ] && rm -rf $HOME/.nv
+[ -f $HOME/.fehbg ] && rm -f $HOME/.fehbg
