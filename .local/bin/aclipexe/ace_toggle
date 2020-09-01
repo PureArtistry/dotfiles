@@ -21,7 +21,7 @@ convert -size 75x75 xc:"$b" \
 i=$(shuf -i 1-10000 -n 1)
 pgrep dunst >/dev/null && killall -q dunst
 dunst -shrink -alignment 'center' &
-pgrep aclipexe >/dev/null && dunstify -r "$i" -t 3000 -a 'fancy' "enabled" \
-    "\nclipboard monitoring" -i /tmp/dunst_icon.png \
-    || dunstify -r "$i" -t 3000 -a 'fancy' "disabled" "\nclipboard monitoring" \
+pgrep aclipexe >/dev/null && dunstify -r "$i" -t 3000 -a 'fancy1' "enabled" \
+    "clipboard monitoring" -i /tmp/dunst_icon.png \
+    || dunstify -r "$i" -t 3000 -a 'fancy1' "disabled" "clipboard monitoring" \
         -i /tmp/dunst_icon.png

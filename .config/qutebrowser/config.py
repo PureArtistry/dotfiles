@@ -506,7 +506,7 @@ c.colors.webpage.darkmode.enabled = True
 ##   - always: Apply dark mode filter to all images.
 ##   - never: Never apply dark mode filter to any images.
 ##   - smart: Apply dark mode based on image content.
-# c.colors.webpage.darkmode.policy.images = 'never'
+c.colors.webpage.darkmode.policy.images = 'never'
 
 ## Which pages to apply dark mode to.
 ## Type: String
@@ -546,7 +546,7 @@ c.colors.webpage.prefers_color_scheme_dark = True
 
 ## Height (in pixels or as percentage of the window) of the completion.
 ## Type: PercOrInt
-# c.completion.height = '50%'
+c.completion.height = '35%'
 
 ## Minimum amount of characters needed to update completions.
 ## Type: Int
@@ -877,7 +877,7 @@ c.content.local_content_can_access_remote_urls = True
 ## still be downloaded by clicking the download button in the pdf.js
 ## viewer.
 ## Type: Bool
-# c.content.pdfjs = False
+c.content.pdfjs = True
 
 ## Allow websites to request persistent storage quota via
 ## `navigator.webkitPersistentStorage.requestQuota`.
@@ -1084,7 +1084,7 @@ c.fonts.prompts = 'default_size default_family'
 
 ## Font used in the statusbar.
 ## Type: Font
-# c.fonts.statusbar = 'default_size default_family'
+c.fonts.statusbar = '10pt default_family'
 
 ## Font used for selected tabs.
 ## Type: Font
@@ -1621,7 +1621,7 @@ c.tabs.last_close = 'close'
 ##   - persist: Retain the current mode.
 ##   - restore: Restore previously saved mode.
 ##   - normal: Always revert to normal mode.
-c.tabs.mode_on_change = 'restore'
+c.tabs.mode_on_change = 'normal'
 
 ## Switch between tabs using the mouse wheel.
 ## Type: Bool

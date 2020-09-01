@@ -60,6 +60,12 @@ set nobackup
 set nowb
 " set noswapfile
 
+" turn on persistent undo
+if has("persistent_undo")
+  set undodir=$XDG_DATA_HOME/nvim/undo
+  set undofile
+endif
+
 set hidden
 set history=1000
 

@@ -23,7 +23,7 @@ timer() {
     pgrep dunst >/dev/null && killall -q dunst
     dunst -shrink -alignment 'center' &
     until [ "$c" = "$z" ]; do
-        dunstify -r "$i" -t 6000 -a 'fancy' "$j" "\nuntil scrot" \
+        dunstify -r "$i" -t 6000 -a 'fancy1' "$j" "until scrot" \
             -i /tmp/dunst_icon.png
         sleep 1
         c=$((${c} + 1))

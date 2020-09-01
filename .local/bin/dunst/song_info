@@ -43,7 +43,7 @@ z=0
 c=8
 until [ "$z" = "$c" ]; do
     calc
-    dunstify -r 2001 -t 6000 -a mpdunst "   now playing" \
+    dunstify -r 2001 -t 6000 -a 'fancy3' "   now playing" \
         "\n  $song\n‎ﴁ‎  $artist\n神  $elapsed of $duration $perc" -i "/tmp/dartc.png"
     sleep 0.5
     z=$((${z} + 1))
@@ -51,7 +51,7 @@ done
 z=0
 until [ "$z" = "$c" ]; do
     calc
-    dunstify -r 2001 -t 6000 -a mpdunst "     up next" \
+    dunstify -r 2001 -t 6000 -a 'fancy3' "     up next" \
         "\n  $nsong\n‎ﴁ‎  $nartist\n神  $remain until song begins" -i "/tmp/dartn.png"
     sleep 0.5
     z=$((${z} + 1))

@@ -66,7 +66,7 @@ fi
 pgrep dunst >/dev/null && killall -q dunst
 dunst -geometry "380x3-4+4" -alignment "center" &
 i=$(shuf -i 1-10000 -n 1)
-dunstify -r "$i" -t 6000 -a 'fancy' "$v%" "\n$p" -i /tmp/dunst_icon0.png
+dunstify -r "$i" -t 6000 -a 'fancy1' "$v%" "$p" -i /tmp/dunst_icon0.png
 
 if [ -n "$an" ]; then
     sleep 3
@@ -75,12 +75,12 @@ if [ -n "$an" ]; then
         until [ "$c" -gt "$mc" ]; do
             l=$(echo "$an" | sed -n "$c"p)
             k=$(echo "$vm" | sed -n "$c"p)
-            dunstify -r "$i" -t 6000 -a 'fancy' "$k%" "\n$l" -i /tmp/dunst_icon"$c".png
+            dunstify -r "$i" -t 6000 -a 'fancy1' "$k%" "$l" -i /tmp/dunst_icon"$c".png
             sleep 3
             c=$((${c} + 1))
         done
     else
-        dunstify -r "$i" -t 6000 -a 'fancy' "$vm%" "\n$an" -i /tmp/dunst_icon1.png
+        dunstify -r "$i" -t 6000 -a 'fancy1' "$vm%" "$an" -i /tmp/dunst_icon1.png
         sleep 3
     fi
 else

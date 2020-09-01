@@ -27,9 +27,9 @@ convert -size 75x75 xc:"$b" \
 i=$(shuf -i 1-10000 -n 1)
 pgrep dunst >/dev/null && killall -q dunst
 dunst -shrink -alignment 'center' &
-[ $status = "enabled" ] && dunstify -r "$i" -t 6000 -a 'fancy' "disabled" \
-    "\nwifi" -i /tmp/dunst_icon.png \
-    || dunstify -r "$i" -t 6000 -a 'fancy' "enabled" "\nwifi" \
+[ $status = "enabled" ] && dunstify -r "$i" -t 6000 -a 'fancy1' "disabled" \
+    "wifi" -i /tmp/dunst_icon.png \
+    || dunstify -r "$i" -t 6000 -a 'fancy1' "enabled" "wifi" \
         -i /tmp/dunst_icon.png
 sleep 3
 dunstify -C "$i"

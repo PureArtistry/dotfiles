@@ -7,8 +7,13 @@ esac
 
 # exit menu using rofi
 
-foo=$($utter " logout \n secure \n‎ﰇ‎ reboot " | rofi -theme 'exit' -dmenu -i \
-    -mesg "  $(echo "$USER") |    $(head -n1 /etc/hostname) |   $(uptime -p | sed -e 's/up //g')" \
+my_uptime=$(uptime -p | awk '{print $2, $3, $4, $5}')
+case "$my_uptime" in
+*,) my_uptime=$(echo "> $my_uptime" | sed 's/.$//') ;;
+esac
+
+foo=$($utter " logout \n secure \n‎ﰇ‎ reboot " | rofi -theme 'exit' -no-cycle -dmenu -i \
+    -mesg "  $(echo "$USER") |    $(head -n1 /etc/hostname) |   $my_uptime" \
     -p 'going somewhere..?' -selected-row 1 -format d)
 [ ! "$foo" ] && exit
 case "$foo" in

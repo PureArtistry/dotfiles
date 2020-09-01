@@ -73,8 +73,8 @@ super + alt + p
     qutebrowser ':open -p'
 
 # games
-super + l
-    game_launcher
+#super + l
+# this script needs re-writing
 super + shift + l
     lutris
 super + alt + l

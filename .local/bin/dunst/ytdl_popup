@@ -15,17 +15,10 @@ convert -size 75x75 xc:"$b" \
     -annotate +0+0 "" \
     /tmp/dunst_icon.png >/dev/null 2>&1
 
-if [ -n "$2" ]; then
-    doing="downloading..."
-    title="$1"
-else
-    doing="download complete"
-    title=$(echo "$1" | awk -F '/' '{print $6}')
-fi
-
 pgrep dunst >/dev/null && killall -q dunst
 dunst -shrink -alignment "center" &
-dunstify -r 43224 -t 6000 -a 'fancy' "$doing" "\n$title" -i /tmp/dunst_icon.png
+dunstify -r 43224 -t 6000 -a 'fancy1' "ready!" \
+    "$(echo "$1" | awk -F '/' '{print $6}')" -i /tmp/dunst_icon.png
 sleep 4
 dunstify -C 43224
 killall -q dunst

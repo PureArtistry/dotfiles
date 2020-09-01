@@ -64,21 +64,27 @@ listening() {
 
 youtube() {
     processed="$selection"
-    foo=$($utter "download video\nwatch fullscreen\nwatch distraction\nwatch standard" | rofi -theme 'video1' \
-        -p "viewing experience?" \
-        -mesg "  $(echo "$selection" | cut -c 1-40 | sed 's/$/.../')" \
-        -lines 4 -fixed-num-lines 4 -dmenu -i -format d)
+    local msg=$(echo "$selection" | wc -c)
+    [ "$msg" -ge 43 ] && msg=$(echo "$selection" | cut -c 1-40 | sed 's/$/.../') \
+        || msg="$selection"
+    foo=$($utter "download video\nwatch fullscreen\nwatch distraction\nwatch standard" \
+        | rofi -theme 'video1' \
+            -p "viewing experience?" \
+            -mesg "  $msg" \
+            -lines 4 -fixed-num-lines 4 -dmenu -i -format d)
     [ ! "$foo" ] && main
     case "$foo" in
     1)
         youtube-dl "$selection" &
-        ytdl_popup "$selection" 1 &
+        make_icon '52' ''
+        new_face_in_town
+        dunstify -r 43224 -t 4000 -a 'fancy1' "downloading" "$selection" -i /tmp/dunst_icon.png
         ;;
     2)
         listening
         make_icon '52' ''
         new_face_in_town
-        dunstify -r 010101 -t 4000 -a 'fancy' "loading video..." "\n$selection" \
+        dunstify -r 010101 -t 4000 -a 'fancy1' "loading" "$selection" \
             -i /tmp/dunst_icon.png
         bspc rule -a mpv:\* -o desktop=10
         mpv "$selection" --fs &
@@ -91,7 +97,7 @@ youtube() {
         listening
         make_icon '52' ''
         new_face_in_town
-        dunstify -r 010101 -t 4000 -a 'fancy' "loading video..." "\n$selection" \
+        dunstify -r 010101 -t 4000 -a 'fancy1' "loading" "$selection" \
             -i /tmp/dunst_icon.png
         distraction_toggle off
         bspc rule -a mpv:\* -o desktop=1 state=floating \
@@ -109,7 +115,7 @@ youtube() {
         listening
         make_icon '52' ''
         new_face_in_town
-        dunstify -r 010101 -t 4000 -a 'fancy' "loading video..." "\n$selection" \
+        dunstify -r 010101 -t 4000 -a 'fancy1' "loading" "$selection" \
             -i /tmp/dunst_icon.png
         mpv "$selection" &
         bspc subscribe node_add -c 1
@@ -126,16 +132,19 @@ torrent() {
     transmission-remote -a "$selection"
     make_icon '52' ''
     new_face_in_town
-    dunstify -t 3000 -a 'fancy' "torrent added" -i /tmp/dunst_icon.png
+    dunstify -t 4000 -a 'fancy2' "torrent added" -i /tmp/dunst_icon.png
     xclip -selection clipboard /dev/null
     main
 }
 
 twitch() {
     processed="$selection"
+    local msg=$(echo "$selection" | wc -c)
+    [ "$msg" -ge 43 ] && msg=$(echo "$selection" | cut -c 1-40 | sed 's/$/.../') \
+        || msg="$selection"
     bar=$($utter "interactive\ndistraction\nfullscreen" | rofi -theme 'video1' \
         -p "viewing experience?" \
-        -mesg "  $(echo "$selection" | cut -c 1-26 | sed 's/$/.../')" \
+        -mesg "  $msg" \
         -lines 3 -fixed-num-lines 3 -dmenu -i -format d)
     [ ! "$bar" ] && main
     case "$bar" in
@@ -143,7 +152,7 @@ twitch() {
         listening
         make_icon '52' ''
         new_face_in_town
-        dunstify -r 010101 -t 10000 -a 'fancy' "loading stream..." "\n$selection" \
+        dunstify -r 010101 -t 10000 -a 'fancy1' "loading" "$selection" \
             -i /tmp/dunst_icon.png
         bspc rule -a mpv:\* -o desktop=10 state=tiled
         streamlink -p mpv "$selection" best &
@@ -161,7 +170,7 @@ twitch() {
         listening
         make_icon '52' ''
         new_face_in_town
-        dunstify -r 010101 -t 10000 -a 'fancy' "loading stream..." "\n$selection" \
+        dunstify -r 010101 -t 10000 -a 'fancy1' "loading" "$selection" \
             -i /tmp/dunst_icon.png
         distraction_toggle off
         bspc rule -a mpv:\* -o desktop=1 state=floating \
@@ -179,7 +188,7 @@ twitch() {
         listening
         make_icon '52' ''
         new_face_in_town
-        dunstify -r 010101 -t 10000 -a 'fancy' "loading stream..." "\n$selection" \
+        dunstify -r 010101 -t 10000 -a 'fancy1' "loading" "$selection" \
             -i /tmp/dunst_icon.png
         bspc rule -a mpv:\* -o desktop=10 state=fullscreen
         streamlink -p mpv "$selection" best &
