@@ -41,12 +41,12 @@ color.debug=blue
 # Task state
 color.completed=
 color.deleted=
-color.active=white on green
-color.recurring=magenta
-color.scheduled=white on green
+color.active=
+color.recurring=
+color.scheduled=
 color.until=
-color.blocked=black on white
-color.blocking=black on bright white
+color.blocked=
+color.blocking=
 
 # Project
 color.project.none=
@@ -54,17 +54,17 @@ color.project.none=
 # Priority
 color.uda.priority.H=bold white
 color.uda.priority.M=white
-color.uda.priority.L=
+color.uda.priority.L=yellow
 
 # Tags
-color.tag.next=bold yellow
+color.tag.next=
 color.tag.none=
-color.tagged=green
+color.tagged=magenta
 
 # Due
-color.due=red
-color.due.today=red
-color.overdue=bold red
+color.due=white on green
+color.due.today=cyan
+color.overdue=bold white on red
 
 # UDA
 #color.uda.X=

@@ -13,19 +13,13 @@
     location: 0;
 }
 
-textbox {
-    horizontal-align: 0.5;
-    vertical-align: 0.5;
-    padding: 8px;
-}
-
 inputbar {
     children: [ prompt ];
     background-color: @my-colour1;
 }
 
 prompt {
-    font: "VictorMono Nerd Font italic 20";
+    font: "VictorMono Nerd Font italic 19";
     background-color: @my-colour1;
     padding: 8px 8px 8px 12px;
 }
@@ -47,12 +41,15 @@ element selected {
 message {
     children: [ textbox ];
     font: "Iosevka Nerd Font 7";
-    background-color: @my-inactive;
+    background-color: @my-colour4;
 }
 
 textbox {
-    text-color: @my-colour8;
-    background-color: @my-inactive;
+    text-color: @my-colour7;
+    background-color: @my-colour4;
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
+    padding: 4px 8px 4px 8px;
 }
 
 /* vim:ft=css

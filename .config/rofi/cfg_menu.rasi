@@ -57,10 +57,11 @@ entry {
 }
 
 prompt {
-    text-color: @my-colour8;
+    text-color: @my-colour7;
+    background-color: @my-colour4;
     horizontal-align: 0.5;
     vertical-align: 0.5;
-    padding: 2 6 2 6;
+    padding: 4px 8px 4px 8px;
 }
 
 /* vim:ft=css

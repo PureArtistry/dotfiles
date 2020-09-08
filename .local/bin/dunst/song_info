@@ -29,7 +29,7 @@ calc() {
     k=$((${k} * 60))
     k=$((${k} + ${l}))
     remain=$((${k} - ${i}))
-    if [ "$remain" -le 1 ]; then
+    if [ "$remain" -le 2 ]; then
         dunstify -C 2001
         killall -q dunst
         exit
@@ -41,6 +41,7 @@ calc() {
 
 z=0
 c=8
+pgrep dunst &>/dev/null && killall -q dunst
 until [ "$z" = "$c" ]; do
     calc
     dunstify -r 2001 -t 6000 -a 'fancy3' "   now playing" \

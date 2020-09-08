@@ -36,6 +36,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'honza/vim-snippets'
     Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+    Plug 'vim-scripts/restore_view.vim'
 
 call plug#end()
 
@@ -46,14 +47,15 @@ call plug#end()
 
 " Set to auto read when a file is changed from the outside
 au FocusGained,BufEnter * checktime
-" Return to last edit position when opening files (You want this!)
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 " auto reload config on edits
 augroup myconfighooks
     au!
     autocmd bufwritepost init.vim source ~/.config/nvim/init.vim
     autocmd bufwritepost mood.vim source ~/.config/nvim/init.vim
 augroup END
+
+set viewoptions=cursor,folds,slash,unix
+" let g:skipview_files = ['*\.vim']
 
 " Turn backup off, since most stuff is in SVN, git etc. anyway...
 set nobackup

@@ -1,7 +1,31 @@
 #!/bin/sh
+intro() { # <- this function is here to enable me/you to fold the banner
 
-# script to display system/life/song information
-# idea (sort of) inspired by https://github.com/sdushantha/fontpreview
+    #   .o88o.
+    #   888 `"
+    #  o888oo   .oooo.   ooo. .oo.    .ooooo.  oooo    ooo
+    #   888    `P  )88b  `888P"Y88b  d88' `"Y8  `88.  .8'
+    #   888     .oP"888   888   888  888         `88..8'
+    #   888    d8(  888   888   888  888   .o8    `888'
+    #  o888o   `Y888""8o o888o o888o `Y8bod8P'     .8'
+    #                                          .o..P'
+    #                                          `Y8P'
+    #
+    #                             o8o      .    o8o
+    #                             `"'    .o8    `"'
+    #  oooo oooo    ooo oooo d8b oooo  .o888oo oooo  ooo. .oo.    .oooooooo
+    #   `88. `88.  .8'  `888""8P `888    888   `888  `888P"Y88b  888' `88b
+    #    `88..]88..8'    888      888    888    888   888   888  888   888
+    #     `888'`888'     888      888    888 .  888   888   888  `88bod8P'
+    #      `8'  `8'     d888b    o888o   "888" o888o o888o o888o `8oooooo.
+    #                                                            d"     YD
+    #                                                            "Y88888P'
+
+    # script to display system/life/song information
+    # idea (sort of) inspired by https://github.com/sdushantha/fontpreview
+
+    echo ' ' &>/dev/null # https://github.com/PureArtistry
+}
 
 catch_signal_usr1() {
     trap catch_signal_usr1 USR1
@@ -10,11 +34,18 @@ catch_signal_usr1() {
 }
 trap catch_signal_usr1 USR1
 
+catch_signal_usr2() {
+    trap catch_signal_usr2 USR2
+    state="update"
+    pm_run=1
+    break
+}
+trap catch_signal_usr2 USR2
+
 main() {
     count=0
     cycle=0
     state="running"
-    [ -f /tmp/fancy_message ] && other_info fancy_message
     now_playing=$(mpc | sed -n 2p | awk '{print $1}')
     [ ! "$now_playing" ] && other_info
     case "$now_playing" in
@@ -23,36 +54,129 @@ main() {
     esac
 }
 
+update_check() {
+    nc -z -w 1 8.8.8.8 53 >/dev/null 2>&1
+    local net=$?
+    if [ "$net" -eq 0 ]; then
+        if [ -z "$uc_interval" ] || [ $(($(date +'%s') - ${uc_interval})) -gt 1800 ] || [ -n "$pm_run" ]; then
+            uc_interval=$(date +'%s')
+            [ -n "$pm_run" ] && unset pm_run
+            local p=$(checkupdates 2>/dev/null | wc -l)
+            local y=$(yay -Qum 2>/dev/null | wc -l)
+            [ ! "$p" ] && p=0
+            [ ! "$y" ] && y=0
+            local t=$((${p} + ${y}))
+            if [ "$t" = 1 ]; then
+                update_status="  there's an update available"
+            elif [ "$t" -gt 0 ]; then
+                update_status="  you have $t updates waiting"
+            else
+                update_status="  your system is up to date"
+            fi
+        fi
+    else
+        update_status="  there's no internet!"
+    fi
+    return
+}
+
 other_info() {
-    [ "$1" = "fancy_message" ] && general="$(head -n1 /tmp/fancy_message)" \
-        || general="Hello Dave. You're looking well today."
-    # general="‎שּ‎ ‎‎   hi reddit!"
+    general="Hello Dave. You're looking well today."
     until [ "$state" = "update" ]; do
         if [ "$1" = "pause" ]; then
             song=$(mpc current -f "%title%")
             if [ "$count" = 100 ]; then
                 count=0
-                [ "$cycle" = 1 ] && cycle=0 || cycle=$((${cycle} + 1))
+                [ "$cycle" = 3 ] && cycle=0 || cycle=$((${cycle} + 1))
             fi
             if [ "$cycle" = 0 ]; then
+                fancy_font='Iosevka-Nerd-Font-Complete'
                 message="  $song"
-                fancy_font="Iosevka-Nerd-Font-Complete"
                 display_text
                 loop
             elif [ "$cycle" = 1 ]; then
-                message="$general"
-                fancy_font="Victor-Mono-Medium-Italic-Nerd-Font-Complete"
+                if [ -f /tmp/fancy_message ]; then
+                    local x=$(cat /tmp/fancy_message)
+                    message=$(echo "$x" | head -n1)
+                    local font=$(echo "$x" | sed -n 2p)
+                    case "$font" in
+                    1) fancy_font='Victor-Mono-Medium-Italic-Nerd-Font-Complete' ;;
+                    *) fancy_font='Iosevka-Nerd-Font-Complete' ;;
+                    esac
+                    rm -f /tmp/fancy_message 2>/dev/null
+                else
+                    message="$general"
+                    fancy_font='Victor-Mono-Medium-Italic-Nerd-Font-Complete'
+                fi
+                display_text
+                loop
+            elif [ "$cycle" = 2 ]; then
+                fancy_font='Iosevka-Nerd-Font-Complete'
+                topjob=$(task 2>/dev/null | sed -n 4p)
+                job_no=$(echo "$topjob" | awk '{print $1}')
+                job_due=$(echo "$topjob" | awk '{print $5}')
+                job_desc=$(task export 2>/dev/null | jq -r ".[$((${job_no} - 1))].description")
+                [ $(echo "$job_desc" | wc -c) -gt 22 ] \
+                    && job_desc=$(echo "$job_desc" | cut -c 1-19 | sed 's/$/.../')
+                message="‎華‎  $job_desc ($job_due)"
+                display_text
+                loop
+            elif [ "$cycle" = 3 ]; then
+                update_check
+                fancy_font='Iosevka-Nerd-Font-Complete'
+                message="$update_status"
                 display_text
                 loop
             fi
         else
-            [ "$count" = 100 ] && count=0
-            message="$general"
-            [ "$1" = "fancy_message" ] \
-                && fancy_font="Iosevka-Nerd-Font-Complete" \
-                || fancy_font="Victor-Mono-Medium-Italic-Nerd-Font-Complete"
-            display_text
-            loop
+            if [ "$count" = 100 ]; then
+                count=0
+                [ "$cycle" = 2 ] && cycle=0 || cycle=$((${cycle} + 1))
+            fi
+            if [ "$cycle" = 0 ]; then
+                if [ -f /tmp/fancy_message ]; then
+                    local x=$(cat /tmp/fancy_message)
+                    message=$(echo "$x" | head -n1)
+                    local font=$(echo "$x" | sed -n 2p)
+                    case "$font" in
+                    1) fancy_font='Victor-Mono-Medium-Italic-Nerd-Font-Complete' ;;
+                    *) fancy_font='Iosevka-Nerd-Font-Complete' ;;
+                    esac
+                    rm -f /tmp/fancy_message 2>/dev/null
+                else
+                    message="$general"
+                    fancy_font='Victor-Mono-Medium-Italic-Nerd-Font-Complete'
+                fi
+                if [ $(($(date +'%s') - ${wp_timer})) -gt 180 ]; then
+                    wp_timer=$(date +'%s')
+                    wp_list=$(ls -1 $HOME/images/wallpapers)
+                    rand_wall=$(shuf -i 1-$(echo "$wp_list" | wc -l) -n 1)
+                    wallpaper=$(echo "$wp_list" | sed -n ${rand_wall}p)
+                    wallpaper="${HOME}/images/wallpapers/${wallpaper}"
+                    convert "$wallpaper" -resize 500x500^ \
+                        -gravity center -extent 500x500 \
+                        -flatten /tmp/albumart.png
+                fi
+                display_text
+                loop
+            elif [ "$cycle" = 1 ]; then
+                fancy_font='Iosevka-Nerd-Font-Complete'
+                topjob=$(task 2>/dev/null | sed -n 4p)
+                job_no=$(echo "$topjob" | awk '{print $1}')
+                job_due=$(echo "$topjob" | awk '{print $5}')
+                job_desc=$(task export 2>/dev/null | jq -r ".[$((${job_no} - 1))].description")
+                [ $(echo "$job_desc" | wc -c) -gt 22 ] \
+                    && job_desc=$(echo "$job_desc" | cut -c 1-19 | sed 's/$/.../')
+                message="‎華‎  $job_desc ($job_due)"
+                display_text
+                loop
+            elif [ "$cycle" = 2 ]; then
+                update_check
+                fancy_font='Iosevka-Nerd-Font-Complete'
+                message="$update_status"
+                display_text
+                loop
+            fi
         fi
     done
     main
@@ -69,25 +193,25 @@ song_info() {
             [ "$cycle" = 3 ] && cycle=0 || cycle=$((${cycle} + 1))
         fi
         if [ "$cycle" = 0 ]; then
+            fancy_font='Iosevka-Nerd-Font-Complete'
             [ ! "$song" ] && message="  missing IDv3 tags" || message="  $song"
-            fancy_font="Iosevka-Nerd-Font-Complete"
             display_text
             loop
         elif [ "$cycle" = 1 ]; then
+            fancy_font='Iosevka-Nerd-Font-Complete'
             [ ! "$artist" ] && message="  missing IDv3 tags" \
                 || message="‎ﴁ‎  $artist"
-            fancy_font="Iosevka-Nerd-Font-Complete"
             display_text
             loop
         elif [ "$cycle" = 2 ]; then
+            fancy_font='Iosevka-Nerd-Font-Complete'
             [ ! "$album" ] && message="  missing IDv3 tags" || message="  $album"
-            fancy_font="Iosevka-Nerd-Font-Complete"
             display_text
             loop
         elif [ "$cycle" = 3 ]; then
+            fancy_font='Iosevka-Nerd-Font-Complete'
             [ ! "$date" ] && message="  missing IDv3 tags" \
                 || message="‎ﮮ‎  $date"
-            fancy_font="Iosevka-Nerd-Font-Complete"
             display_text
             loop
         fi
@@ -104,13 +228,13 @@ loop() {
 }
 
 display_text() {
-    bspc node $(head -n 1 /tmp/fancy_writing_id) --flag hidden=on
+    bspc node "$fancy_writing_id" --flag hidden=on
     sleep 0.1
     clear
     fg_color=$(sed -n 8p $XDG_CACHE_HOME/wal/colors)
     length_check=$(echo -n "$message" | wc -c)
     [ "$length_check" -gt 39 ] && final_message=$(echo "$message" | cut -c 1-36 \
-        | sed 's/$/.../g') || final_message="$message"
+        | sed 's/$/.../') || final_message="$message"
     [ "$fancy_font" = 'Victor-Mono-Medium-Italic-Nerd-Font-Complete' ] \
         && font_size=31 || font_size=34
     convert -size 650x200 xc:"transparent" \
@@ -122,15 +246,11 @@ display_text() {
         /tmp/fancy_writing.png >/dev/null 2>&1
     kitty +kitten icat /tmp/fancy_writing.png >/dev/null 2>&1
     sleep 0.1
-    bspc node $(head -n 1 /tmp/fancy_writing_id) --flag hidden=off
-    if [ -f /tmp/fancy_message ]; then
-        rm -f /tmp/fancy_message
-        loop
-        main
-    fi
+    bspc node "$fancy_writing_id" --flag hidden=off
     return
 }
 
 fancy_writing_id=$(xwininfo -root -children | grep -w "fancy writing" | awk '{print $1}')
 echo "$fancy_writing_id" >/tmp/fancy_writing_id
+wp_timer=$(date +'%s')
 main

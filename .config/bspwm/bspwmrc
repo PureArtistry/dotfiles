@@ -23,8 +23,8 @@ bspc config border_width 3
 bspc config window_gap 12
 
 bspc config automatic_scheme spiral
-bspc config split_ratio 0.5
 bspc config initial_polarity first_child
+bspc config split_ratio 0.5
 bspc config ignore_ewmh_focus true
 
 bspc config borderless_monocle true
@@ -36,7 +36,7 @@ bspc config left_monocle_padding 0
 
 # window rules
 bspc rule -a HideMe hidden=on
-bspc rule -a Sxiv:\* state=floating
+bspc rule -a Sxiv:\* state=floating manage=on
 bspc rule -a mpv state=floating rectangle=1280x720+0+0 center=true
 bspc rule -a "my playlist" state=floating rectangle=640x480+0+0 center=true hidden=on sticky=on layer=above
 bspc rule -a "companion" state=floating rectangle=800x600+0+0 center=true hidden=on sticky=on layer=above

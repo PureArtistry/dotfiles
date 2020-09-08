@@ -24,20 +24,23 @@ configuration {
 inputbar {
     children: [ entry, prompt ];
     padding: 0 2 0 6;
+    background-color: @my-inactive;
 }
 
 entry {
     font: "VictorMono Nerd Font italic 14";
     horizontal-align: 0.5;
     vertical-align: 0.6;
-    padding: 0 6 0 6;
+    padding: 0 6 2 6;
+    background-color: @my-inactive;
     placeholder: "are you lost?";
     placeholder-color: @my-colour8;
 }
 
 prompt {
     font: "Iosevka Nerd Font 28";
-    padding: 0 4 0 4;
+    padding: 2 4 0 4;
+    background-color: @my-inactive;
     text-color: @my-colour4;
 }
 
@@ -56,11 +59,11 @@ element selected {
     background-color: @my-colour2;
 }
 
-element normal.urgent {
+element urgent {
     background-color: @my-colour4;
 }
 
-element normal.active {
+element active {
     background-color: @my-colour1;
 }
 

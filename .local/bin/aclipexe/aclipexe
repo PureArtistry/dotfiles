@@ -1,11 +1,23 @@
 #!/bin/sh
 SHELL_TYPE=$(readlink /bin/sh)
-case $SHELL_TYPE in
+case "$SHELL_TYPE" in
 *dash) utter='echo' ;;
 *) utter='echo -e' ;;
 esac
+intro() { # (this function is here to enable me/you to fold the banner)
 
-# (a)utomatic (clip)board (exe)cution
+    #                      oooo   o8o
+    #                      `888   `"'
+    #   .oooo.    .ooooo.   888  oooo  oo.ooooo.   .ooooo.  oooo    ooo  .ooooo.
+    #  `P  )88b  d88' `"Y8  888  `888   888' `88b d88' `88b  `88b..8P'  d88' `88b
+    #   .oP"888  888        888   888   888   888 888ooo888    Y888'    888ooo888
+    #  d8(  888  888   .o8  888   888   888   888 888    .o  .o8"'88b   888    .o
+    #  `Y888""8o `Y8bod8P' o888o o888o  888bod8P' `Y8bod8P' o88'   888o `Y8bod8P'
+    #                                   888
+    #                                  o888o (a)utomatic (clip)board (exe)cution
+
+    echo ' ' &>/dev/null # https://github.com/PureArtistry
+}
 
 processed=""
 
@@ -14,6 +26,7 @@ main() {
         selection=$(xclip -selection clipboard -o)
         [ ! "$selection" ] || [ "$selection" = "$processed" ] && main
         case "$selection" in
+        https://*.*/*.png | https://*.*/*.jpg | https://*.*/*.jpeg) image_bit ;;
         https://*.youtube.com/watch* | https://*.youtu.be/watch*) youtube ;;
         magnet:?* | *magnet*tracker*) torrent ;;
         https://*twitch.tv/*) twitch ;;
@@ -64,75 +77,7 @@ listening() {
 
 youtube() {
     processed="$selection"
-    local msg=$(echo "$selection" | wc -c)
-    [ "$msg" -ge 43 ] && msg=$(echo "$selection" | cut -c 1-40 | sed 's/$/.../') \
-        || msg="$selection"
-    foo=$($utter "download video\nwatch fullscreen\nwatch distraction\nwatch standard" \
-        | rofi -theme 'video1' \
-            -p "viewing experience?" \
-            -mesg "  $msg" \
-            -lines 4 -fixed-num-lines 4 -dmenu -i -format d)
-    [ ! "$foo" ] && main
-    case "$foo" in
-    1)
-        youtube-dl "$selection" &
-        make_icon '52' ''
-        new_face_in_town
-        dunstify -r 43224 -t 4000 -a 'fancy1' "downloading" "$selection" -i /tmp/dunst_icon.png
-        ;;
-    2)
-        listening
-        make_icon '52' ''
-        new_face_in_town
-        dunstify -r 010101 -t 4000 -a 'fancy1' "loading" "$selection" \
-            -i /tmp/dunst_icon.png
-        bspc rule -a mpv:\* -o desktop=10
-        mpv "$selection" --fs &
-        bspc subscribe node_add -c 1
-        and_the_horse_you_rode_in_on
-        [ "$need_mute" = "yes" ] && mpc pause
-        bspc desktop 10 -f
-        ;;
-    3)
-        listening
-        make_icon '52' ''
-        new_face_in_town
-        dunstify -r 010101 -t 4000 -a 'fancy1' "loading" "$selection" \
-            -i /tmp/dunst_icon.png
-        distraction_toggle off
-        bspc rule -a mpv:\* -o desktop=1 state=floating \
-            rectangle=897x505+1005+287 center=false
-        mpv "$selection" &
-        bspc subscribe node_add -c 1
-        and_the_horse_you_rode_in_on
-        [ "$need_mute" = "yes" ] && mpc pause
-        bspc desktop 1 -f
-        sleep 0.1
-        xdotool mousemove 400 400
-        bspc node pointed -f
-        ;;
-    4)
-        listening
-        make_icon '52' ''
-        new_face_in_town
-        dunstify -r 010101 -t 4000 -a 'fancy1' "loading" "$selection" \
-            -i /tmp/dunst_icon.png
-        mpv "$selection" &
-        bspc subscribe node_add -c 1
-        and_the_horse_you_rode_in_on
-        [ "$need_mute" = "yes" ] && mpc pause
-        ;;
-    esac
-    xclip -selection clipboard /dev/null
-    main
-}
-
-torrent() {
-    processed="$selection"
-    transmission-remote -a "$selection"
-    make_icon '52' ''
-    new_face_in_town
-    dunstify -t 4000 -a 'fancy2' "torrent added" -i /tmp/dunst_icon.png
+    rofeo aclipexe "$(echo $selection | awk -F '=' '{print $NF}')"
     xclip -selection clipboard /dev/null
     main
 }
@@ -142,17 +87,49 @@ twitch() {
     local msg=$(echo "$selection" | wc -c)
     [ "$msg" -ge 43 ] && msg=$(echo "$selection" | cut -c 1-40 | sed 's/$/.../') \
         || msg="$selection"
-    bar=$($utter "interactive\ndistraction\nfullscreen" | rofi -theme 'video1' \
-        -p "viewing experience?" \
-        -mesg "  $msg" \
+    bar=$($utter "  fullscreen\n  home screen\n  interactive" | rofi -theme 'video1' \
+        -p "  viewing experience?" \
+        -mesg "  $msg" \
         -lines 3 -fixed-num-lines 3 -dmenu -i -format d)
     [ ! "$bar" ] && main
+    local name=$(echo "$selection" | awk -F '/' '{print $NF}')
     case "$bar" in
     1)
         listening
         make_icon '52' ''
         new_face_in_town
-        dunstify -r 010101 -t 10000 -a 'fancy1' "loading" "$selection" \
+        dunstify -r 010101 -t 10000 -a 'fancy1' "loading" "$name" \
+            -i /tmp/dunst_icon.png
+        bspc rule -a mpv:\* -o desktop=10 state=fullscreen
+        streamlink -p mpv "$selection" best &
+        bspc subscribe node_add -c 1
+        and_the_horse_you_rode_in_on
+        [ "$need_mute" = "yes" ] && mpc pause
+        bspc desktop 10 -f
+        ;;
+    2)
+        listening
+        make_icon '52' ''
+        new_face_in_town
+        dunstify -r 010101 -t 10000 -a 'fancy1' "loading" "$name" \
+            -i /tmp/dunst_icon.png
+        distraction_toggle off
+        bspc rule -a mpv:\* -o desktop=1 state=floating \
+            rectangle=897x505+1005+287 center=false
+        streamlink -p mpv "$selection" best &
+        bspc subscribe node_add -c 1
+        and_the_horse_you_rode_in_on
+        [ "$need_mute" = "yes" ] && mpc pause
+        bspc desktop 1 -f
+        sleep 0.1
+        xdotool mousemove 400 400
+        bspc node pointed -f
+        ;;
+    3)
+        listening
+        make_icon '52' ''
+        new_face_in_town
+        dunstify -r 010101 -t 10000 -a 'fancy1' "loading" "$name" \
             -i /tmp/dunst_icon.png
         bspc rule -a mpv:\* -o desktop=10 state=tiled
         streamlink -p mpv "$selection" best &
@@ -166,38 +143,17 @@ twitch() {
         qutebrowser --target window \
             https://www.twitch.tv/popout/"$chat"/chat?popout= &
         ;;
-    2)
-        listening
-        make_icon '52' ''
-        new_face_in_town
-        dunstify -r 010101 -t 10000 -a 'fancy1' "loading" "$selection" \
-            -i /tmp/dunst_icon.png
-        distraction_toggle off
-        bspc rule -a mpv:\* -o desktop=1 state=floating \
-            rectangle=897x505+1005+287 center=false
-        streamlink -p mpv "$selection" best &
-        bspc subscribe node_add -c 1
-        and_the_horse_you_rode_in_on
-        [ "$need_mute" = "yes" ] && mpc pause
-        bspc desktop 1 -f
-        sleep 0.1
-        xdotool mousemove 400 400
-        bspc node pointed -f
-        ;;
-    3)
-        listening
-        make_icon '52' ''
-        new_face_in_town
-        dunstify -r 010101 -t 10000 -a 'fancy1' "loading" "$selection" \
-            -i /tmp/dunst_icon.png
-        bspc rule -a mpv:\* -o desktop=10 state=fullscreen
-        streamlink -p mpv "$selection" best &
-        bspc subscribe node_add -c 1
-        and_the_horse_you_rode_in_on
-        [ "$need_mute" = "yes" ] && mpc pause
-        bspc desktop 10 -f
-        ;;
     esac
+    xclip -selection clipboard /dev/null
+    main
+}
+
+torrent() {
+    processed="$selection"
+    transmission-remote -a "$selection"
+    make_icon '52' ''
+    new_face_in_town
+    dunstify -t 4000 -a 'fancy1' "added" "to transmission queue" -i /tmp/dunst_icon.png
     xclip -selection clipboard /dev/null
     main
 }
@@ -213,6 +169,55 @@ github() {
     processed="$selection"
     ace_ghc "$selection" &
     xclip -selection clipboard /dev/null
+    main
+}
+
+image_bit() {
+    processed="$selection"
+    og_name=$(echo "$selection" | awk -F '/' '{print $NF}')
+    ext=$(echo "$selection" | awk -F '.' '{print $NF}')
+    temp_name="$(date +'%s').img.$ext"
+    wp_total=$(ls -1 $HOME/images/wallpapers | wc -l)
+    wget -q -O /tmp/"$temp_name" "$selection"
+    convert /tmp/"$temp_name" -resize 460x259^ \
+        -gravity center -extent 460x259 \
+        -flatten /tmp/rofi_thumb.png
+    bspc rule -a Sxiv:\* -o state=floating manage=off
+    sxiv -g 460x259+730+260 -p -b /tmp/rofi_thumb.png &
+    thumb_pid="$!"
+    img_option=$(echo "  download image\n  set as wallpaper\n  open in gimp" \
+        | rofi -theme 'image' -dmenu \
+            -p "  $og_name" \
+            -mesg "  you currently have $wp_total wallpapers" \
+            -lines 3 -fixed-num-lines 3 -format d)
+    xclip -selection clipboard /dev/null
+    if [ ! "$img_option" ]; then
+        kill "$thumb_pid"
+        main
+    fi
+    case "$img_option" in
+    1)
+        new_name=$(rofi -theme 'entry' -dmenu -i -mesg '凜 are you naming this?')
+        kill "$thumb_pid"
+        [ ! "$new_name" ] && tn="$og_name" || tn="$new_name.$ext"
+        cp /tmp/"$temp_name" "$HOME"/images/download/"$tn"
+        make_icon '52' ''
+        new_face_in_town
+        dunstify -r 010101 -t 4000 -a 'fancy1' "copied" "$tn" -i /tmp/dunst_icon.png
+        ;;
+    2)
+        new_name=$(rofi -theme 'entry' -dmenu -i -mesg '凜 are you naming this?')
+        kill "$thumb_pid"
+        [ ! "$new_name" ] && tn="$og_name" || tn="$new_name.$ext"
+        cp /tmp/"$temp_name" "$HOME"/images/wallpapers/"$tn"
+        wpg -a "$HOME"/images/wallpapers/"$tn"
+        theme_change "$tn" &
+        ;;
+    3)
+        kill "$thumb_pid"
+        gimp /tmp/"$temp_name" &
+        ;;
+    esac
     main
 }
 

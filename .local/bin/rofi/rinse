@@ -11,9 +11,9 @@ playing=$(mpc current -f '%position%')
 [ ! "$playing" ] && playing=0 || playing=$((${playing} - 1))
 up_next=$(mpc queued -f '%title%')
 [ $(echo "$up_next" | wc -c) -gt 29 ] && up_next=$(echo "$up_next" | cut -c 1-26 | sed 's/$/.../')
-song_selection=$(mpc playlist | rofi -theme 'rinse' -keep-right \
-    -mesg "怜 $up_next" \
-    -p " ‎ﴁ‎  $x | ‎‎  $y | ‎‎  $z | 神  $t" \
+song_selection=$(mpc playlist -f "%title%  ->  ‎ﴁ‎  %artist%  ‎‎  %album%" \
+    | rofi -theme 'rinse' -mesg "怜 $up_next" \
+    -p " ‎ﴁ‎  $x | ‎‎  $y | ‎‎  $z | 神  $t " \
     -selected-row "$playing" -u "$playing" -no-custom -dmenu -i -format d)
 [ ! "$song_selection" ] && exit
 mpc -q play "$song_selection"

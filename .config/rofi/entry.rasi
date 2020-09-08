@@ -6,44 +6,30 @@
 }
 
 #window {
-    children: [ message, listview, inputbar, prompt ];
+    children: [ message, inputbar ];
     width: 460px;
     location: 0;
+    y-offset: -22;
+    border: 0 0 12 0;
+    border-color: @my-colour4;
 }
 
 message {
     children: [ textbox ];
     background-color: @my-colour1;
-    padding: 8px 8px 8px 12px;
 }
 
 textbox {
     font: "VictorMono Nerd Font italic 19";
+    text-color: @my-colour7;
     background-color: @my-colour1;
-}
-
-element-text {
+    padding: 8px 8px 8px 12px;
     vertical-align: 0.5;
-    highlight: @hl-style;
-    padding: 3 12 3 0;
-}
-
-element selected {
-    background-color: @my-colour2;
-}
-
-element urgent {
-    background-color: @my-colour4;
-}
-
-element active {
-    background-color: @my-colour1;
 }
 
 inputbar {
     children: [ entry ];
     padding: 8px 8px 8px 12px;
-    background-color: @my-active;
 }
 
 entry {
@@ -51,17 +37,8 @@ entry {
     vertical-align: 0.5;
     horizontal-align: 0.5;
     padding: 4;
-    background-color: @my-active;
-    placeholder: "pick a banger...";
+    placeholder: "something...";
     placeholder-color: @my-colour8;
-}
-
-prompt {
-    text-color: @my-colour7;
-    background-color: @my-colour4;
-    horizontal-align: 0.5;
-    vertical-align: 0.5;
-    padding: 4px 8px 4px 8px;
 }
 
 /* vim:ft=css

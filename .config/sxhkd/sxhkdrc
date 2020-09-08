@@ -12,9 +12,9 @@ super + Return
 super + shift + Return
     goyo_launch ranger
 
-# ytop
+# bottom
 super + shift + BackSpace
-    goyo_launch ytop
+    goyo_launch btm --battery
 
 # vim
 super + k
@@ -69,6 +69,8 @@ super + p
     private_script 1
 super + shift + p
     private_script 2
+super + ctrl + p
+    private_script 3
 super + alt + p
     qutebrowser ':open -p'
 
@@ -179,13 +181,17 @@ super + b
 
 # misc {{{
 
+# quick launch (will later be bookmarks menu)
+super + slash
+    qutebrowser --target 'window' 'https://www.nerdfonts.com/cheat-sheet'
+
 # toggle scratch terminal
 super + shift + Tab
     toggle_companion
 
 # rofi video menu
 super + v
-    video_menu
+    rofeo
 
 # toggle visualizer & album art
 super + shift + v
@@ -239,6 +245,25 @@ super + {w,q}
 
 # workspace {{{
 
+# bsp-layout {{{
+
+# notification popup for current layout
+super + shift + g
+    bspl_popup
+
+# make workspace master/stack (tall)
+super + g
+    bsp-layout set tall $(bspc query -T -d | jq -r '.name') --master-size 0.5
+# make workspace master/stack (wide)
+super + alt + g
+    bsp-layout set wide $(bspc query -T -d | jq -r '.name') --master-size 0.6
+
+# remove layout
+super + ctrl + g
+    bsp-layout remove $(bspc query -T -d | jq -r '.name')
+
+# }}}
+
 # focus home workspace and layer everything correctly
 super + 1
     feng_shui
@@ -281,11 +306,11 @@ super + {_,alt + } space
 
 # focus floating layer
 super + x
-    bspc node -f biggest.local.floating.\!hidden
+    bspc node -f 'biggest.local.floating.!hidden.window'
 
 # focus the next/previous node in the current desktop
 super + {_,shift + }c
-    bspc node -f {next,prev}.local.\!hidden
+    bspc node -f {next,prev}.local.\!hidden.window
 
 # fullscreen toggle
 super + shift + space

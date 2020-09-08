@@ -526,7 +526,7 @@ use_console_editor = yes
 #
 #color2 = green
 #
-progressbar_color = 4:b
+progressbar_color = 9:b
 #
 #progressbar_elapsed_color = green:b
 #

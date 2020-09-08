@@ -6,20 +6,24 @@
 }
 
 #window {
-    children: [ inputbar, listview, message ];
+    children: [ message, listview, inputbar ];
     width: 460px;
     location: 0;
+    y-offset: 80;
 }
 
-inputbar {
-    children: [ prompt ];
-    background-color: @my-colour1;
+message {
+    children: [ textbox ];
+    font: "Iosevka Nerd Font 7";
+    background-color: @my-active;
 }
 
-prompt {
-    font: "VictorMono Nerd Font italic 19";
-    background-color: @my-colour1;
-    padding: 8px 8px 8px 12px;
+textbox {
+    text-color: @my-colour7;
+    background-color: @my-active;
+    padding: 8;
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
 }
 
 listview {
@@ -43,18 +47,16 @@ element active {
     background-color: @my-colour1;
 }
 
-message {
-    children: [ textbox ];
-    font: "Iosevka Nerd Font 7";
+inputbar {
+    children: [ prompt ];
     background-color: @my-colour4;
 }
 
-textbox {
+prompt {
     text-color: @my-colour7;
     background-color: @my-colour4;
-    padding: 4px 8px 4px 8px;
-    horizontal-align: 0.5;
     vertical-align: 0.5;
+    padding: 4px 8px 4px 8px;
 }
 
 /* vim:ft=css

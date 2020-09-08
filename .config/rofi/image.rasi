@@ -6,26 +6,30 @@
 }
 
 #window {
-    children: [ message, listview, inputbar, prompt ];
+    children: [ inputbar, listview, message ];
     width: 460px;
     location: 0;
+    y-offset: 80;
 }
 
-message {
-    children: [ textbox ];
+inputbar {
+    children: [ prompt ];
+    background-color: @my-colour1;
+}
+
+prompt {
+    font: "VictorMono Nerd Font italic 19";
     background-color: @my-colour1;
     padding: 8px 8px 8px 12px;
 }
 
-textbox {
-    font: "VictorMono Nerd Font italic 19";
-    background-color: @my-colour1;
+listview {
 }
 
 element-text {
+    font: "Iosevka Nerd Font 16";
+    padding: 6px;
     vertical-align: 0.5;
-    highlight: @hl-style;
-    padding: 3 12 3 0;
 }
 
 element selected {
@@ -40,28 +44,18 @@ element active {
     background-color: @my-colour1;
 }
 
-inputbar {
-    children: [ entry ];
-    padding: 8px 8px 8px 12px;
-    background-color: @my-active;
+message {
+    children: [ textbox ];
+    font: "Iosevka Nerd Font 7";
+    background-color: @my-colour4;
 }
 
-entry {
-    font: "VictorMono Nerd Font italic 14";
-    vertical-align: 0.5;
-    horizontal-align: 0.5;
-    padding: 4;
-    background-color: @my-active;
-    placeholder: "pick a banger...";
-    placeholder-color: @my-colour8;
-}
-
-prompt {
+textbox {
     text-color: @my-colour7;
     background-color: @my-colour4;
+    padding: 4px 8px 4px 8px;
     horizontal-align: 0.5;
     vertical-align: 0.5;
-    padding: 4px 8px 4px 8px;
 }
 
 /* vim:ft=css

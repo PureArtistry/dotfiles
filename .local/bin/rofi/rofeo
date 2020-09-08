@@ -1,0 +1,337 @@
+#!/bin/sh
+SHELL_TYPE=$(readlink /bin/sh)
+case "$SHELL_TYPE" in
+*dash) utter='echo' ;;
+*) utter='echo -e' ;;
+esac
+intro() { # <- this function is here to enable me/you to fold the banner
+
+    #                      .o88o.
+    #                      888 `"
+    #  oooo d8b  .ooooo.  o888oo   .ooooo.   .ooooo.
+    #  `888""8P d88' `88b  888    d88' `88b d88' `88b
+    #   888     888   888  888    888ooo888 888   888
+    #   888     888   888  888    888    .o 888   888
+    #  d888b    `Y8bod8P' o888o   `Y8bod8P' `Y8bod8P'
+
+    #  rofi menu for searching/playing videos
+    #  code snippets/ideas lifted from https://gitlab.com/uoou/ytp
+
+    echo ' ' &>/dev/null # https://github.com/PureArtistry
+}
+
+api_key=$(head -n1 $HOME/.local/private/yt-api)
+# check this link for creating an api key -> https://www.slickremix.com/docs/get-api-key-for-youtube/
+
+listening() {
+    need_mute=$(mpc current)
+    [ -n "$need_mute" ] && paused=$(mpc | sed -n 2p | awk '{print $1}' | grep "paused")
+    [ -n "$need_mute" ] && [ ! "$paused" ] && need_mute=yes
+    return
+}
+
+new_face_in_town() {
+    pgrep dunst >/dev/null && killall -q dunst
+    dunst -shrink -alignment "center" &
+    return
+}
+
+and_the_horse_you_rode_in_on() {
+    dunstify -C 43224
+    killall -q dunst
+    return
+}
+
+make_icon() {
+    local cols=$(cat $XDG_CONFIG_HOME/kitty/kitty_colors.conf | awk '{print $2}')
+    local b=$(echo "$cols" | sed -n 20p)
+    local f=$(echo "$cols" | sed -n 2p)
+    local bd=$(echo "$cols" | sed -n 18p)
+
+    convert -size 75x75 xc:"$b" \
+        -gravity center \
+        -pointsize "$1" \
+        -font "Iosevka-Nerd-Font-Complete" \
+        -fill "$f" \
+        -bordercolor "$bd" \
+        -border '5' \
+        -annotate +0+0 "$2" \
+        /tmp/dunst_icon.png >/dev/null 2>&1
+    return
+}
+
+first() {
+    x=$(ls -1 "$VIDEO" | sed 's/^/  /g')
+    catnum=$(($("$utter" "$x" | wc -l) + 1))
+    vid_total=$(find "$VIDEO"/ -type f | wc -l) # <- needs to be tweaked to only find video files
+    catagory=$("$utter" "  search -->\n$x" | rofi -theme 'video1' \
+        -lines "$catnum" -fixed-num-lines "$catnum" \
+        -p '  what do you fancy?' \
+        -mesg "  contains $vid_total videos total" \
+        -selected-row 0 -u 0 -dmenu -i -format s)
+    if [ ! "$catagory" ]; then
+        exit
+    elif [ "$catagory" = '  search -->' ]; then
+        yt_search
+    else
+        catagory=$(echo "$catagory" | sed 's/  //g')
+        second
+    fi
+}
+
+second() {
+    list=$(find "$VIDEO"/"$catagory" -type f -printf "%f|%h\n" | sort) # <- also needs to only search for video files
+    cat_vids=$(echo "$list" | wc -l)
+    choice=$("$utter" "$list" | awk -F '|' '{print $1}' | rofi -theme 'video2' \
+        -p "         contains $cat_vids videos to select from        " \
+        -mesg '  pick a title...' \
+        -dmenu -i -format d)
+    [ ! "$choice" ] && first
+    final
+}
+
+final() {
+    file=$($utter "$list" | awk -F "|" '{print $2"/"$1}' | sed -n ${choice}p)
+    snap=$(shuf -i 20-80 -n 1)
+    ffmpegthumbnailer -i "$file" -o /tmp/rofi_thumb.png -s 460 -m -t "${snap}%"
+    duration=$(mediainfo "$file" | grep -m 1 'Duration' | awk -F ':' '{print $2}')
+    bspc rule -a Sxiv:\* -o state=floating manage=off
+    sxiv -g 460x259+730+260 -p -b /tmp/rofi_thumb.png &
+    experience=$($utter "  fullscreen\n  home screen\n金  standard" | rofi -theme 'video3' \
+        -p "  viewing experience?" \
+        -mesg "please enjoy the next$duration" \
+        -lines 3 -fixed-num-lines 3 -dmenu -i -format d)
+    if [ ! "$experience" ]; then
+        kill "$!"
+        second
+    fi
+    kill "$!"
+    listening
+    case "$experience" in
+    1)
+        bspc rule -a mpv:\* -o desktop=10
+        mpv "$file" --fs &
+        bspc subscribe node_add -c 1
+        bspc desktop 10 -f
+        [ "$need_mute" = "yes" ] && mpc pause
+        ;;
+    2)
+        distraction_toggle off
+        bspc rule -a mpv:\* -o desktop=1 state=floating rectangle=897x505+1005+287 center=false
+        mpv "$file" &
+        bspc subscribe node_add -c 1
+        [ "$need_mute" = "yes" ] && mpc pause
+        bspc desktop 1 -f
+        sleep 0.1
+        xdotool mousemove 400 400
+        bspc node pointed -f
+        ;;
+    3)
+        mpv "$file" &
+        bspc subscribe node_add -c 1
+        [ "$need_mute" = "yes" ] && mpc pause
+        ;;
+    esac
+    exit
+}
+
+yt_search() {
+    # things for tweaking
+    rnum=15
+    tidy_output="s/\&//g; s/#39;/\'/g; s/amp;/(and)/g; s/quot;/\"/g" # <- may need to add to this
+
+    if [ ! "$1" ]; then
+        search_type=1
+        st='q'
+        unset channel_mode
+        search=$(rofi -theme 'entry' -dmenu -i -mesg "  keywords?")
+        rpage=1
+    else
+        case "$1" in
+        next)
+            search_type=2
+            [ "$channel_mode" = 'on' ] && st='channelId' || st='q'
+            page_id=$(echo "$ytresults" | jq -r '.nextPageToken')
+            rpage=$((${rpage} + 1))
+            ;;
+        prev)
+            search_type=2
+            [ "$channel_mode" = 'on' ] && st='channelId' || st='q'
+            page_id=$(echo "$ytresults" | jq -r '.prevPageToken')
+            rpage=$((${rpage} - 1))
+            ;;
+        details)
+            search_type=1
+            st='q'
+            search="$2"
+            skip_list=1
+            rnum=1
+            ;;
+        *)
+            search_type=1
+            [ "$channel_mode" = 'on' ] && st='channelId' || st='q'
+            search="$1"
+            rpage=1
+            ;;
+        esac
+    fi
+    [ ! "$search" ] && first
+    [ ! "$st" ] && st="q"
+    search=$(echo "$search" | sed 's/ /+/g') # <- need to make this escape other special chars
+    if [ "$search_type" = 1 ]; then
+        ytresults=$(curl -G 'https://www.googleapis.com/youtube/v3/search/' --data-urlencode "key=$api_key" \
+            --data-urlencode "part=snippet" --data-urlencode "type=video" \
+            --data-urlencode "fields=items(snippet/title,snippet/thumbnails,snippet/channelTitle,snippet/description,snippet/publishedAt,snippet/channelId,id/videoId),nextPageToken,prevPageToken" \
+            --data-urlencode "maxResults=$rnum" --data-urlencode "$st=$search" 2>/dev/null)
+    elif [ "$search_type" = 2 ]; then
+        ytresults=$(curl -G 'https://www.googleapis.com/youtube/v3/search/' --data-urlencode "key=$api_key" \
+            --data-urlencode "part=snippet" --data-urlencode "type=video" \
+            --data-urlencode "fields=items(snippet/title,snippet/thumbnails,snippet/channelTitle,snippet/description,snippet/publishedAt,snippet/channelId,id/videoId),nextPageToken,prevPageToken" \
+            --data-urlencode "maxResults=$rnum" --data-urlencode "$st=$search" \
+            --data-urlencode "pageToken=$page_id" 2>/dev/null)
+    fi
+    rlist=$(echo "$ytresults" | jq -r '.items[] | .snippet.title + "  ->    " + .snippet.channelTitle' \
+        | sed -e "$tidy_output")
+    [ ! "$skip_list" ] && yt_list || yt_details
+}
+
+yt_list() {
+    if [ "$rpage" -eq 1 ]; then
+        bleh="$rlist\nnext page -->"
+        ytvid=$("$utter" "$bleh" | rofi -theme 'video2' -dmenu -i -no-custom -u "$rnum" \
+            -lines "$((${rnum} + 1))" -fixed-num-lines "$((${rnum} + 1))" -format i \
+            -p "  returning $rnum results per page          | 龎  $rpage  " \
+            -mesg "  is it there?")
+        if [ ! "$ytvid" ]; then
+            yt_search
+        elif [ "$ytvid" = "$rnum" ]; then
+            yt_search next
+        else
+            yt_details
+        fi
+    else
+        bleh="$rlist\n<-- previous page\nnext page -->"
+        ytvid=$("$utter" "$bleh" | rofi -theme 'video2' -dmenu -i -no-custom -a "$rnum" -u "$((${rnum} + 1))" \
+            -lines "$((${rnum} + 2))" -fixed-num-lines "$((${rnum} + 2))" -format i \
+            -p "  returning $rnum results per page          | 龎  $rpage  " \
+            -mesg "  find it yet?")
+        if [ ! "$ytvid" ]; then
+            yt_search
+        elif [ "$ytvid" = "$rnum" ]; then
+            yt_search prev
+        elif [ "$ytvid" = "$((${rnum} + 1))" ]; then
+            yt_search next
+        else
+            yt_details
+        fi
+    fi
+}
+
+yt_details() {
+    ytsel_id=$(echo "$ytresults" | jq -r ".items[$ytvid].id.videoId")
+    ytsel_thumb=$(echo "$ytresults" | jq -r ".items[$ytvid].snippet.thumbnails.high.url")
+    wget -q -O /tmp/rofi_thumb.png "$ytsel_thumb" &
+    ytsel_duration=$(curl -G 'https://www.googleapis.com/youtube/v3/videos/' \
+        --data-urlencode "key=$api_key" --data-urlencode "part=contentDetails" \
+        --data-urlencode "fields=items(contentDetails/duration)" \
+        --data-urlencode "id=$ytsel_id" 2>/dev/null | jq -r '.items[0].contentDetails.duration' \
+        | sed -e 's/P\|T\|S//g; s/D\|H\|M/:/g' -e 's/\<[0-9]\>/0&/g')
+    ytsel_title=$(echo "$ytresults" | jq -r ".items[$ytvid].snippet.title" | sed -e "$tidy_output")
+    [ $(echo "$ytsel_title" | wc -c) -gt 42 ] && ytsel_title=$(echo "$ytsel_title" \
+        | cut -c 1-39 | sed 's/$/.../')
+    ytsel_chan_title=$(echo "$ytresults" | jq -r ".items[$ytvid].snippet.channelTitle")
+    ytsel_chan_id=$(echo "$ytresults" | jq -r ".items[$ytvid].snippet.channelId")
+    ytsel_desc=$(echo "$ytresults" | jq -r ".items[$ytvid].snippet.description" | sed -e "$tidy_output")
+    ytsel_date=$(echo "$ytresults" | jq -r ".items[$ytvid].snippet.publishedAt" \
+        | xargs -I '{}' date -d '{}' "+%A %-d %B %Y")
+    wait
+    convert /tmp/rofi_thumb.png -resize 460x259^ \
+        -gravity center -extent 460x259 \
+        -flatten /tmp/rofi_thumb.png
+    bspc rule -a Sxiv:\* -o state=floating manage=off
+    sxiv -g 460x259+730+170 -p -b /tmp/rofi_thumb.png &
+    yt_choice=$($utter "  download video\n  watch fullscreen\n  watch distraction\n  watch standard\n  more from $ytsel_chan_title" \
+        | rofi -theme 'youtube' -p "神  $ytsel_duration |   $ytsel_date" \
+            -mesg "<span>  $ytsel_title</span>
+<span>  $ytsel_chan_title</span>
+<span><small>
+<i>$ytsel_desc</i></small></span>" \
+            -lines 5 -fixed-num-lines 5 -u 0 -a 4 -dmenu -i -format d)
+    if [ ! "$yt_choice" ]; then
+        if [ ! "$skip_list" ]; then
+            kill "$!"
+            yt_list
+        else
+            kill "$!"
+            exit
+        fi
+    else
+        kill "$!"
+        selection="https://youtube.com/watch?v=${ytsel_id}"
+        case "$yt_choice" in
+        1)
+            echo "$ytsel_title" >/tmp/yt_title
+            youtube-dl "$selection" &
+            make_icon '52' ''
+            new_face_in_town
+            dunstify -r 43224 -t 4000 -a 'fancy1' "downloading" "$ytsel_title" -i /tmp/dunst_icon.png
+            ;;
+        2)
+            listening
+            make_icon '52' ''
+            new_face_in_town
+            dunstify -r 43224 -t 4000 -a 'fancy1' "loading" "$ytsel_title" \
+                -i /tmp/dunst_icon.png
+            bspc rule -a mpv:\* -o desktop=10
+            mpv "$selection" --fs &
+            bspc subscribe node_add -c 1
+            and_the_horse_you_rode_in_on
+            [ "$need_mute" = "yes" ] && mpc pause
+            bspc desktop 10 -f
+            ;;
+        3)
+            listening
+            make_icon '52' ''
+            new_face_in_town
+            dunstify -r 43224 -t 4000 -a 'fancy1' "loading" "$ytsel_title" \
+                -i /tmp/dunst_icon.png
+            distraction_toggle off
+            bspc rule -a mpv:\* -o desktop=1 state=floating \
+                rectangle=897x505+1005+287 center=false
+            mpv "$selection" &
+            bspc subscribe node_add -c 1
+            and_the_horse_you_rode_in_on
+            [ "$need_mute" = "yes" ] && mpc pause
+            bspc desktop 1 -f
+            sleep 0.1
+            xdotool mousemove 400 400
+            bspc node pointed -f
+            ;;
+        4)
+            listening
+            make_icon '52' ''
+            new_face_in_town
+            dunstify -r 43224 -t 4000 -a 'fancy1' "loading" "$ytsel_title" \
+                -i /tmp/dunst_icon.png
+            mpv "$selection" &
+            bspc subscribe node_add -c 1
+            and_the_horse_you_rode_in_on
+            [ "$need_mute" = "yes" ] && mpc pause
+            ;;
+        5)
+            channel_mode="on"
+            yt_search "$ytsel_chan_id"
+            ;;
+        esac
+        exit
+    fi
+}
+
+if [ ! "$1" ]; then
+    first
+else
+    case "$1" in
+    aclipexe) yt_search details "$2" ;;
+    *) yt_search "$1" ;;
+    esac
+fi
