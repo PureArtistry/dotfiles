@@ -48,7 +48,7 @@ make_icon() {
     local f=$(echo "$cols" | sed -n 2p)
     local bd=$(echo "$cols" | sed -n 18p)
 
-    convert -size 75x75 xc:"$b" \
+    convert -size 90x90 xc:"$b" \
         -gravity center \
         -pointsize "$1" \
         -font "Iosevka-Nerd-Font-Complete" \
@@ -272,13 +272,13 @@ yt_details() {
         1)
             echo "$ytsel_title" >/tmp/yt_title
             youtube-dl "$selection" &
-            make_icon '52' ''
+            make_icon '60' ''
             new_face_in_town
             dunstify -r 43224 -t 4000 -a 'fancy1' "downloading" "$ytsel_title" -i /tmp/dunst_icon.png
             ;;
         2)
             listening
-            make_icon '52' ''
+            make_icon '66' ''
             new_face_in_town
             dunstify -r 43224 -t 4000 -a 'fancy1' "loading" "$ytsel_title" \
                 -i /tmp/dunst_icon.png
@@ -291,7 +291,7 @@ yt_details() {
             ;;
         3)
             listening
-            make_icon '52' ''
+            make_icon '66' ''
             new_face_in_town
             dunstify -r 43224 -t 4000 -a 'fancy1' "loading" "$ytsel_title" \
                 -i /tmp/dunst_icon.png
@@ -309,7 +309,7 @@ yt_details() {
             ;;
         4)
             listening
-            make_icon '52' ''
+            make_icon '66' ''
             new_face_in_town
             dunstify -r 43224 -t 4000 -a 'fancy1' "loading" "$ytsel_title" \
                 -i /tmp/dunst_icon.png

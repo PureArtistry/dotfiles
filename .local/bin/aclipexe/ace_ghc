@@ -6,9 +6,9 @@ f=$(echo "$x" | sed -n 2p)
 bd=$(echo "$x" | sed -n 18p)
 
 make_icon() {
-    convert -size 75x75 xc:"$b" \
+    convert -size 90x90 xc:"$b" \
         -gravity center \
-        -pointsize "52" \
+        -pointsize "60" \
         -font "Iosevka-Nerd-Font-Complete" \
         -fill "$f" \
         -bordercolor "$bd" \
@@ -21,7 +21,7 @@ make_icon() {
 make_icon
 i=$(shuf -i 1-10000 -n 1)
 pgrep dunst >/dev/null && killall -q dunst
-dunst -shrink -alignment 'center' &
+dunst -geometry "380x3-4+4" -alignment 'center' &
 repo=$(echo "$1" | awk -F '/' '{print $NF}' | sed 's/\.git//')
 dunstify -r "$i" -t 4000 -a 'fancy1' "$repo" "cloning to ~/downloads/git" -i /tmp/dunst_icon.png
 cd $HOME/downloads/git

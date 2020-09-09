@@ -5,21 +5,21 @@ b=$(echo "$x" | sed -n 20p)
 f=$(echo "$x" | sed -n 2p)
 bd=$(echo "$x" | sed -n 18p)
 
-convert -size 75x75 xc:"$b" \
+convert -size 90x90 xc:"$b" \
     -gravity center \
-    -pointsize "52" \
-    -font "Iosevka-Nerd-Font-Complete" \
+    -pointsize '66' \
+    -font 'Iosevka-Nerd-Font-Complete' \
     -fill "$f" \
     -bordercolor "$bd" \
     -border '5' \
-    -annotate +0+0 "" \
+    -annotate +0+0 '' \
     /tmp/dunst_icon.png >/dev/null 2>&1
 
 [ -f /tmp/yt_title ] && msg=$(head -n1 /tmp/yt_title) \
     || msg=$(echo "$1" | awk -F '/' '{print $NF}')
 pgrep dunst >/dev/null && killall -q dunst
 dunst -shrink -alignment "center" &
-dunstify -r 43224 -t 6000 -a 'fancy1' "ready!" "$msg" -i /tmp/dunst_icon.png
+dunstify -r 43224 -t 6000 -a 'fancy1' 'ready!' "$msg" -i /tmp/dunst_icon.png
 sleep 4
 dunstify -C 43224
 killall -q dunst

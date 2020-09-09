@@ -1,7 +1,7 @@
 auto-reload yes
 reload-threads 4
 notify-program "newsboat_info"
-notify-format "%d recent posts \n%f unread feeds \n%n unread posts "
+notify-format "%d\n%f\n%n"
 notify-always yes
 browser "echo -n %u | xclip -selection clipboard"
 max-items 100

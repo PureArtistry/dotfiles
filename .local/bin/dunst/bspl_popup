@@ -5,9 +5,9 @@ b=$(echo "$x" | sed -n 20p)
 f=$(echo "$x" | sed -n 2p)
 bd=$(echo "$x" | sed -n 18p)
 
-convert -size 75x75 xc:"$b" \
+convert -size 90x90 xc:"$b" \
     -gravity center \
-    -pointsize "52" \
+    -pointsize "60" \
     -font "Iosevka-Nerd-Font-Complete" \
     -fill "$f" \
     -bordercolor "$bd" \

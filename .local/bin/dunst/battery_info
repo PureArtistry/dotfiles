@@ -7,7 +7,7 @@ z=$(echo "$y" | head -n1)
 b=$(echo "$x" | sed -n 20p)
 f=$(echo "$x" | sed -n 2p)
 bd=$(echo "$x" | sed -n 18p)
-s=72
+s=60
 
 [ "$(echo "$y" | sed -n 3p | awk '{print $3}')" = 'on-line' ] && ac=1 || ac=0
 bp=$(echo "$z" | awk '{print $4}' | sed 's/%//;s/,//')
@@ -29,7 +29,14 @@ elif [ "$bp" -le 94 ] && [ "$bp" -gt 80 ]; then
 elif [ "$bp" -gt 94 ]; then
     if [ "$ac" = 1 ]; then
         case "$cs" in
-        Unknown*) [ -n "$ctr" ] && icon='' || icon='ﮣ' ;;
+        Unknown*)
+            if [ -n "$ctr" ]; then
+                icon=''
+            else
+                icon='ﮣ'
+                s=72
+            fi
+            ;;
         Charging*) icon='' ;;
         *) icon='' ;;
         esac

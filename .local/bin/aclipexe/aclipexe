@@ -55,7 +55,7 @@ make_icon() {
     f=$(echo "$x" | sed -n 2p)
     bd=$(echo "$x" | sed -n 18p)
 
-    convert -size 75x75 xc:"$b" \
+    convert -size 90x90 xc:"$b" \
         -gravity center \
         -pointsize "$1" \
         -font "Iosevka-Nerd-Font-Complete" \
@@ -96,7 +96,7 @@ twitch() {
     case "$bar" in
     1)
         listening
-        make_icon '52' ''
+        make_icon '64' ''
         new_face_in_town
         dunstify -r 010101 -t 10000 -a 'fancy1' "loading" "$name" \
             -i /tmp/dunst_icon.png
@@ -109,7 +109,7 @@ twitch() {
         ;;
     2)
         listening
-        make_icon '52' ''
+        make_icon '64' ''
         new_face_in_town
         dunstify -r 010101 -t 10000 -a 'fancy1' "loading" "$name" \
             -i /tmp/dunst_icon.png
@@ -127,7 +127,7 @@ twitch() {
         ;;
     3)
         listening
-        make_icon '52' ''
+        make_icon '64' ''
         new_face_in_town
         dunstify -r 010101 -t 10000 -a 'fancy1' "loading" "$name" \
             -i /tmp/dunst_icon.png
@@ -151,7 +151,7 @@ twitch() {
 torrent() {
     processed="$selection"
     transmission-remote -a "$selection"
-    make_icon '52' ''
+    make_icon '60' ''
     new_face_in_town
     dunstify -t 4000 -a 'fancy1' "added" "to transmission queue" -i /tmp/dunst_icon.png
     xclip -selection clipboard /dev/null
@@ -201,7 +201,7 @@ image_bit() {
         kill "$thumb_pid"
         [ ! "$new_name" ] && tn="$og_name" || tn="$new_name.$ext"
         cp /tmp/"$temp_name" "$HOME"/images/download/"$tn"
-        make_icon '52' ''
+        make_icon '66' ''
         new_face_in_town
         dunstify -r 010101 -t 4000 -a 'fancy1' "copied" "$tn" -i /tmp/dunst_icon.png
         ;;
