@@ -250,7 +250,7 @@ yt_details() {
         -flatten /tmp/rofi_thumb.png
     bspc rule -a Sxiv:\* -o state=floating manage=off
     sxiv -g 460x259+730+170 -p -b /tmp/rofi_thumb.png &
-    yt_choice=$($utter "  download video\n  watch fullscreen\n  watch distraction\n  watch standard\n  more from $ytsel_chan_title" \
+    yt_choice=$($utter "  download video\n  watch fullscreen\n  watch on home screen\n金  watch standard\n  more from $ytsel_chan_title" \
         | rofi -theme 'youtube' -p "神  $ytsel_duration |   $ytsel_date" \
             -mesg "<span>  $ytsel_title</span>
 <span>  $ytsel_chan_title</span>
