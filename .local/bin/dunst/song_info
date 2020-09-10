@@ -34,7 +34,7 @@ calc() {
         killall -q dunst
         exit
     else
-        remain=$(date -d@"$remain" -u +%M:%S)
+        remain=$(date -d@"$remain" -u +'%M:%S')
     fi
     return
 }

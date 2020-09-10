@@ -6,9 +6,9 @@ timer() {
     f=$(echo "$x" | sed -n 2p)
     bd=$(echo "$x" | sed -n 18p)
 
-    convert -size 75x75 xc:"$b" \
+    convert -size 90x90 xc:"$b" \
         -gravity center \
-        -pointsize "48" \
+        -pointsize "60" \
         -font "Iosevka-Nerd-Font-Complete" \
         -fill "$f" \
         -bordercolor "$bd" \
@@ -23,7 +23,7 @@ timer() {
     pgrep dunst >/dev/null && killall -q dunst
     dunst -shrink -alignment 'center' &
     until [ "$c" = "$z" ]; do
-        dunstify -r "$i" -t 6000 -a 'fancy1' "$j" "until scrot" \
+        dunstify -r "$i" -t 6000 -a 'fancy1' "$j" "until screenshot" \
             -i /tmp/dunst_icon.png
         sleep 1
         c=$((${c} + 1))
@@ -31,7 +31,7 @@ timer() {
     done
     dunstify -C "$i"
     killall -q dunst
-    sleep 1
+    sleep 0.5
     ffmpeg -f x11grab -video_size 1920x1080 -i "$DISPLAY" -vframes 1 \
         ~/working/scrot_$(date '+%Y%m%d-%H%M%S').png
     exit
