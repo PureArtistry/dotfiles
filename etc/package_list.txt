@@ -5,27 +5,27 @@ atomicparsley       	Command line program for reading, parsing and setting metad
 atool               	A script for managing file archives of various types
 bash-completion     	Programmable completion for the bash shell
 bat                 	Cat clone with syntax highlighting and git integration
+bc                  	An arbitrary precision calculator language
+bspwm               	Tiling window manager based on binary space partitioning
 clipnotify          	Polling-free clipboard notifier
 dash                	POSIX compliant shell that aims to be as small as possible
 dunst               	Customizable and lightweight notification-daemon
 exa                 	ls replacement
 expac               	pacman database extraction utility
 fd                  	Simple, fast and user-friendly alternative to find
+feh                 	Fast and light imlib2-based image viewer
+ffmpegthumbnailer   	Lightweight video thumbnailer that can be used by file managers.
 fzf                 	Command-line fuzzy finder
+gimp                	GNU Image Manipulation Program
 git                 	the fast distributed version control system
 gnu-netcat          	GNU rewrite of netcat, the network piping application
 gtk-engine-murrine  	GTK2 engine to make your desktop look like a 'murrina', an italian word meaning the art glass works done by Venicians glass blowers.
-gucharmap           	Gnome Unicode Charmap
 highlight           	Fast and flexible source code highlighter (CLI version)
-hunspell-en_GB      	GB English hunspell dictionaries
-hyperfine           	A command-line benchmarking tool
+jpegexiforient      	Get and set the Exif Orientation Tag
 jq                  	Command-line JSON processor
-kmon                	Linux kernel manager and activity monitor
+kitty               	A modern, hackable, featureful, OpenGL-based terminal emulator
 libcaca             	Color AsCii Art library
 libnotify           	Library for sending desktop notifications
-lxappearance        	Feature-rich GTK+ theme switcher of the LXDE Desktop
-man-db              	A utility for reading man pages
-man-pages           	Linux man pages
 mediainfo           	Supplies technical and tag information about a video or audio file (CLI interface)
 mlocate             	Merging locate/updatedb implementation
 mpc                 	Minimalist command line interface to MPD
@@ -62,15 +62,12 @@ qt5-websockets      	Provides WebSocket communication compliant with RFC 6455
 qt5-x11extras       	Provides platform-specific APIs for X11
 qutebrowser         	A keyboard-driven, vim-like browser based on PyQt5
 ranger              	Simple, vim-like file manager
-reflector           	A Python 3 module and script to retrieve and filter the latest Pacman mirror list.
 ripgrep             	A search tool that combines the usability of ag with the raw speed of grep
-rust                	Systems programming language focused on safety, speed and concurrency
 sd                  	Intuitive find & replace
 shfmt               	Format shell programs
-strace              	A diagnostic, debugging and instructional userspace tracer
 streamlink          	CLI program that launches streams from various streaming services in a custom video player (livestreamer fork)
+sxhkd               	Simple X hotkey daemon
 task                	A command-line todo list manager
-time                	Utility for monitoring a program's use of system resources
 transmission-cli    	Fast, easy, and free BitTorrent client (CLI tools, daemon and web client)
 ueberzug            	Command line util which allows to display images in combination with X11
 unace               	An extraction tool for the proprietary ace archive format
@@ -87,7 +84,7 @@ xorg-xinit          	X.Org initialisation program
 xorg-xsetroot       	Classic X utility to set your root window background to a given pattern or color
 xorg-xwininfo       	Command-line utility to print information about windows on an X server
 xsettingsd          	Provides settings to X11 applications via the XSETTINGS specification
-youtube-dl          	A small command-line program to download videos from YouTube.com and a few more sites
+youtube-dl          	A command-line program to download videos from YouTube.com and a few more sites
 zathura             	Minimalistic document viewer
 zathura-pdf-poppler 	Adds pdf support to zathura by using the poppler engine
 zip                 	Compressor/archiver for creating and modifying zipfiles
@@ -96,22 +93,22 @@ zsh                 	A very advanced and programmable command interpreter (shell
 zsh-syntax-highlighting	Fish shell like syntax highlighting for Zsh
 alacritty-ligatures 	A cross-platform, GPU-accelerated terminal emulator
 bat-extras-git      	Bash scripts that integrate bat with various command line tools.
-bspwm-git           	A tiling window manager based on binary space partitioning
+bottom              	A cross-platform graphical process/system monitor with a customizable interface and a multitude of features.
+bsp-layout          	Dynamic layout management for bspwm with tall, wide, even, tiled, monocle
 cairo-infinality-remix	Cairo vector graphics library with Infinality patch support
 ddate               	PERPETUAL DATE CONVERTER FROM GREGORIAN TO POEE CALENDAR
 dragon-drag-and-drop	Simple drag-and-drop source/sink for X
 dust-bin            	du + rust = dust. Like du but more intuitive
-feh-git             	Fast and light imlib2-based image viewer
 fontconfig-infinality-remix	A library for configuring and customizing font access, optimized for Infinality Remix.
 freetype2-infinality-remix	TrueType font rendering library with Infinality Remix patches
 gitui               	Blazing fast terminal-ui for git written in Rust
 grex                	A command-line tool for generating regular expressions from user-provided input strings
 gron                	Makes JSON greppable
-kitty-git           	A modern, hackable, featureful, OpenGL based terminal emulator
 neovim-symlinks     	Runs neovim if vi or vim is called
 paleta-git          	Change terminal colors on-the-fly independent of terminal emulator.
 picom-jonaburg-git  	jonaburg's picom fork with tryone144's dual_kawase blur and ibhagwan's rounded corners, an X compositor (compton's fork)
 procs               	A modern replacement for ps written in Rust
+pyfa                	EVE Online Fitting Assistant
 python-bidi         	BIDI algorithm related functions
 python-discord      	An API wrapper for Discord written in Python
 python-markdown2-git	A fast and complete implementation of Markdown in Python 3
@@ -121,11 +118,9 @@ qt5-styleplugins    	Additional style plugins for Qt5
 ripcord             	Qt-based Discord and Slack client
 rofi-git            	A window switcher, run dialog and dmenu replacement
 spaceship-prompt-git	A Zsh prompt for Astronauts
-sxhkd-git           	A simple X hotkey daemon
 tealdeer            	A fast tldr client in Rust.
 tremc-git           	Curses interface for transmission - python3 fork of transmission-remote-cli
 tuir                	Terminal UI for Reddit, forked from discontinued rtv
 unclutter-xfixes-git	unclutter-xfixes is a rewrite of unclutter using the x11-xfixes extension.
 wpgtk-git           	A gui wallpaper chooser that changes your Openbox theme, GTK theme and Tint2 theme
 yay                 	Yet another yogurt. Pacman wrapper and AUR helper written in go.
-ytop                	A TUI system monitor written in Rust
