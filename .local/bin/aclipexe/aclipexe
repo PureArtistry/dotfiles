@@ -31,7 +31,7 @@ main() {
         magnet:?* | *magnet*tracker*) torrent ;;
         https://*twitch.tv/*) twitch ;;
         https://*.redd*/*) reddit ;;
-        https://github.com/*.git) github ;;
+        https://*.*/*.git) gitbit ;;
         *) ignore ;;
         esac
     done
@@ -165,9 +165,9 @@ reddit() {
     main
 }
 
-github() {
+gitbit() {
     processed="$selection"
-    ace_ghc "$selection" &
+    ace_gc "$selection" &
     xclip -selection clipboard /dev/null
     main
 }
