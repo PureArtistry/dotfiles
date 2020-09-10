@@ -177,6 +177,10 @@ super + shift + m
 super + b
     battery_info
 
+# backlight info
+super + shift + {F4,F5}
+    backlight_info
+
 # }}}
 
 # misc {{{
