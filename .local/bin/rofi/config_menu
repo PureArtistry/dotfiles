@@ -13,7 +13,7 @@ goyo() {
         wait
     elif [ "$1" = 'other' ]; then
         alacritty --class 'vim','vim' --title 'vim' \
-            -e size_fix vim $(whereis "$choice" | awk {'print $2'}) &
+            -e size_fix vim $(whereis "$choice" | awk '{print $2}') &
         bspc subscribe node_add -c 1
         wait
     fi
@@ -30,30 +30,27 @@ scripts() {
         -mesg "something wrong with my code!?!" \
         -p " combined - code has only $lol potential errors! " \
         -lines "$x" -fixed-num-lines "$x" -no-custom -dmenu -i)
-    [ ! "$choice" ] && start
+    [ ! "$choice" ] && exit
     [ "$home_desktop" = '1' ] && [ "$mctl_state" = 'floating' ] && goyo other \
         || alacritty -e size_fix vim $(whereis "$choice" | awk {'print $2'}) &
     exit
 }
 
-start() {
-    home_desktop=$(bspc query -d focused -T | jq -r '.name')
-    mctl_id=$(head -n1 /tmp/mctl_id)
-    mctl_state=$(bspc query -T -n "$mctl_id" | jq -r '.client.state')
-    cd "$DOTFILES"
-    git_bit=$(echo $(git log -1) | sed 's/.*Date: //' | awk '{print $1, $2, $3, $4, $5, $6}')
-    x=$(cat "$ARTISTRY"/config_menu | wc -l)
-    y=$((${x} - 1))
+[ -f "$ARTISTRY"/config_menu ] || exit
+home_desktop=$(bspc query -d focused -T | jq -r '.name')
+mctl_id=$(head -n1 /tmp/mctl_id)
+mctl_state=$(bspc query -T -n "$mctl_id" | jq -r '.client.state')
+cd "$DOTFILES"
+git_bit=$(echo $(git log -1) | sed 's/.*Date: //' | awk '{print $1, $2, $3, $4, $5, $6}')
+x=$(cat "$ARTISTRY"/config_menu | wc -l)
+y=$((${x} - 1))
 
-    foo=$(awk {'print $1'} "$ARTISTRY"/config_menu | rofi -theme 'cfg_menu' -u 0 -a "$y" \
-        -mesg '漣 what needs fiddling with?' \
-        -p " last commit date: $git_bit " \
-        -lines "$x" -fixed-num-lines "$x" -no-custom -dmenu -i -format d)
-    [ ! "$foo" ] && exit
-    [ "$foo" = 1 ] && scripts
-    bar=$(sed -n "$foo"p "$ARTISTRY"/config_menu | awk {'print $2'})
-    [ "$home_desktop" = '1' ] && [ "$mctl_state" = 'floating' ] \
-        && goyo main || alacritty -e size_fix vim "$HOME"/"$bar" &
-}
-
-[ -f "$ARTISTRY"/config_menu ] && start || exit
+foo=$(awk '{print $1}' "$ARTISTRY"/config_menu | rofi -theme 'cfg_menu' -u 0 -a "$y" \
+    -mesg '漣 what needs fiddling with?' \
+    -p " last commit date: $git_bit " \
+    -lines "$x" -fixed-num-lines "$x" -no-custom -dmenu -i -format d)
+[ ! "$foo" ] && exit
+[ "$foo" = 1 ] && scripts
+bar=$(sed -n "$foo"p "$ARTISTRY"/config_menu | awk '{print $2}')
+[ "$home_desktop" = '1' ] && [ "$mctl_state" = 'floating' ] \
+    && goyo main || alacritty -e size_fix vim "$HOME"/"$bar" &
