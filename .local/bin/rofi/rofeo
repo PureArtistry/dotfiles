@@ -249,7 +249,7 @@ yt_details() {
         -gravity center -extent 460x259 \
         -flatten /tmp/rofi_thumb.png
     bspc rule -a Sxiv:\* -o state=floating manage=off
-    sxiv -g 460x259+730+170 -p -b /tmp/rofi_thumb.png &
+    sxiv -g 460x259+730+178 -p -b /tmp/rofi_thumb.png &
     yt_choice=$($utter "  download video\n  watch fullscreen\n  watch on home screen\n金  watch standard\n  more from $ytsel_chan_title" \
         | rofi -theme 'youtube' -p "神  $ytsel_duration |   $ytsel_date" \
             -mesg "<span>  $ytsel_title</span>
@@ -268,11 +268,12 @@ yt_details() {
     else
         kill "$!"
         selection="https://youtube.com/watch?v=${ytsel_id}"
+        xclip -selection clipboard /dev/null
         case "$yt_choice" in
         1)
             echo "$ytsel_title" >/tmp/yt_title
             youtube-dl "$selection" &
-            make_icon '60' ''
+            make_icon '60' ''
             new_face_in_town
             dunstify -r 43224 -t 4000 -a 'fancy1' "downloading" "$ytsel_title" -i /tmp/dunst_icon.png
             ;;

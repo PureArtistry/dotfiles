@@ -19,7 +19,6 @@ export GOPATH=$XDG_CONFIG_HOME/go
 export TASKRC=$XDG_CONFIG_HOME/taskwarrior/taskrc
 export TASKDATA=$XDG_CONFIG_HOME/taskwarrior
 export VIT_DIR=$XDG_CONFIG_HOME/vit
-#export RECOLL_CONFDIR=$XDG_CONFIG_HOME/recoll
 export ASPELL_CONF="per-conf $XDG_CONFIG_HOME/aspell/aspell.conf; personal $XDG_CONFIG_HOME/aspell/en.pws; repl $XDG_CONFIG_HOME/aspell/en.prepl"
 export CARGO_HOME=$XDG_DATA_HOME/cargo
 export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc

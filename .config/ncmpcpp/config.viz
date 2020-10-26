@@ -84,7 +84,7 @@ visualizer_type = wave_filled
 #
 visualizer_look = ●▮
 #
-visualizer_color = 2, 5, 7, 6
+visualizer_color = 10, 13, 15, 14
 #
 ## Alternative subset of 256 colors for terminals that support it.
 ##
@@ -528,7 +528,7 @@ mouse_support = yes
 #
 progressbar_color = 9:b
 #
-progressbar_elapsed_color = green:b
+progressbar_elapsed_color = 3:b
 #
 #statusbar_color = default
 #

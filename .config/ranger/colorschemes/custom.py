@@ -27,25 +27,25 @@ class Default(ColorScheme):
                 fg = 3
             if context.media:
                 if context.image:
-                    fg = 4
+                    fg = 12
                 else:
                     fg = 4
             if context.container:
-                fg = 8
+                fg = 7
             if context.directory:
-                fg = 6
+                fg = 14
             elif context.executable and not \
                     any((context.media, context.container,
                          context.fifo, context.socket)):
-                fg = 5
+                fg = 13
             if context.socket:
-                fg = 1
+                fg = 9
             if context.fifo or context.device:
                 fg = 3
                 if context.device:
                     attr |= bold
             if context.link:
-                fg = 3 if context.good else 8
+                fg = 11 if context.good else 7
             if context.tag_marker and not context.selected:
                 attr |= bold
                 if fg in (red, magenta):
@@ -54,7 +54,7 @@ class Default(ColorScheme):
                     fg = red
             if not context.selected and (context.cut or context.copied):
                 attr |= bold
-                fg = 8
+                fg = 7
                 # If the terminal doesn't support bright colors, use dim white
                 # instead of black.
                 if BRIGHT == 0:
@@ -75,17 +75,17 @@ class Default(ColorScheme):
                     fg = magenta
 
             if context.inactive_pane:
-                fg = 8
+                fg = 7
 
         elif context.in_titlebar:
             attr = normal
             bg = 2
             if context.hostname:
                 bg = default
-                fg = 8 if context.bad else 1
+                fg = 7 if context.bad else 1
             elif context.directory:
                 bg = default
-                fg = 6
+                fg = 14
             elif context.tab:
                 if context.good:
                     attr = bold
@@ -94,16 +94,16 @@ class Default(ColorScheme):
                     bg = 0
             elif context.link:
                 bg = default
-                fg = 8
+                fg = 7
 
         elif context.in_statusbar:
             attr = normal
             if context.permissions:
                 attr = underline
                 if context.good:
-                    fg = 5
+                    fg = 13
                 elif context.bad:
-                    fg = 8
+                    fg = 7
             if context.marked:
                 attr |= bold | reverse
                 fg = yellow

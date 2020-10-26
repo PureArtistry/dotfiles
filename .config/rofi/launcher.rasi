@@ -5,7 +5,7 @@ configuration {
 
 * {
     background-color: @my-inactive;
-    text-color: @my-colour7;
+    text-color: @my-colour15;
     border: 0;
     padding: 0;
 }
@@ -23,7 +23,7 @@ configuration {
 
 inputbar {
     children: [ entry, prompt ];
-    padding: 0 2 0 6;
+    padding: 12px;
     background-color: @my-inactive;
 }
 
@@ -34,12 +34,12 @@ entry {
     padding: 0 6 2 6;
     background-color: @my-inactive;
     placeholder: "maybe make a keybind?";
-    placeholder-color: @my-colour8;
+    placeholder-color: @my-colour7;
 }
 
 prompt {
-    font: "Iosevka Nerd Font 28";
-    padding: 2 4 0 4;
+    font: "Iosevka Nerd Font 26";
+    padding: 0px 0px 10px 0px;
     background-color: @my-inactive;
     text-color: #1793d1;
 }

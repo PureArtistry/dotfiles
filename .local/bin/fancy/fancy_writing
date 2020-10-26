@@ -81,6 +81,7 @@ update_check() {
 }
 
 other_info() {
+    [ ! "$wp_timer" ] && wp_timer=$(date +'%s')
     general="Hello Dave. You're looking well today."
     until [ "$state" = "update" ]; do
         if [ "$1" = "pause" ]; then
@@ -183,6 +184,7 @@ other_info() {
 }
 
 song_info() {
+    [ -n "$wp_timer" ] && unset wp_timer
     song=$(mpc current -f "%title%")
     artist=$(mpc current -f "%artist%")
     album=$(mpc current -f "%album%")
@@ -231,7 +233,7 @@ display_text() {
     bspc node "$fancy_writing_id" --flag hidden=on
     sleep 0.1
     clear
-    fg_color=$(sed -n 8p $XDG_CACHE_HOME/wal/colors)
+    fg_color=$(sed -n 16p $XDG_CACHE_HOME/wal/colors)
     length_check=$(echo -n "$message" | wc -c)
     [ "$length_check" -gt 39 ] && final_message=$(echo "$message" | cut -c 1-36 \
         | sed 's/$/.../') || final_message="$message"

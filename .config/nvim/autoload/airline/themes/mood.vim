@@ -4,20 +4,20 @@
 let g:airline#themes#mood#palette = {}
 
 " NORMAL mode
-let s:N1 = ['#005f00', '#afdf00', 7, 3, '']
-let s:N2 = ['#ffffff', '#444444', 7, 2, '']
-let s:N3 = ['#ffffff', '#121212', 8, '', 'italic']
-let s:W = ['#000000', '#8700df', 7, 2, '']
-let s:E = ['#000000', '#990000', 7, 4, '']
+let s:N1 = ['#005f00', '#afdf00', 15, 4, 'bold']
+let s:N2 = ['#ffffff', '#444444', 15, 6, '']
+let s:N3 = ['#ffffff', '#121212', 7, '', 'italic']
+let s:W = ['#000000', '#8700df', 15, 1, '']
+let s:E = ['#000000', '#990000', 15, 9, '']
 let g:airline#themes#mood#palette.normal =
       \ airline#themes#generate_color_map(s:N1, s:N2, s:N3)
 let g:airline#themes#mood#palette.normal.airline_warning = s:W
 let g:airline#themes#mood#palette.normal.airline_error = s:E
 let g:airline#themes#mood#palette.normal_modified = {
-      \ 'airline_c': ['#ff5f00', '#121212', 6, '', 'none'], }
+      \ 'airline_c': ['#ff5f00', '#121212', 15, '', 'bold'], }
 
 " INSERT mode
-let s:I1 = ['#0000df', '#00dfff', 7, 1, '']
+let s:I1 = ['#0000df', '#00dfff', 15, 2, '']
 let s:I2 = s:N2
 let s:I3 = s:N3
 let g:airline#themes#mood#palette.insert =
@@ -42,7 +42,7 @@ let g:airline#themes#mood#palette.replace_modified =
       \ g:airline#themes#mood#palette.normal_modified
 
 " VISAUL mode
-let s:V1 = ['#5f0000', '#ffaf00', 7, 5, '']
+let s:V1 = ['#5f0000', '#ffaf00', 15, 5, '']
 let s:V2 = s:N2
 let s:V3 = s:N3
 let g:airline#themes#mood#palette.visual =
@@ -64,7 +64,7 @@ let g:airline#themes#mood#palette.inactive_modified = {
       \ 'airline_c': ['#875faf', '', 97, '', ''], }
 
 " COMMAND mode
-let s:airline_a_commandline = [ '#0000ff' , '#0cff00' , 7  , 4 ]
+let s:airline_a_commandline = ['#0000ff', '#0cff00', 15 , 3, '']
 let s:airline_b_commandline = s:N2
 let s:airline_c_commandline = s:N3
 let g:airline#themes#mood#palette.commandline = airline#themes#generate_color_map(s:airline_a_commandline, s:airline_b_commandline, s:airline_c_commandline)
@@ -81,6 +81,6 @@ if !get(g:, 'loaded_ctrlp', 0)
 endif
 let g:airline#themes#mood#palette.ctrlp =
       \ airline#extensions#ctrlp#generate_color_map(
-      \   ['#d7d7ff', '#5f00af', 7, '', ''],
-      \   ['#ffffff', '#875fd7', 7, 2, ''],
-      \   ['#5f00af', '#ffffff', 7, 1, 'bold'] )
+      \   ['#d7d7ff', '#5f00af', 15, '', ''],
+      \   ['#ffffff', '#875fd7', 15, 2, ''],
+      \   ['#5f00af', '#ffffff', 15, 1, 'bold'] )

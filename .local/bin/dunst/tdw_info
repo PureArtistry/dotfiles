@@ -52,7 +52,7 @@ if [ "$net" -eq 0 ]; then
             if [ "$dn" -le 5 ] || [ "$dn" -ge 20 ]; then
                 icon=""
             else
-                s=60
+                s=56
                 icon=""
             fi
         else
@@ -79,12 +79,17 @@ if [ "$net" -eq 0 ]; then
     Overcast*)
         s=48
         if [ "$ws" -lt 20 ]; then
-            [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
+            if [ "$dn" -le 5 ] || [ "$dn" -ge 20 ]; then
+                s=56
+                icon=""
+            else
+                icon=""
+            fi
         else
             [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
         fi
         ;;
-    Mist* | Fog* | "Freezing fog"*)
+    Mist* | Fog* | "Freezing fog"* | "Shallow fog"*)
         s=48
         [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
         ;;
@@ -100,8 +105,8 @@ if [ "$net" -eq 0 ]; then
         s=48
         [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
         ;;
-    "Patchy rain possible"* | "Patchy light rain"* | "Light rain"* | "Shower in vicinity"*)
-        s=48
+    "Patchy rain possible"* | "Patchy light rain"* | "Light rain"* | "Shower in vicinity"* | "Rain shower"*)
+        s=54
         [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
         ;;
     "Patchy snow possible"* | "Blowing snow"* | "Light snow"* | "Patchy light snow"*)
@@ -128,8 +133,8 @@ if [ "$net" -eq 0 ]; then
         s=48
         [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
         ;;
-    "Patchy light drizzle"* | "Light drizzle"*)
-        s=48
+    "Patchy light drizzle"* | "Light drizzle"* | "Drizzle"*)
+        s=60
         [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
         ;;
     "Heavy freezing drizzle"* | "Heavy rain"* | "Moderate or heavy freezing rain"* | "Torrential rain shower"*)
@@ -137,7 +142,7 @@ if [ "$net" -eq 0 ]; then
         [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="歹" || icon="歹"
         ;;
     "Moderate rain"* | "Moderate or heavy rain shower"* | "Rain")
-        s=48
+        s=54
         if [ "$ws" -lt 20 ]; then
             [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
         else

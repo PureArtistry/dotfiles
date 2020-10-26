@@ -2,6 +2,7 @@
 # vim:foldmethod=marker
 
 neocover >/dev/null 2>&1
+wal_steam -w
 
 # tweak some configs post generation {{{
 x=$(cat "$XDG_CONFIG_HOME"/kitty/kitty_colors.conf | awk '{print $2}')

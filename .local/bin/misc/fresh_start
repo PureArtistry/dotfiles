@@ -1,6 +1,6 @@
 #!/bin/sh
 
-printf '\033[0m\033[1;31m:: \033[37mcleaning up temporary files for a fresh start...\033[0m\n'
+printf '\033[0m\033[1;91m:: \033[97mcleaning up temporary files for a fresh start...\033[0m\n'
 
 for x in $(ls -1 /tmp/dunst_icon* 2>/dev/null); do rm -f -v "$x" 2>/dev/null; done
 for y in $(ls -1 /tmp/*.img.* 2>/dev/null); do rm -f -v "$y" 2>/dev/null; done

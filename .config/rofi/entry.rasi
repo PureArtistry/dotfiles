@@ -1,6 +1,6 @@
 * {
     background-color: @my-inactive;
-    text-color: @my-colour7;
+    text-color: @my-colour15;
     border: 0;
     padding: 0;
 }
@@ -17,14 +17,15 @@
 message {
     children: [ textbox ];
     background-color: @my-colour1;
+    padding: 8px 8px 8px 12px;
 }
 
 textbox {
     font: "VictorMono Nerd Font italic 19";
-    text-color: @my-colour7;
+    text-color: @my-colour15;
     background-color: @my-colour1;
-    padding: 8px 8px 8px 12px;
     vertical-align: 0.5;
+    padding: 0px 0px 8px 0px;
 }
 
 inputbar {
@@ -38,7 +39,7 @@ entry {
     horizontal-align: 0.5;
     padding: 4;
     placeholder: "something...";
-    placeholder-color: @my-colour8;
+    placeholder-color: @my-colour7;
 }
 
 /* vim:ft=css

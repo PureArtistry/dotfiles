@@ -1,6 +1,6 @@
 * {
     background-color: @my-inactive;
-    text-color: @my-colour7;
+    text-color: @my-colour15;
     border: 0;
     padding: 0;
     lines: 3;
@@ -16,12 +16,13 @@
 inputbar {
     children: [ prompt ];
     background-color: @my-colour1;
+    padding: 8px 8px 8px 12px;
 }
 
 prompt {
     font: "VictorMono Nerd Font italic 19";
     background-color: @my-colour1;
-    padding: 8px 8px 8px 12px;
+    padding: 0px 0px 8px 0px;
 }
 
 listview {
@@ -45,7 +46,7 @@ message {
 }
 
 textbox {
-    text-color: @my-colour7;
+    text-color: @my-colour15;
     background-color: @my-colour4;
     horizontal-align: 0.5;
     vertical-align: 0.5;

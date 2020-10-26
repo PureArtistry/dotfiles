@@ -1,6 +1,6 @@
 #!/bin/sh
 
-paccache -rk1 2> /dev/null
+paccache -rk2 2> /dev/null
 paccache -ruk0 2> /dev/null
 pgrep fancy_writing >/dev/null 2>&1
 [ "$?" -eq 0 ] && pkill fancy_writing --signal=USR2 >/dev/null 2>&1

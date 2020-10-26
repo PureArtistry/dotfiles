@@ -1,6 +1,6 @@
 * {
     background-color: @my-inactive;
-    text-color: @my-colour7;
+    text-color: @my-colour15;
     border: 0;
     padding: 0;
 }
@@ -8,7 +8,7 @@
 #window {
     children: [ message, listview, inputbar ];
     width: 460px;
-    height: 383px;
+    height: 368px;
     location: 0;
     y-offset: 80;
 }
@@ -17,12 +17,13 @@ message {
     children: [ textbox ];
     font: "Iosevka Nerd Font 7";
     background-color: @my-active;
+    padding: 8px 8px 8px 12px;
 }
 
 textbox {
-    text-color: @my-colour7;
+    text-color: @my-colour15;
     background-color: @my-active;
-    padding: 8;
+    padding: 0px 0px 8px 0px;
     horizontal-align: 0.5;
     vertical-align: 0.5;
 }
@@ -54,7 +55,7 @@ inputbar {
 }
 
 prompt {
-    text-color: @my-colour7;
+    text-color: @my-colour15;
     background-color: @my-colour4;
     vertical-align: 0.5;
     padding: 4px 8px 4px 8px;

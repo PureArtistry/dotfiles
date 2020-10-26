@@ -4,10 +4,8 @@
 " thanks for the handy comments, I learned a lot from them
 
 " configure the environment {{{
-"
 
 " plugin management {{{
-"
 
 " auto install plugged, if needed
     if empty(glob('~/.config/nvim/autoload/plug.vim'))
@@ -37,6 +35,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'honza/vim-snippets'
     Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
     Plug 'vim-scripts/restore_view.vim'
+    Plug 'mhinz/vim-startify'
 
 call plug#end()
 
@@ -70,71 +69,49 @@ endif
 
 set hidden
 set history=1000
-
 set shell=/bin/sh
-
 set ttimeoutlen=10
 set clipboard+=unnamedplus
 set mouse=a
 
-" Enable autocompletion:
-set wildmode=longest,list,full
+set wildmode=longest,list,full " Enable autocompletion
+set complete-=i
+set magic " For regular expressions turn magic on
+
 " Disables automatic commenting on newline:
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
+set tabstop=4
 set shiftwidth=4 "default indent
-set wrap "Wrap lines
-" Set x lines to the cursor - when moving vertically using j/k
-set so=15
+
+autocmd InsertEnter * norm zz " Vertically center document when entering insert mode
+set so=15 " Set x lines to the cursor - when moving vertically using j/k
+set nowrap " Line wrapping
 set whichwrap+=<,>,h,l
-" For regular expressions turn magic on
-set magic
-" Show matching brackets when text indicator is over them
-set showmatch
-" How many tenths of a second to blink when matching brackets
-set mat=2
+set showmatch " Show matching brackets when text indicator is over them
+set mat=2 " How many tenths of a second to blink when matching brackets
 
 set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ --follow
+set ignorecase " Ignore case when searching
+set smartcase " When searching try to be smart about cases
 
-" Ignore case when searching
-set ignorecase
-" When searching try to be smart about cases
-set smartcase
 " Visual mode pressing * or # searches for the current selection
 vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 
 " leader key mappings {{{
 
-" With a map leader it's possible to do extra key combinations
-" like <leader>w saves the current file
-let mapleader = ";"
+let mapleader = ";" " With a map leader it's possible to do extra key combinations
 
-" swift exit
-nmap <leader>q :q<cr>
-" save first
-nmap <leader>r :wq<cr>
-
-" Fast saving
-nmap <leader>w :w!<cr>
-
-" quick reload
-nmap <leader>e :e<cr>
-
-" goyo mode
-nmap <leader>g :Goyo 110x85%<cr>
-
-" enable spellcheck
-nmap <leader>h :set spell spelllang=en_gb<cr>
-
-" toggle markdown preview
-nmap <leader>p <Plug>MarkdownPreviewToggle
-
-" quick script start
-nmap <leader>s i#!/bin/sh<cr><cr>#<Esc>:w! /tmp/new_script<cr>:e<cr><End>a<Space>
-
-" tidy my code
-nmap <Leader>c <Plug>(Prettier)
+nmap <leader>q :q<cr> " swift exit
+nmap <leader>r :wq<cr> " save first
+nmap <leader>w :w!<cr> " Fast saving
+nmap <leader>e :e<cr> " quick reload
+nmap <leader>g :Goyo 110x85%<cr> " goyo mode
+nmap <leader>h :set spell spelllang=en_gb<cr> " enable spellcheck
+nmap <leader>p <Plug>MarkdownPreviewToggle " toggle markdown preview
+nmap <Leader>c <Plug>(Prettier) " tidy my code
+map <silent> <leader><cr> :noh<cr> " Disable highlight when <leader><cr> is pressed
 
 " }}}
 
@@ -146,72 +123,52 @@ else
     set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
 endif
 
-" markdown preview options
-let g:mkdp_browser = 'qute_markdown'
+let g:mkdp_browser = 'qute_markdown' " markdown preview options
 
 " prettier config
 let g:prettier#exec_cmd_path = "~/.local/share/npm/bin/prettier"
 let g:prettier#exec_cmd_async = 1
-" number of spaces per indentation level: a number or 'auto' (use
-" softtabstop)
-" default: 'auto'
 let g:prettier#config#tab_width = '4'
 let g:prettier#config#use_tabs = 'false'
 
 " }}}
 
 " theme config {{{
-"
 
-" set termguicolors " colour scheme needs editing first
 colorscheme mood
 set noshowmode
 set cursorline
+set number
+set cmdheight=1 " Height of the command bar
 
 " goyo stuff
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
 
-" Disable highlight when <leader><cr> is pressed
-map <silent> <leader><cr> :noh<cr>
-
-set number
-" set foldcolumn=1
-
 " airline config
 let g:airline_theme='mood'
 let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
-
-" Height of the command bar
-set cmdheight=1
-
-" gitgutter colours
-highlight GitGutterAdd    guifg=#009900 ctermfg=15
-highlight GitGutterChange guifg=#bbbb00 ctermfg=15
-highlight GitGutterDelete guifg=#ff2222 ctermfg=15
+let g:airline_powerline_fonts = 1
+let g:airline_left_sep=''
+let g:airline_right_sep=''
 
 " }}}
 
 " handy shit {{{
-"
 
-" fold controls
-let g:sh_fold_enabled= 5
+let g:sh_fold_enabled= 5 " fold controls
 
 " Delete trailing white space on save, useful for some filetypes ;)
-fun! CleanExtraSpaces()
-    let save_cursor = getpos(".")
-    let old_query = getreg('/')
-    silent! %s/\s\+$//e
-    call setpos('.', save_cursor)
-    call setreg('/', old_query)
-endfun
-
+" fun! CleanExtraSpaces()
+"     let save_cursor = getpos(".")
+"     let old_query = getreg('/')
+"     silent! %s/\s\+$//e
+"     call setpos('.', save_cursor)
+"     call setreg('/', old_query)
+" endfun
 " if has("autocmd")
 "     autocmd BufWritePre * :call CleanExtraSpaces()
 " endif
-
-set complete-=i
 
 " Move a line of text using ALT+[jk]
 nmap <M-j> mz:m+<cr>`z
@@ -383,4 +340,3 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 " }}}
 
 " }}}
-

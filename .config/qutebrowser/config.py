@@ -99,11 +99,11 @@ c.colors.completion.item.selected.fg = col_c15
 
 ## Foreground color of the matched text in the selected completion item.
 ## Type: QtColor
-c.colors.completion.item.selected.match.fg = col_c8
+c.colors.completion.item.selected.match.fg = col_c14
 
 ## Foreground color of the matched text in the completion.
 ## Type: QtColor
-c.colors.completion.match.fg = col_c8
+c.colors.completion.match.fg = col_c14
 
 ## Background color of the completion widget for odd rows.
 ## Type: QssColor
@@ -204,7 +204,7 @@ c.colors.hints.fg = col_c15
 
 ## Font color for the matched part of hints.
 ## Type: QtColor
-c.colors.hints.match.fg = col_c8
+c.colors.hints.match.fg = col_c7
 
 ## Background color of the keyhint widget.
 ## Type: QssColor
@@ -344,11 +344,11 @@ c.colors.statusbar.passthrough.fg = col_c15
 
 ## Default foreground color of the URL in the statusbar.
 ## Type: QssColor
-c.colors.statusbar.url.fg = col_c8
+c.colors.statusbar.url.fg = col_c7
 
 ## Foreground color of the URL in the statusbar for hovered links.
 ## Type: QssColor
-c.colors.statusbar.url.hover.fg = col_c0
+c.colors.statusbar.url.hover.fg = col_c14
 
 ## Foreground color of the URL in the statusbar on successful load
 ## (http).
@@ -374,7 +374,7 @@ c.colors.tabs.even.bg = col_c0
 
 ## Foreground color of unselected even tabs.
 ## Type: QtColor
-c.colors.tabs.even.fg = col_c15
+c.colors.tabs.even.fg = col_c7
 
 ## Color for the tab indicator on errors.
 ## Type: QtColor
@@ -403,7 +403,7 @@ c.colors.tabs.odd.bg = col_c0
 
 ## Foreground color of unselected odd tabs.
 ## Type: QtColor
-c.colors.tabs.odd.fg = col_c15
+c.colors.tabs.odd.fg = col_c7
 
 ## Background color of pinned unselected even tabs.
 ## Type: QtColor
@@ -483,7 +483,7 @@ c.colors.webpage.bg = col_c0
 ## `colors.webpage.darkmode.threshold.background` to 205.  - "With
 ## selective inversion of everything": Combines the two variants   above.
 ## Type: Bool
-c.colors.webpage.darkmode.enabled = True
+c.colors.webpage.darkmode.enabled = False 
 
 ## Render all colors as grayscale. This only has an effect when
 ## `colors.webpage.darkmode.algorithm` is set to `lightness-hsl` or
@@ -838,6 +838,8 @@ c.content.local_content_can_access_remote_urls = True
 ## Enable support for HTML 5 local storage and Web SQL.
 ## Type: Bool
 # c.content.local_storage = True
+
+# ** below options need to be adjusted post 1.14 release **
 
 ## Allow websites to record audio/video.
 ## Type: BoolAsk
@@ -1434,7 +1436,7 @@ c.prompt.filebrowser = False
 ## Enable smooth scrolling for web pages. Note smooth scrolling does not
 ## work with the `:scroll-px` command.
 ## Type: Bool
-# c.scrolling.smooth = False
+c.scrolling.smooth = True
 
 ## When to find text on a page case-insensitively.
 ## Type: IgnoreCase

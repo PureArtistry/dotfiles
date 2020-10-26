@@ -6,38 +6,38 @@ autoload -U colors && colors
 autoload -U promptinit; promptinit
 prompt spaceship
 SPACESHIP_PROMPT_ORDER=(
-  exec_time     # Execution time
-  user          # Username section
-  dir           # Current directory section
-  host          # Hostname section
-  git           # Git section (git_branch + git_status)
-  hg            # Mercurial section (hg_branch  + hg_status)
-  package       # Package version
-  node          # Node.js section
-  ruby          # Ruby section
-  elixir        # Elixir section
-  xcode         # Xcode section
-  swift         # Swift section
-  golang        # Go section
-  php           # PHP section
-  rust          # Rust section
-  haskell       # Haskell Stack section
-  julia         # Julia section
-  docker        # Docker section
-  aws           # Amazon Web Services section
-  venv          # virtualenv section
-  conda         # conda virtualenv section
-  pyenv         # Pyenv section
-  dotnet        # .NET section
-  ember         # Ember.js section
-  kubectl       # Kubectl context section
-  terraform     # Terraform workspace section
-  line_sep      # Line break
-  battery       # Battery level and status
-  vi_mode       # Vi-mode indicator
-  jobs          # Background jobs indicator
-  exit_code     # Exit code section
-  char          # Prompt character
+    exec_time     # Execution time
+    user          # Username section
+    dir           # Current directory section
+    host          # Hostname section
+    git           # Git section (git_branch + git_status)
+    hg            # Mercurial section (hg_branch  + hg_status)
+    package       # Package version
+    node          # Node.js section
+    ruby          # Ruby section
+    elixir        # Elixir section
+    xcode         # Xcode section
+    swift         # Swift section
+    golang        # Go section
+    php           # PHP section
+    rust          # Rust section
+    haskell       # Haskell Stack section
+    julia         # Julia section
+    docker        # Docker section
+    aws           # Amazon Web Services section
+    venv          # virtualenv section
+    conda         # conda virtualenv section
+    pyenv         # Pyenv section
+    dotnet        # .NET section
+    ember         # Ember.js section
+    kubectl       # Kubectl context section
+    terraform     # Terraform workspace section
+    line_sep      # Line break
+    battery       # Battery level and status
+    vi_mode       # Vi-mode indicator
+    jobs          # Background jobs indicator
+    exit_code     # Exit code section
+    char          # Prompt character
 )
 SPACESHIP_RPROMPT_ORDER=()
 SPACESHIP_CHAR_SYMBOL=" "
@@ -67,14 +67,12 @@ zmodload zsh/complist
 compinit
 _comp_options+=(globdots)
 
-#// only useful when sorting music collection
-	autoload bashcompinit
-	bashcompinit
-	_get_comp_words_by_ref() { :; }
-	compopt() { :; }
-	_filedir() { :; }
-	# eval "$(beet completion)"
-#// -----------------------------------------
+autoload bashcompinit
+bashcompinit
+_get_comp_words_by_ref() { :; }
+compopt() { :; }
+_filedir() { :; }
+# eval "$(beet completion)" # <- only useful when sorting music collection
 
 kitty + complete setup zsh | source /dev/stdin
 
@@ -120,15 +118,15 @@ key[Control-Right]="${terminfo[kRIT5]}"
 [[ -n "${key[Control-Right]}" ]] && bindkey -- "${key[Control-Right]}" forward-word
 
 if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
-	autoload -Uz add-zle-hook-widget
-	function zle_application_mode_start {
-		echoti smkx
-	}
-	function zle_application_mode_stop {
-		echoti rmkx
-	}
-	add-zle-hook-widget -Uz zle-line-init zle_application_mode_start
-	add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
+    autoload -Uz add-zle-hook-widget
+    function zle_application_mode_start {
+          echoti smkx
+    }
+    function zle_application_mode_stop {
+          echoti rmkx
+    }
+    add-zle-hook-widget -Uz zle-line-init zle_application_mode_start
+    add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
 fi
 
 autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
@@ -146,13 +144,71 @@ bindkey '^ ' autosuggest-execute
 bindkey "^${key[Down]}" autosuggest-clear
 
 # }}}
-# bloat {{{
+# highlighting {{{
+
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=15,bg=1,bold'
+ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=5,bold'
+ZSH_HIGHLIGHT_STYLES[alias]='fg=14,bold'
+ZSH_HIGHLIGHT_STYLES[global-alias]='fg=14'
+ZSH_HIGHLIGHT_STYLES[suffix-alias]='fg=14,underline'
+ZSH_HIGHLIGHT_STYLES[builtin]='fg=5'
+ZSH_HIGHLIGHT_STYLES[function]='fg=4,bold'
+ZSH_HIGHLIGHT_STYLES[command]='fg=13,bold'
+ZSH_HIGHLIGHT_STYLES[precommand]='fg=15,bg=3'
+ZSH_HIGHLIGHT_STYLES[commandseparator]='fg=15,bg=5,bold'
+# ZSH_HIGHLIGHT_STYLES[hashed-command]=''
+ZSH_HIGHLIGHT_STYLES[autodirectory]='fg=15,underline'
+ZSH_HIGHLIGHT_STYLES[path]='fg=15,underline'
+ZSH_HIGHLIGHT_STYLES[path_pathseparator]='fg=5,bold'
+# ZSH_HIGHLIGHT_STYLES[path_prefix]=''
+# ZSH_HIGHLIGHT_STYLES[path_prefix_pathseparator]=''
+ZSH_HIGHLIGHT_STYLES[globbing]='bg=4,fg=15'
+ZSH_HIGHLIGHT_STYLES[history-expansion]='fg=12'
+# ZSH_HIGHLIGHT_STYLES[command-substitution]=''
+ZSH_HIGHLIGHT_STYLES[command-substitution-unquoted]='fg=1,bold'
+ZSH_HIGHLIGHT_STYLES[command-substitution-quoted]='fg=9,bold'
+# ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter]=''
+ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter-unquoted]='fg=1,bold'
+ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter-quoted]='fg=9,bold'
+# ZSH_HIGHLIGHT_STYLES[process-substitution]=''
+ZSH_HIGHLIGHT_STYLES[process-substitution-delimiter]='fg=9,bold'
+ZSH_HIGHLIGHT_STYLES[arithmetic-expansion]='fg=11,bold'
+ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=10'
+ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=2'
+# ZSH_HIGHLIGHT_STYLES[back-quoted-argument]=''
+# ZSH_HIGHLIGHT_STYLES[back-quoted-argument-unclosed]=''
+# ZSH_HIGHLIGHT_STYLES[back-quoted-argument-delimiter]=''
+# ZSH_HIGHLIGHT_STYLES[single-quoted-argument]=''
+# ZSH_HIGHLIGHT_STYLES[single-quoted-argument-unclosed]=''
+# ZSH_HIGHLIGHT_STYLES[double-quoted-argument]=''
+# ZSH_HIGHLIGHT_STYLES[double-quoted-argument-unclosed]=''
+# ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]=''
+# ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument-unclosed]=''
+# ZSH_HIGHLIGHT_STYLES[rc-quote]=''
+# ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]=''
+# ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]=''
+# ZSH_HIGHLIGHT_STYLES[back-dollar-quoted-argument]=''
+ZSH_HIGHLIGHT_STYLES[assign]='fg=9,bold'
+ZSH_HIGHLIGHT_STYLES[redirection]='fg=5,bold'
+ZSH_HIGHLIGHT_STYLES[comment]='fg=7,bg=8'
+# ZSH_HIGHLIGHT_STYLES[named-fd]=''
+# ZSH_HIGHLIGHT_STYLES[numeric-fd]=''
+ZSH_HIGHLIGHT_STYLES[arg0]='fg=10'
+ZSH_HIGHLIGHT_STYLES[default]='fg=15'
+# ZSH_HIGHLIGHT_STYLES[bracket-error]=''
+# ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]=''
+# ZSH_HIGHLIGHT_STYLES[bracket-level-N]='' # <- you can define multiple levels
+
+ZSH_AUTOSUGGEST_USE_ASYNC=true
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=7'
 
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-[ -f /tmp/startup.tmp ] && neofetch && rm -f /tmp/startup.tmp
-
 # }}}
+
+[ -f /tmp/startup.tmp ] && neofetch && rm -f /tmp/startup.tmp
 
 # vim:foldmethod=marker

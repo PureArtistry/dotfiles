@@ -53,7 +53,7 @@ super + alt + Return
     $BROWSER
 
 # rofi app launcher
-super + d
+super + slash
     rofi -theme 'launcher' -show drun
 
 # run the testscript
@@ -77,9 +77,9 @@ super + alt + p
 # games
 #super + l
 # this script needs re-writing
-super + shift + l
-    lutris
 super + alt + l
+    lutris
+super + shift + l
     steam
 
 # ripcord
@@ -162,7 +162,7 @@ super + alt + c
     NOtifications
 
 # time/date/weather notification
-super + shift + d
+super + d
     tdw_info
 
 # volume popup
@@ -186,7 +186,7 @@ super + shift + {F4,F5}
 # misc {{{
 
 # quick launch (will later be bookmarks menu)
-super + slash
+super + shift + slash
     qutebrowser --target 'window' 'https://www.nerdfonts.com/cheat-sheet'
 
 # toggle scratch terminal
@@ -212,6 +212,10 @@ super + shift + F3
 # game mode toggle
 super + alt + F3
     game_mode
+
+# diablo 3 macro
+super + x
+    macro_toggle
 
 # clipboard monitor toggle
 super + shift + y
@@ -248,25 +252,6 @@ super + {w,q}
 # }}}
 
 # workspace {{{
-
-# bsp-layout {{{
-
-# notification popup for current layout
-super + shift + g
-    bspl_popup
-
-# make workspace master/stack (tall)
-super + g
-    bsp-layout set tall $(bspc query -T -d | jq -r '.name') --master-size 0.5
-# make workspace master/stack (wide)
-super + alt + g
-    bsp-layout set wide $(bspc query -T -d | jq -r '.name') --master-size 0.6
-
-# remove layout
-super + ctrl + g
-    bsp-layout remove $(bspc query -T -d | jq -r '.name')
-
-# }}}
 
 # focus home workspace and layer everything correctly
 super + 1
