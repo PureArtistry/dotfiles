@@ -161,19 +161,19 @@ c.colors.downloads.error.fg = col_c15
 
 ## Color gradient start for download backgrounds.
 ## Type: QtColor
-# c.colors.downloads.start.bg = '#0000aa'
+c.colors.downloads.start.bg = col_c3
 
 ## Color gradient start for download text.
 ## Type: QtColor
-# c.colors.downloads.start.fg = 'white'
+c.colors.downloads.start.fg = col_c15
 
 ## Color gradient stop for download backgrounds.
 ## Type: QtColor
-# c.colors.downloads.stop.bg = '#00aa00'
+c.colors.downloads.stop.bg = col_c2
 
 ## Color gradient end for download text.
 ## Type: QtColor
-# c.colors.downloads.stop.fg = 'white'
+c.colors.downloads.stop.fg = col_c15
 
 ## Color gradient interpolation system for download backgrounds.
 ## Type: ColorSystem
@@ -220,15 +220,15 @@ c.colors.hints.match.fg = col_c7
 
 ## Background color of an error message.
 ## Type: QssColor
-# c.colors.messages.error.bg = 'red'
+c.colors.messages.error.bg = col_c1
 
 ## Border color of an error message.
 ## Type: QssColor
-# c.colors.messages.error.border = '#bb0000'
+c.colors.messages.error.border = col_c1
 
 ## Foreground color of an error message.
 ## Type: QssColor
-# c.colors.messages.error.fg = 'white'
+c.colors.messages.error.fg = col_c15
 
 ## Background color of an info message.
 ## Type: QssColor
@@ -244,27 +244,27 @@ c.colors.messages.info.fg = col_c15
 
 ## Background color of a warning message.
 ## Type: QssColor
-# c.colors.messages.warning.bg = 'darkorange'
+c.colors.messages.warning.bg = col_c3
 
 ## Border color of a warning message.
 ## Type: QssColor
-# c.colors.messages.warning.border = '#d47300'
+c.colors.messages.warning.border = col_c3
 
 ## Foreground color of a warning message.
 ## Type: QssColor
-# c.colors.messages.warning.fg = 'white'
+c.colors.messages.warning.fg = col_c15
 
 ## Background color for prompts.
 ## Type: QssColor
-# c.colors.prompts.bg = '#444444'
+c.colors.prompts.bg = col_inactive
 
 ## Border used around UI elements in prompts.
 ## Type: String
-# c.colors.prompts.border = '1px solid gray'
+c.colors.prompts.border = col_inactive
 
 ## Foreground color for prompts.
 ## Type: QssColor
-# c.colors.prompts.fg = 'white'
+c.colors.prompts.fg = col_c15
 
 ## Background color for the selected item in filename prompts.
 ## Type: QssColor

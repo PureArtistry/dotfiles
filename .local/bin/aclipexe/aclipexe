@@ -182,7 +182,7 @@ image_bit() {
         -gravity center -extent 460x259 \
         -flatten /tmp/rofi_thumb.png
     bspc rule -a Sxiv:\* -o state=floating manage=off
-    sxiv -g 460x259+730+268 -p -b /tmp/rofi_thumb.png &
+    sxiv -g 460x259+730+260 -p -b /tmp/rofi_thumb.png &
     thumb_pid="$!"
     img_option=$(echo "  download image\n  set as wallpaper\n  open in gimp" \
         | rofi -theme 'image' -dmenu \

@@ -34,7 +34,7 @@ if [ "$net" -eq 0 ]; then
 
     case "$w" in
     Clear*)
-        s=52
+        s=58
         if [ "$ws" -lt 20 ]; then
             if [ "$dn" -le 5 ] || [ "$dn" -ge 20 ]; then
                 icon="望"
@@ -77,7 +77,7 @@ if [ "$net" -eq 0 ]; then
         fi
         ;;
     Overcast*)
-        s=48
+        s=52
         if [ "$ws" -lt 20 ]; then
             if [ "$dn" -le 5 ] || [ "$dn" -ge 20 ]; then
                 s=56
@@ -134,7 +134,7 @@ if [ "$net" -eq 0 ]; then
         [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
         ;;
     "Patchy light drizzle"* | "Light drizzle"* | "Drizzle"*)
-        s=60
+        s=52
         [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
         ;;
     "Heavy freezing drizzle"* | "Heavy rain"* | "Moderate or heavy freezing rain"* | "Torrential rain shower"*)

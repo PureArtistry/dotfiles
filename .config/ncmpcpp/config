@@ -182,7 +182,7 @@ lyrics_directory = ~/.config/ncmpcpp/lyrics
 ## Note: colors can be nested.
 ##
 #
-song_list_format = {$8%t}|{$8%f$9}$R{$7(%l)$9}
+song_list_format = {$(16)%t}|{$8%f$9}$R{$(15)(%l)$9}
 #
 #song_status_format = {{%a{ "%b"{ (%y)}} - }{%t}}|{%f}
 #
