@@ -171,6 +171,11 @@ gitbit() {
     main
 }
 
+wall_change(){
+    theme_change "$1" &
+    return
+}
+
 image_bit() {
     processed="$selection"
     og_name=$(echo "$selection" | awk -F '/' '{print $NF}')
@@ -210,7 +215,7 @@ image_bit() {
         [ ! "$new_name" ] && tn="$og_name" || tn="$new_name.$ext"
         cp /tmp/"$temp_name" "$HOME"/images/wallpapers/"$tn"
         wpg -a "$HOME"/images/wallpapers/"$tn"
-        theme_change "$tn" &
+        wall_change "$tn"
         ;;
     3)
         kill "$thumb_pid"

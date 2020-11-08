@@ -89,7 +89,7 @@ if [ "$net" -eq 0 ]; then
             [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
         fi
         ;;
-    Mist* | Fog* | "Freezing fog"* | "Shallow fog"*)
+    Mist* | Fog* | "Freezing fog"* | "Shallow fog"* | Haze*)
         s=48
         [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
         ;;
