@@ -74,7 +74,11 @@ compopt() { :; }
 _filedir() { :; }
 # eval "$(beet completion)" # <- only useful when sorting music collection
 
-kitty + complete setup zsh | source /dev/stdin
+if command -v pazi &>/dev/null; then
+  eval "$(pazi init zsh)"
+fi
+
+# kitty + complete setup zsh | source /dev/stdin
 
 source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh
