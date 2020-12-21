@@ -49,7 +49,7 @@ lyrics_directory = ~/.config/ncmpcpp/lyrics
 ## }
 ##
 #
-visualizer_fifo_path = /tmp/mpd.fifo
+visualizer_data_source = /tmp/mpd.fifo
 #
 ##
 ## Note: Below parameter is needed for ncmpcpp to determine which output
@@ -65,30 +65,52 @@ visualizer_output_name = Visualizer feed
 visualizer_in_stereo = yes
 #
 ##
-## Note: Below parameter defines how often ncmpcpp has to "synchronize"
-## visualizer and audio outputs.  30 seconds is optimal value, but if you
-## experience synchronization problems, set it to lower value.  Keep in mind
-## that sane values start with >=10.
-##
-#
-visualizer_sync_interval = 30
-#
-##
 ## Note: To enable spectrum frequency visualization you need to compile ncmpcpp
 ## with fftw3 support.
 ##
 #
 ## Available values: spectrum, wave, wave_filled, ellipse.
 ##
-visualizer_type = wave_filled
+visualizer_type = ellipse
 #
 visualizer_look = ●▮
 #
-visualizer_color = 10, 13, 15, 14
+visualizer_fps = 60
+#
+visualizer_autoscale = yes
+#
+visualizer_color = 2, 10, 5, 13, 7, 15, 6, 14
 #
 ## Alternative subset of 256 colors for terminals that support it.
 ##
-#visualizer_color = 41, 83, 119, 155, 185, 215, 209, 203, 197, 161
+# visualizer_color = 41, 83, 119, 155, 185, 215, 209, 203, 197, 161
+#
+##
+## Note: The next few visualization options apply to the spectrum visualizer.
+##
+#
+## Use unicode block characters for a smoother, more continuous look.
+## This will override the visualizer_look option. With transparent terminals
+## and visualizer_in_stereo set, artifacts may be visible on the bottom half of
+## the visualization.
+#
+# visualizer_spectrum_smooth_look = no
+#
+## A value between 1 and 5 inclusive. Specifying a larger value makes the
+## visualizer look at a larger slice of time, which results in less jumpy
+## visualizer output.
+#
+#visualizer_spectrum_dft_size = 3
+#
+#visualizer_spectrum_gain = 10
+#
+## Left-most frequency of visualizer in Hz, must be less than HZ MAX
+#
+#visualizer_spectrum_hz_min = 20
+#
+## Right-most frequency of visualizer in Hz, must be greater than HZ MIN
+#
+#visualizer_spectrum_hz_max = 20000
 #
 ##### system encoding #####
 ##
@@ -317,7 +339,7 @@ execute_on_player_state_change = "update_player > /dev/null 2>&1 &"
 ## Note: You can specify third character which will be used to build 'empty'
 ## part of progressbar.
 ##
-progressbar_look = ""
+progressbar_look = " "
 #
 ## Available values: database, playlist.
 ##
@@ -393,7 +415,7 @@ statusbar_visibility = no
 ##
 ## Note: You can define startup screen by choosing screen from the list above.
 ##
-startup_screen = visualizer
+startup_screen = clock
 #
 ##
 ## Note: You can define startup slave screen by choosing screen from the list

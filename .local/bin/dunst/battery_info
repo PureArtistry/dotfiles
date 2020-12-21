@@ -1,15 +1,15 @@
 #!/bin/sh
 
-x=$(cat $XDG_CONFIG_HOME/kitty/kitty_colors.conf | awk '{print $2}')
+x=$(cat $XDG_CONFIG_HOME/kitty/kitty_colors.conf)
 y=$(acpi -V)
 z=$(echo "$y" | head -n1)
 
-b=$(echo "$x" | sed -n 20p)
-f=$(echo "$x" | sed -n 2p)
-bd=$(echo "$x" | sed -n 18p)
+b=$(echo "$x" | awk 'NR==20{print $2}')
+f=$(echo "$x" | awk 'NR==2{print $2}')
+bd=$(echo "$x" | awk 'NR==18{print $2}')
 s=60
 
-[ "$(echo "$y" | sed -n 3p | awk '{print $3}')" = 'on-line' ] && ac=1 || ac=0
+[ "$(echo "$y" | awk 'NR==3{print $3}')" = 'on-line' ] && ac=1 || ac=0
 bp=$(echo "$z" | awk '{print $4}' | sed 's/%//;s/,//')
 ctr=$(echo "$z" | sed 's/.*: //' | awk -F ',' '{print $3}' | sed 's/ //')
 cs=$(echo "$z" | sed 's/.*: //' | awk '{print $1}' | sed 's/,//')

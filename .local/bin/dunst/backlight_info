@@ -1,12 +1,12 @@
 #!/bin/sh
 
-x=$(cat $XDG_CONFIG_HOME/kitty/kitty_colors.conf | awk '{print $2}')
+x=$(cat $XDG_CONFIG_HOME/kitty/kitty_colors.conf)
 y=$(xbacklight -get)
 z=$(echo "$y" | head -n1)
 
-b=$(echo "$x" | sed -n 20p)
-f=$(echo "$x" | sed -n 2p)
-bd=$(echo "$x" | sed -n 18p)
+b=$(echo "$x" | awk 'NR==20{print $2}')
+f=$(echo "$x" | awk 'NR==2{print $2}')
+bd=$(echo "$x" | awk 'NR==18{print $2}')
 s=72
 
 if [ "$y" -le 25 ]; then

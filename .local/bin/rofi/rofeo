@@ -25,7 +25,7 @@ api_key=$(head -n1 $HOME/.local/private/yt-api)
 
 listening() {
     need_mute=$(mpc current)
-    [ -n "$need_mute" ] && paused=$(mpc | sed -n 2p | awk '{print $1}' | grep "paused")
+    [ -n "$need_mute" ] && paused=$(mpc | awk 'NR==2{print $1}' | grep "paused")
     [ -n "$need_mute" ] && [ ! "$paused" ] && need_mute=yes
     return
 }
@@ -43,10 +43,10 @@ and_the_horse_you_rode_in_on() {
 }
 
 make_icon() {
-    local cols=$(cat $XDG_CONFIG_HOME/kitty/kitty_colors.conf | awk '{print $2}')
-    local b=$(echo "$cols" | sed -n 20p)
-    local f=$(echo "$cols" | sed -n 2p)
-    local bd=$(echo "$cols" | sed -n 18p)
+    local cols=$(cat $XDG_CONFIG_HOME/kitty/kitty_colors.conf)
+    local b=$(echo "$cols" | awk 'NR==20{print $2}')
+    local f=$(echo "$cols" | awk 'NR==2{print $2}')
+    local bd=$(echo "$cols" | awk 'NR==18{print $2}')
 
     convert -size 90x90 xc:"$b" \
         -gravity center \
@@ -81,9 +81,15 @@ first() {
 
 second() {
     list=$(find "$VIDEO"/"$catagory" -type f -printf "%f|%h\n" | sort) # <- also needs to only search for video files
+    if [ ! "$list" ]; then
+        new_face_in_town
+        make_icon 72 
+        dunstify -r 43224 -t 4000 -a 'fancy1' "no videos!" "folder $catagory is empty" -i /tmp/dunst_icon.png
+        first
+    fi
     cat_vids=$(echo "$list" | wc -l)
     choice=$("$utter" "$list" | awk -F '|' '{print $1}' | rofi -theme 'video2' \
-        -p "         contains $cat_vids videos to select from        " \
+        -p "         contains $cat_vids videos to select from         " \
         -mesg '  pick a title...' \
         -dmenu -i -format d)
     [ ! "$choice" ] && first

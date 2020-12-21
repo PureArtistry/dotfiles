@@ -6,4 +6,5 @@ pgrep tdw_info >/dev/null 2>&1 && killall -q tdw_info
 pgrep volume_info >/dev/null 2>&1 && killall -q volume_info
 pgrep song_info >/dev/null 2>&1 && killall -q song_info
 pgrep newsboat_info >/dev/null 2>&1 && killall -q newsboat_info
+pgrep backlight_info >/dev/null 2>&1 && killall -q backlight_info
 killall -q dunst

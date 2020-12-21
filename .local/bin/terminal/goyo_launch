@@ -23,9 +23,14 @@ if [ "$home_desktop" = '1' ] && [ "$mctl_state" = 'floating' ]; then
     fi
 else
     if [ "$1" = 'newsboat' ] || [ "$1" = 'ncmpcpp' ]; then
-        bspc node -p east
-        bspc node -o 0.70
-        alacritty --class "$1","$1" --title "$1" -e "$@" &
+        w=$(bspc query -T -d | gron | grep className | wc -l)
+        if [ "$w" -eq 1 ]; then
+            bspc node -p east
+            bspc node -o 0.70
+            alacritty --class "$1","$1" --title "$1" -e "$@" &
+        else
+            alacritty --class "$1","$1" --title "$1" -e "$@" &
+        fi
     elif [ "$1" = 'size_fix' ]; then
         alacritty --class "$2","$2" --title "$2" -e "$@" &
     else

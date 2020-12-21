@@ -3,9 +3,9 @@
 # that tune? rinsed it!
 
 stats=$(mpc stats)
-x=$(echo "$stats" | head -n1 | awk '{print $2}')
-y=$(echo "$stats" | sed -n 2p | awk '{print $2}')
-z=$(echo "$stats" | sed -n 3p | awk '{print $2}')
+x=$(echo "$stats" | awk 'NR==1{print $2}')
+y=$(echo "$stats" | awk 'NR==2{print $2}')
+z=$(echo "$stats" | awk 'NR==3{print $2}')
 t=$(echo "$stats" | tail -n1 | awk '{for (i=4; i <= NF; i++) printf $i""FS; print""}')
 playing=$(mpc current -f '%position%')
 [ ! "$playing" ] && playing=0 || playing=$((${playing} - 1))

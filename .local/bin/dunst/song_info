@@ -14,9 +14,9 @@ nsong=$(mpc queued -f "%title%")
 nartist=$(mpc queued -f "%artist%")
 
 calc() {
-    y=$(mpc | sed -n 2p)
-    elapsed=$(echo "$y" | awk '{print $3}' | sed 's/\/.*//')
-    perc=$(echo "$y" | awk '{print $4}')
+    y=$(mpc)
+    elapsed=$(echo "$y" | awk 'NR==2{print $3}' | sed 's/\/.*//')
+    perc=$(echo "$y" | awk 'NR==2{print $4}')
     # this bit only works if the song is less than an hour
     # I don't have anything over an hour to test the output of mpc
     # I'll re-write this to something less hacky when needed.

@@ -1,10 +1,10 @@
 #!/bin/sh
 
 timer() {
-    x=$(cat $XDG_CONFIG_HOME/kitty/kitty_colors.conf | awk '{print $2}')
-    b=$(echo "$x" | sed -n 20p)
-    f=$(echo "$x" | sed -n 2p)
-    bd=$(echo "$x" | sed -n 18p)
+    x=$(cat $XDG_CONFIG_HOME/kitty/kitty_colors.conf)
+    b=$(echo "$x" | awk 'NR==20{print $2}')
+    f=$(echo "$x" | awk 'NR==2{print $2}')
+    bd=$(echo "$x" | awk 'NR==18{print $2}')
 
     convert -size 90x90 xc:"$b" \
         -gravity center \

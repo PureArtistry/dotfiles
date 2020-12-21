@@ -1,0 +1,40 @@
+#!/bin/sh
+
+# will finish this soon(tm)
+
+x=$(cat $XDG_CONFIG_HOME/kitty/kitty_colors.conf)
+b=$(echo "$x" | awk 'NR==20{print $2}')
+f=$(echo "$x" | awk 'NR==2{print $2}')
+bd=$(echo "$x" | awk 'NR==18{print $2}')
+s=72
+
+make_icon() {
+    convert -size 90x90 xc:"$b" \
+        -gravity center \
+        -pointsize "$s" \
+        -font "Iosevka-Nerd-Font-Complete" \
+        -fill "$f" \
+        -bordercolor "$bd" \
+        -border '5' \
+        -annotate +0+0 "$icon" \
+        /tmp/dunst_icon.png >/dev/null 2>&1
+    return
+}
+
+d=$(ip route | grep default | awk '{print $5}')
+case "$d" in
+enp*)
+    icon=''
+    make_icon
+    dunstify "wired"
+    exit
+    ;;
+wlp*)
+    dunstify "wifi"
+    exit
+    ;;
+*)
+    dunstify "no internet"
+    exit
+    ;;
+esac

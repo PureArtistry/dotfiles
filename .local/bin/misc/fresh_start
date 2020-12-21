@@ -17,6 +17,7 @@ for y in $(ls -1 /tmp/*.img.* 2>/dev/null); do rm -f -v "$y" 2>/dev/null; done
 [ -f /tmp/companion_id ] && rm -f -v /tmp/companion_id 2>/dev/null
 [ -f /tmp/neocover.png ] && rm -f -v /tmp/neocover.png 2>/dev/null
 [ -f /tmp/pretty_colours_id ] && rm -f -v /tmp/pretty_colours_id 2>/dev/null
+[ -f /tmp/pretty_colours_mode ] && rm -f -v /tmp/pretty_colours_mode 2>/dev/null
 [ -f /tmp/startup.tmp ] && rm -f -v /tmp/startup.tmp 2>/dev/null
 [ -f /tmp/my_sloc ] && rm -f -v /tmp/my_sloc 2>/dev/null
 [ -e /tmp/kitty_control ] && rm -f -v /tmp/kitty_control 2>/dev/null

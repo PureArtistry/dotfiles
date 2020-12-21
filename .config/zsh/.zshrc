@@ -78,8 +78,6 @@ if command -v pazi &>/dev/null; then
   eval "$(pazi init zsh)"
 fi
 
-# kitty + complete setup zsh | source /dev/stdin
-
 source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh
 source /usr/share/doc/pkgfile/command-not-found.zsh

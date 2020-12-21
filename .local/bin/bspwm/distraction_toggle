@@ -8,9 +8,10 @@ dazzle_me() {
     wait
     [ -f /tmp/pretty_colours_id ] && rm -f /tmp/pretty_colours_id
     bspc subscribe node_add -c 1 &
-    sleep 0.05
+    sleep 0.01
     new_term --class 'pretty colours','pretty colours' --title 'pretty colours' \
         -e ncmpcpp -c $XDG_CONFIG_HOME/ncmpcpp/config.viz
+    sleep 0.05
     wait
     pretty_colours_id=$(xwininfo -root -children | grep -w "pretty colours" | awk '{print $1}')
     echo $pretty_colours_id >/tmp/pretty_colours_id
@@ -28,6 +29,7 @@ plz_stop() {
     rm -f /tmp/kitty_control
     rm -f /tmp/fancy_writing_id
     rm -f /tmp/pretty_colours_id
+    rm -f /tmp/pretty_colours_mode
     rm -f /tmp/art_show_id
     exit
 }

@@ -4,7 +4,7 @@
 
 enter_fullscreen() {
     [ -f /tmp/breadcrumbs ] || touch /tmp/breadcrumbs
-    echo $(bspc query -d focused -T | jq '.name') | sed 's/\"//g' >/tmp/breadcrumbs
+    echo $(bspc query -d focused -T | jq -r '.name') >/tmp/breadcrumbs
     state=$(bspc query -N -n any.\!floating.focused)
     bspc monitor -a fs
     bspc node -d fs --follow
@@ -24,6 +24,6 @@ exit_fullscreen() {
 }
 
 need_focus=$(bspc query -D --names | grep "fs")
-fullscreen_check=$(bspc query -d focused -T | jq '.name')
+fullscreen_check=$(bspc query -d focused -T | jq -r '.name')
 [ ! "$need_focus" ] && enter_fullscreen
-[ "$fullscreen_check" = '"fs"' ] && exit_fullscreen || bspc desktop fs -f
+[ "$fullscreen_check" = 'fs' ] && exit_fullscreen || bspc desktop fs -f

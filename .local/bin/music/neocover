@@ -46,7 +46,7 @@ make_square() {
     else
         convert /tmp/"$1" -resize 500x500^ \
             -gravity center -extent 500x500 \
-            -bordercolor "$(sed -n 18p $XDG_CONFIG_HOME/kitty/kitty_colors.conf | awk '{print $2}')" \
+            -bordercolor "$(awk 'NR==18{print $2}' $XDG_CONFIG_HOME/kitty/kitty_colors.conf)" \
             -border 5 \
             -flatten /tmp/"$1"
     fi

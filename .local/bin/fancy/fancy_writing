@@ -46,7 +46,7 @@ main() {
     count=0
     cycle=0
     state="running"
-    now_playing=$(mpc | sed -n 2p | awk '{print $1}')
+    now_playing=$(mpc | awk 'NR==2{print $1}')
     [ ! "$now_playing" ] && other_info
     case "$now_playing" in
     *paused*) other_info pause ;;
@@ -162,9 +162,9 @@ other_info() {
                 loop
             elif [ "$cycle" = 1 ]; then
                 fancy_font='Iosevka-Nerd-Font-Complete'
-                topjob=$(task 2>/dev/null | sed -n 4p)
-                job_no=$(echo "$topjob" | awk '{print $1}')
-                job_due=$(echo "$topjob" | awk '{print $5}')
+                topjob=$(task 2>/dev/null)
+                job_no=$(echo "$topjob" | awk 'NR==4{print $1}')
+                job_due=$(echo "$topjob" | awk 'NR==4{print $5}')
                 job_desc=$(task export 2>/dev/null | jq -r ".[$((${job_no} - 1))].description")
                 [ $(echo "$job_desc" | wc -c) -gt 22 ] \
                     && job_desc=$(echo "$job_desc" | cut -c 1-19 | sed 's/$/.../')
@@ -189,29 +189,26 @@ song_info() {
     artist=$(mpc current -f "%artist%")
     album=$(mpc current -f "%album%")
     date=$(mpc current -f "%date%")
+    fancy_font='Iosevka-Nerd-Font-Complete'
     until [ "$state" = "update" ]; do
         if [ "$count" = 100 ]; then
             count=0
             [ "$cycle" = 3 ] && cycle=0 || cycle=$((${cycle} + 1))
         fi
         if [ "$cycle" = 0 ]; then
-            fancy_font='Iosevka-Nerd-Font-Complete'
             [ ! "$song" ] && message="  missing IDv3 tags" || message="  $song"
             display_text
             loop
         elif [ "$cycle" = 1 ]; then
-            fancy_font='Iosevka-Nerd-Font-Complete'
             [ ! "$artist" ] && message="  missing IDv3 tags" \
                 || message="‎ﴁ‎  $artist"
             display_text
             loop
         elif [ "$cycle" = 2 ]; then
-            fancy_font='Iosevka-Nerd-Font-Complete'
             [ ! "$album" ] && message="  missing IDv3 tags" || message="  $album"
             display_text
             loop
         elif [ "$cycle" = 3 ]; then
-            fancy_font='Iosevka-Nerd-Font-Complete'
             [ ! "$date" ] && message="  missing IDv3 tags" \
                 || message="‎ﮮ‎  $date"
             display_text

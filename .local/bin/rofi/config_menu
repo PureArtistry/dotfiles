@@ -25,7 +25,7 @@ goyo() {
 scripts() {
     [ -f /tmp/my_sloc ] && rm -f /tmp/my_sloc
     for z in $(find "$SCRIPTS"/ -type f); do cat "$z" >>/tmp/my_sloc; done
-    lol=$(cat /tmp/my_sloc | sed -e '/^\s*#.*$/d' -e '/^\s*$/d' | wc -l)
+    lol=$(sed -e '/^\s*#.*$/d' -e '/^\s*$/d' /tmp/my_sloc | wc -l)
     choice=$(find "$SCRIPTS"/ -type f -printf "%f\n" | sort | rofi -theme 'cfg_menu' \
         -mesg "something wrong with my code!?!" \
         -p " combined - code has only $lol potential errors! " \
@@ -51,6 +51,6 @@ foo=$(awk '{print $1}' "$ARTISTRY"/config_menu | rofi -theme 'cfg_menu' -u 0 -a 
     -lines "$x" -fixed-num-lines "$x" -no-custom -dmenu -i -format d)
 [ ! "$foo" ] && exit
 [ "$foo" = 1 ] && scripts
-bar=$(sed -n "$foo"p "$ARTISTRY"/config_menu | awk '{print $2}')
+bar=$(awk NR=="$foo"{'print $2'} "$ARTISTRY"/config_menu)
 [ "$home_desktop" = '1' ] && [ "$mctl_state" = 'floating' ] \
     && goyo main || alacritty -e size_fix vim "$HOME"/"$bar" &
