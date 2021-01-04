@@ -1,14 +1,15 @@
 #!/bin/sh
 
-x=$(cat $XDG_CONFIG_HOME/kitty/kitty_colors.conf)
-b=$(echo "$x" | awk 'NR==20{print $2}')
-f=$(echo "$x" | awk 'NR==2{print $2}')
-bd=$(echo "$x" | awk 'NR==18{print $2}')
+if [ -n "$1" ]; then
+    net=0
+    fw=1
+else
+    nc -z -w 1 8.8.8.8 53 >/dev/null 2>&1
+    net=$?
+fi
 
-nc -z -w 1 8.8.8.8 53 >/dev/null 2>&1
-net=$?
 if [ "$net" -eq 0 ]; then
-    r=$(curl wttr.in/\?format=j1)
+    r=$(curl -s wttr.in/\?format=j1)
     w=$(echo "$r" | jq -r '.current_condition[0].weatherDesc[0].value')
     t=$(echo "$r" | jq -r '.current_condition[0].temp_C')
     ws=$(echo "$r" | jq -r '.current_condition[0].windspeedMiles')
@@ -170,6 +171,16 @@ else
     s=72
     icon=''
 fi
+
+if [ -n "$fw" ]; then
+    [ "$s" -gt 60 ] && echo "$icon  $w ($t°C)" || echo "$icon   $w ($t°C)"
+    exit
+fi
+
+x=$(cat $XDG_CONFIG_HOME/kitty/kitty_colors.conf)
+b=$(echo "$x" | awk 'NR==20{print $2}')
+f=$(echo "$x" | awk 'NR==2{print $2}')
+bd=$(echo "$x" | awk 'NR==18{print $2}')
 
 convert -size 90x90 xc:"$b" \
     -gravity center \

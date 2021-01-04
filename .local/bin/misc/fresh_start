@@ -3,7 +3,7 @@
 printf '\033[0m\033[1;91m:: \033[97mcleaning up temporary files for a fresh start...\033[0m\n'
 
 for x in $(ls -1 /tmp/dunst_icon* 2>/dev/null); do rm -f -v "$x" 2>/dev/null; done
-for y in $(ls -1 /tmp/*.img.* 2>/dev/null); do rm -f -v "$y" 2>/dev/null; done
+for y in $(ls -1 /tmp/*_img.* 2>/dev/null); do rm -f -v "$y" 2>/dev/null; done
 [ -f /tmp/albumart.png ] && rm -f -v /tmp/albumart.png 2>/dev/null
 [ -f /tmp/art_show_id ] && rm -f -v /tmp/art_show_id 2>/dev/null
 [ -f /tmp/yt_title ] && rm -f -v /tmp/yt_title 2>/dev/null

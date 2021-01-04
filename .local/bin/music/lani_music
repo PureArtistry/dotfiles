@@ -1,0 +1,22 @@
+#!/bin/sh
+
+music_check(){
+	x=$(mpc | awk 'NR==2{print $1}')
+	if [ ! "$x" ]; then
+		better_mpd_random
+		exit
+	else
+		case $1 in
+			next) mpc -q next ;;
+			prev) mpc -q prev ;;
+		esac
+		exit
+	fi
+}
+
+case $1 in
+	toggle) mpc -q toggle ;;
+	stop) mpc -q stop ;;
+	next) music_check next ;;
+	prev) music_check prev ;;
+esac

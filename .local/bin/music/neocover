@@ -26,9 +26,17 @@ art_check() {
     return
 }
 
+random_wallpaper(){
+    wp_list=$(ls -1 $HOME/images/wallpapers)
+    rand_wall=$(shuf -i 1-$(echo "$wp_list" | wc -l) -n 1)
+    wallpaper=$(echo "$wp_list" | sed -n ${rand_wall}p)
+    cp $HOME/images/wallpapers/$wallpaper /tmp/neocover.png
+    return
+}
+
 copy_new() {
     if [ ! "$now_playing" ]; then
-        [ -f /tmp/dartc.png ] || cp $XDG_CONFIG_HOME/wpg/.current /tmp/neocover.png
+        [ -f /tmp/dartc.png ] || random_wallpaper
     else
         [ -f /tmp/dartc.png ] || cp $ARTISTRY/no_art.png /tmp/neocover.png
     fi

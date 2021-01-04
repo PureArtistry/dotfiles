@@ -54,130 +54,116 @@ main() {
     esac
 }
 
-update_check() {
+net_check() {
     nc -z -w 1 8.8.8.8 53 >/dev/null 2>&1
-    local net=$?
-    if [ "$net" -eq 0 ]; then
-        if [ -z "$uc_interval" ] || [ $(($(date +'%s') - ${uc_interval})) -gt 1800 ] || [ -n "$pm_run" ]; then
-            uc_interval=$(date +'%s')
-            [ -n "$pm_run" ] && unset pm_run
-            local p=$(checkupdates 2>/dev/null | wc -l)
-            local y=$(yay -Qum 2>/dev/null | wc -l)
-            [ ! "$p" ] && p=0
-            [ ! "$y" ] && y=0
-            local t=$((${p} + ${y}))
-            if [ "$t" = 1 ]; then
-                update_status="  there's an update available"
-            elif [ "$t" -gt 0 ]; then
-                update_status="  you have $t updates waiting"
-            else
-                update_status="  your system is up to date"
-            fi
+    net=$?
+    return
+}
+
+update_check() {
+    if [ -z "$uc_interval" ] || [ $(($(date +'%s') - ${uc_interval})) -gt 1800 ] || [ -n "$pm_run" ]; then
+        uc_interval=$(date +'%s')
+        [ -n "$pm_run" ] && unset pm_run
+        local p=$(checkupdates 2>/dev/null | wc -l)
+        local y=$(yay -Qum 2>/dev/null | wc -l)
+        [ ! "$p" ] && p=0
+        [ ! "$y" ] && y=0
+        local t=$((${p} + ${y}))
+        if [ "$t" = 1 ]; then
+            update_status="  there's an update available"
+        elif [ "$t" -gt 0 ]; then
+            update_status="  you have $t updates waiting"
+        else
+            update_status="  your system is up to date"
         fi
-    else
-        update_status="  there's no internet!"
+    fi
+    return
+}
+
+weather_check() {
+    if [ -z "$wc_interval" ] || [ $(($(date +'%s') - ${wc_interval})) -gt 1800 ]; then
+        wc_interval=$(date +'%s')
+        current_weather=$(tdw_info fancy)
     fi
     return
 }
 
 other_info() {
-    [ ! "$wp_timer" ] && wp_timer=$(date +'%s')
     general="Hello Dave. You're looking well today."
     until [ "$state" = "update" ]; do
-        if [ "$1" = "pause" ]; then
-            song=$(mpc current -f "%title%")
-            if [ "$count" = 100 ]; then
-                count=0
-                [ "$cycle" = 3 ] && cycle=0 || cycle=$((${cycle} + 1))
-            fi
-            if [ "$cycle" = 0 ]; then
-                fancy_font='Iosevka-Nerd-Font-Complete'
-                message="  $song"
-                display_text
-                loop
-            elif [ "$cycle" = 1 ]; then
-                if [ -f /tmp/fancy_message ]; then
-                    local x=$(cat /tmp/fancy_message)
-                    message=$(echo "$x" | head -n1)
-                    local font=$(echo "$x" | sed -n 2p)
-                    case "$font" in
-                    1) fancy_font='Victor-Mono-Medium-Italic-Nerd-Font-Complete' ;;
-                    *) fancy_font='Iosevka-Nerd-Font-Complete' ;;
-                    esac
-                    rm -f /tmp/fancy_message 2>/dev/null
-                else
-                    message="$general"
-                    fancy_font='Victor-Mono-Medium-Italic-Nerd-Font-Complete'
-                fi
-                display_text
-                loop
-            elif [ "$cycle" = 2 ]; then
-                fancy_font='Iosevka-Nerd-Font-Complete'
-                topjob=$(task 2>/dev/null | sed -n 4p)
-                job_no=$(echo "$topjob" | awk '{print $1}')
-                job_due=$(echo "$topjob" | awk '{print $5}')
-                job_desc=$(task export 2>/dev/null | jq -r ".[$((${job_no} - 1))].description")
-                [ $(echo "$job_desc" | wc -c) -gt 22 ] \
-                    && job_desc=$(echo "$job_desc" | cut -c 1-19 | sed 's/$/.../')
-                message="‎華‎  $job_desc ($job_due)"
-                display_text
-                loop
-            elif [ "$cycle" = 3 ]; then
-                update_check
-                fancy_font='Iosevka-Nerd-Font-Complete'
-                message="$update_status"
-                display_text
-                loop
-            fi
+        if [ "$1" = 'pause' ]; then
+            [ -n "$wp_timer" ] && unset wp_timer
         else
-            if [ "$count" = 100 ]; then
-                count=0
-                [ "$cycle" = 2 ] && cycle=0 || cycle=$((${cycle} + 1))
-            fi
-            if [ "$cycle" = 0 ]; then
-                if [ -f /tmp/fancy_message ]; then
-                    local x=$(cat /tmp/fancy_message)
-                    message=$(echo "$x" | head -n1)
-                    local font=$(echo "$x" | sed -n 2p)
-                    case "$font" in
-                    1) fancy_font='Victor-Mono-Medium-Italic-Nerd-Font-Complete' ;;
-                    *) fancy_font='Iosevka-Nerd-Font-Complete' ;;
-                    esac
-                    rm -f /tmp/fancy_message 2>/dev/null
-                else
-                    message="$general"
-                    fancy_font='Victor-Mono-Medium-Italic-Nerd-Font-Complete'
-                fi
-                if [ $(($(date +'%s') - ${wp_timer})) -gt 180 ]; then
-                    wp_timer=$(date +'%s')
-                    wp_list=$(ls -1 $HOME/images/wallpapers)
-                    rand_wall=$(shuf -i 1-$(echo "$wp_list" | wc -l) -n 1)
-                    wallpaper=$(echo "$wp_list" | sed -n ${rand_wall}p)
-                    wallpaper="${HOME}/images/wallpapers/${wallpaper}"
-                    convert "$wallpaper" -resize 500x500^ \
-                        -gravity center -extent 500x500 \
-                        -flatten /tmp/albumart.png
-                fi
-                display_text
-                loop
-            elif [ "$cycle" = 1 ]; then
+            [ ! "$wp_timer" ] && wp_timer=$(date +'%s')
+        fi
+        if [ "$count" = 100 ]; then
+            count=0
+            [ "$cycle" = 4 ] && cycle=0 || cycle=$((${cycle} + 1))
+        fi
+        if [ "$cycle" = 0 ]; then
+            if [ "$1" = 'pause' ]; then
                 fancy_font='Iosevka-Nerd-Font-Complete'
-                topjob=$(task 2>/dev/null)
-                job_no=$(echo "$topjob" | awk 'NR==4{print $1}')
-                job_due=$(echo "$topjob" | awk 'NR==4{print $5}')
-                job_desc=$(task export 2>/dev/null | jq -r ".[$((${job_no} - 1))].description")
-                [ $(echo "$job_desc" | wc -c) -gt 22 ] \
-                    && job_desc=$(echo "$job_desc" | cut -c 1-19 | sed 's/$/.../')
-                message="‎華‎  $job_desc ($job_due)"
+                message="  $(mpc current -f '%title%')"
                 display_text
                 loop
-            elif [ "$cycle" = 2 ]; then
+            else
+                count=100
+            fi
+        elif [ "$cycle" = 1 ]; then
+            if [ -f /tmp/fancy_message ]; then
+                local x=$(cat /tmp/fancy_message)
+                message=$(echo "$x" | head -n1)
+                local font=$(echo "$x" | sed -n 2p)
+                case "$font" in
+                1) fancy_font='Victor-Mono-Medium-Italic-Nerd-Font-Complete' ;;
+                *) fancy_font='Iosevka-Nerd-Font-Complete' ;;
+                esac
+                rm -f /tmp/fancy_message 2>/dev/null
+            else
+                message="$general"
+                fancy_font='Victor-Mono-Medium-Italic-Nerd-Font-Complete'
+            fi
+            if [ "$max_cycle" = 3 ] && [ $(($(date +'%s') - ${wp_timer})) -gt 180 ]; then
+                wp_timer=$(date +'%s')
+                wp_list=$(ls -1 $HOME/images/wallpapers)
+                rand_wall=$(shuf -i 1-$(echo "$wp_list" | wc -l) -n 1)
+                wallpaper=$(echo "$wp_list" | sed -n ${rand_wall}p)
+                wallpaper="${HOME}/images/wallpapers/${wallpaper}"
+                convert "$wallpaper" -resize 500x500^ \
+                    -gravity center -extent 500x500 \
+                    -flatten /tmp/albumart.png
+            fi
+            display_text
+            loop
+        elif [ "$cycle" = 2 ]; then
+            net_check
+            if [ "$net" -eq 0 ]; then
                 update_check
-                fancy_font='Iosevka-Nerd-Font-Complete'
                 message="$update_status"
-                display_text
-                loop
+            else
+                message="  there's no internet!"
+                cycle=3
             fi
+            fancy_font='Iosevka-Nerd-Font-Complete'
+            display_text
+            loop
+        elif [ "$cycle" = 3 ]; then
+            weather_check
+            message="$current_weather"
+            fancy_font='Iosevka-Nerd-Font-Complete'
+            display_text
+            loop
+        elif [ "$cycle" = 4 ]; then
+            fancy_font='Iosevka-Nerd-Font-Complete'
+            topjob=$(task 2>/dev/null)
+            job_no=$(echo "$topjob" | awk 'NR==4{print $1}')
+            job_due=$(echo "$topjob" | awk 'NR==4{print $5}')
+            job_desc=$(task export 2>/dev/null | jq -r ".[$((${job_no} - 1))].description")
+            [ $(echo "$job_desc" | wc -c) -gt 22 ] \
+                && job_desc=$(echo "$job_desc" | cut -c 1-19 | sed 's/$/.../')
+            message="‎華‎  $job_desc ($job_due)"
+            display_text
+            loop
         fi
     done
     main

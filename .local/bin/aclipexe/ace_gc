@@ -5,20 +5,16 @@ b=$(echo "$x" | awk 'NR==20{print $2}')
 f=$(echo "$x" | awk 'NR==2{print $2}')
 bd=$(echo "$x" | awk 'NR==18{print $2}')
 
-make_icon() {
-    convert -size 90x90 xc:"$b" \
-        -gravity center \
-        -pointsize "60" \
-        -font "Iosevka-Nerd-Font-Complete" \
-        -fill "$f" \
-        -bordercolor "$bd" \
-        -border '5' \
-        -annotate +0+0 "" \
-        /tmp/dunst_icon.png >/dev/null 2>&1
-    return
-}
+convert -size 90x90 xc:"$b" \
+    -gravity center \
+    -pointsize "60" \
+    -font "Iosevka-Nerd-Font-Complete" \
+    -fill "$f" \
+    -bordercolor "$bd" \
+    -border '5' \
+    -annotate +0+0 "" \
+    /tmp/dunst_icon.png >/dev/null 2>&1
 
-make_icon
 i=$(shuf -i 1-10000 -n 1)
 pgrep dunst >/dev/null && killall -q dunst
 dunst -geometry "380x3-4+4" -alignment 'center' &
@@ -26,7 +22,6 @@ repo=$(echo "$1" | awk -F '/' '{print $NF}' | sed 's/\.git//')
 dunstify -r "$i" -t 4000 -a 'fancy1' "$repo" ">> ~/downloads/git" -i /tmp/dunst_icon.png
 cd $HOME/downloads/git
 git clone "$1"
-make_icon
 dunstify -r "$i" -t 6000 -a 'fancy1' "ready!" ".../$repo" -i /tmp/dunst_icon.png
 sleep 4
 dunstify -C "$i"

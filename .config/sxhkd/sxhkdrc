@@ -33,7 +33,7 @@ super + o
     goyo_launch tremc
 
 # pulsemixer
-super + alt + F6
+super + alt + {F6,F7,F8}
     alacritty --class 'pulsemixer','pulsemixer' --title 'pulsemixer' -e pulsemixer
 
 # my playlist
@@ -115,7 +115,7 @@ super + shift + F12
 
 # mpd controls
 super + {F9,F10,F11,F12}
-    mpc -q {toggle,stop,prev,next}
+    lani_music {toggle,stop,prev,next}
 super + shift + F11
     mpc -q seek 0
 

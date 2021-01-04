@@ -179,7 +179,7 @@ image_bit() {
     processed="$selection"
     og_name=$(echo "$selection" | awk -F '/' '{print $NF}')
     ext=$(echo "$selection" | awk -F '.' '{print $NF}')
-    temp_name="$(date +'%s').img.$ext"
+    temp_name="$(date +'%s')_img.$ext"
     wp_total=$(ls -1 $HOME/images/wallpapers | wc -l)
     wget -q -O /tmp/"$temp_name" "$selection"
     convert /tmp/"$temp_name" -resize 460x259^ \
@@ -202,17 +202,18 @@ image_bit() {
     1)
         new_name=$(rofi -theme 'entry' -dmenu -i -mesg '凜 are you naming this?')
         kill "$thumb_pid"
-        [ ! "$new_name" ] && tn="$og_name" || tn="$new_name.$ext"
-        cp /tmp/"$temp_name" "$HOME"/images/download/"$tn"
+        [ ! "$new_name" ] && tn="$og_name" || tn="$(echo -n $new_name).$ext"
+        mv /tmp/"$temp_name" "$HOME"/images/download/"$tn"
         make_icon '66' ''
         new_face_in_town
         dunstify -r 010101 -t 4000 -a 'fancy1' "copied" "$tn" -i /tmp/dunst_icon.png
         ;;
     2)
+        # this *might* still be buggy (sometimes crashes everything)
         new_name=$(rofi -theme 'entry' -dmenu -i -mesg '凜 are you naming this?')
         kill "$thumb_pid"
-        [ ! "$new_name" ] && tn="$og_name" || tn="$new_name.$ext"
-        cp /tmp/"$temp_name" "$HOME"/images/wallpapers/"$tn"
+        [ ! "$new_name" ] && tn="$og_name" || tn="$(echo -n $new_name).$ext"
+        mv /tmp/"$temp_name" "$HOME"/images/wallpapers/"$tn"
         wpg -a "$HOME"/images/wallpapers/"$tn"
         wall_change "$tn"
         ;;

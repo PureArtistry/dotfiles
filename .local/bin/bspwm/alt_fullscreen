@@ -1,10 +1,10 @@
 #!/bin/sh
 
-# workaround fullscreen for transparency windows
+# workaround fullscreen for transparent windows
 
 enter_fullscreen() {
-    [ -f /tmp/breadcrumbs ] || touch /tmp/breadcrumbs
-    echo $(bspc query -d focused -T | jq -r '.name') >/tmp/breadcrumbs
+    [ -f /tmp/breadcrumbs ] && rm -f /tmp/breadcrumbs
+    echo $(bspc query -d focused -D --names) >/tmp/breadcrumbs
     state=$(bspc query -N -n any.\!floating.focused)
     bspc monitor -a fs
     bspc node -d fs --follow
@@ -24,6 +24,6 @@ exit_fullscreen() {
 }
 
 need_focus=$(bspc query -D --names | grep "fs")
-fullscreen_check=$(bspc query -d focused -T | jq -r '.name')
+fullscreen_check=$(bspc query -d focused -D --names)
 [ ! "$need_focus" ] && enter_fullscreen
 [ "$fullscreen_check" = 'fs' ] && exit_fullscreen || bspc desktop fs -f
