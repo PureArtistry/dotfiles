@@ -97,7 +97,7 @@ second() {
 }
 
 final() {
-    file=$($utter "$list" | awk -F "|" '{print $2"/"$1}' | sed -n ${choice}p)
+    file=$($utter "$list" | awk -F '|' '{print $2"/"$1}' | sed -n ${choice}p)
     snap=$(shuf -i 20-80 -n 1)
     ffmpegthumbnailer -i "$file" -o /tmp/rofi_thumb.png -s 460 -m -t "${snap}%"
     duration=$(mediainfo "$file" | grep -m 1 'Duration' | awk -F ':' '{print $2}')

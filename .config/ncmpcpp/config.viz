@@ -437,7 +437,7 @@ startup_screen = clock
 #
 #ask_before_clearing_playlists = yes
 #
-#clock_display_seconds = no
+# clock_display_seconds = yes #(disabled: causes a crash on startup)
 #
 #display_volume_level = yes
 #

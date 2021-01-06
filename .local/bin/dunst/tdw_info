@@ -10,170 +10,179 @@ fi
 
 if [ "$net" -eq 0 ]; then
     r=$(curl -s wttr.in/\?format=j1)
-    w=$(echo "$r" | jq -r '.current_condition[0].weatherDesc[0].value')
-    t=$(echo "$r" | jq -r '.current_condition[0].temp_C')
-    ws=$(echo "$r" | jq -r '.current_condition[0].windspeedMiles')
-    dn=$(date +"%H")
+    echo "$r" | jq >/dev/null 2>&1
+    reh=$?
+    if [ "$reh" -eq 0 ]; then
+        w=$(echo "$r" | jq -r '.current_condition[0].weatherDesc[0].value')
+        t=$(echo "$r" | jq -r '.current_condition[0].temp_C')
+        ws=$(echo "$r" | jq -r '.current_condition[0].windspeedMiles')
+        dn=$(date +"%H")
 
-    if [ "$ws" -le 1 ]; then
-        wd='Calm'
-    elif [ "$ws" -gt 1 ] && [ "$ws" -le 3 ]; then
-        wd='Light air'
-    elif [ "$ws" -gt 3 ] && [ "$ws" -le 7 ]; then
-        wd='Light breeze'
-    elif [ "$ws" -gt 7 ] && [ "$ws" -le 12 ]; then
-        wd='Gentle breeze'
-    elif [ "$ws" -gt 12 ] && [ "$ws" -le 18 ]; then
-        wd='Moderate breeze'
-    elif [ "$ws" -gt 18 ] && [ "$ws" -le 24 ]; then
-        wd='Fresh breeze'
-    elif [ "$ws" -gt 24 ] && [ "$ws" -le 31 ]; then
-        wd='Strong winds'
-    elif [ "$ws" -gt 31 ]; then
-        wd='Fuck THAT!'
-    fi
+        if [ "$ws" -le 1 ]; then
+            wd='Calm'
+        elif [ "$ws" -gt 1 ] && [ "$ws" -le 3 ]; then
+            wd='Light air'
+        elif [ "$ws" -gt 3 ] && [ "$ws" -le 7 ]; then
+            wd='Light breeze'
+        elif [ "$ws" -gt 7 ] && [ "$ws" -le 12 ]; then
+            wd='Gentle breeze'
+        elif [ "$ws" -gt 12 ] && [ "$ws" -le 18 ]; then
+            wd='Moderate breeze'
+        elif [ "$ws" -gt 18 ] && [ "$ws" -le 24 ]; then
+            wd='Fresh breeze'
+        elif [ "$ws" -gt 24 ] && [ "$ws" -le 31 ]; then
+            wd='Strong winds'
+        elif [ "$ws" -gt 31 ]; then
+            wd='Fuck THAT!'
+        fi
 
-    case "$w" in
-    Clear*)
-        s=58
-        if [ "$ws" -lt 20 ]; then
-            if [ "$dn" -le 5 ] || [ "$dn" -ge 20 ]; then
-                icon="望"
-                s=72
+        case "$w" in
+        Clear*)
+            s=58
+            if [ "$ws" -lt 20 ]; then
+                if [ "$dn" -le 5 ] || [ "$dn" -ge 20 ]; then
+                    icon="望"
+                    s=72
+                else
+                    icon=""
+                fi
             else
-                icon=""
+                [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="煮" || icon=""
             fi
-        else
-            [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="煮" || icon=""
-        fi
-        ;;
-    Sunny*)
-        s=48
-        if [ "$ws" -lt 20 ]; then
-            if [ "$dn" -le 5 ] || [ "$dn" -ge 20 ]; then
-                icon=""
-            else
-                s=56
-                icon=""
-            fi
-        else
-            [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="煮" || icon=""
-        fi
-        ;;
-    "Partly cloudy"*)
-        s=72
-        if [ "$ws" -lt 20 ]; then
-            [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon="杖"
-        else
+            ;;
+        Sunny*)
             s=48
-            [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
-        fi
-        ;;
-    Cloudy*)
-        s=48
-        if [ "$ws" -lt 20 ]; then
-            [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
-        else
-            [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
-        fi
-        ;;
-    Overcast*)
-        s=52
-        if [ "$ws" -lt 20 ]; then
-            if [ "$dn" -le 5 ] || [ "$dn" -ge 20 ]; then
-                s=56
-                icon=""
+            if [ "$ws" -lt 20 ]; then
+                if [ "$dn" -le 5 ] || [ "$dn" -ge 20 ]; then
+                    icon=""
+                else
+                    s=56
+                    icon=""
+                fi
             else
-                icon=""
+                [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="煮" || icon=""
             fi
-        else
-            [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
+            ;;
+        "Partly cloudy"*)
+            s=72
+            if [ "$ws" -lt 20 ]; then
+                [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon="杖"
+            else
+                s=48
+                [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
+            fi
+            ;;
+        Cloudy*)
+            s=48
+            if [ "$ws" -lt 20 ]; then
+                [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
+            else
+                [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
+            fi
+            ;;
+        Overcast*)
+            s=52
+            if [ "$ws" -lt 20 ]; then
+                if [ "$dn" -le 5 ] || [ "$dn" -ge 20 ]; then
+                    s=56
+                    icon=""
+                else
+                    icon=""
+                fi
+            else
+                [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
+            fi
+            ;;
+        Mist* | Fog* | "Freezing fog"* | "Shallow fog"* | Haze*)
+            s=48
+            [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
+            ;;
+        "Moderate or heavy rain with thunder"*)
+            s=48
+            [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
+            ;;
+        "Patchy light snow with thunder"* | "Moderate or heavy snow with thunder"*)
+            s=48
+            [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
+            ;;
+        "Patchy light rain with thunder"* | "Thundery outbreaks possible"* | "Thunderstorm in vicinity"*)
+            s=48
+            [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
+            ;;
+        "Patchy rain possible"* | "Patchy light rain"* | "Light rain"* | "Shower in vicinity"* | "Rain shower"*)
+            s=54
+            [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
+            ;;
+        "Patchy snow possible"* | "Blowing snow"* | "Light snow"* | "Patchy light snow"*)
+            s=48
+            if [ "$ws" -lt 20 ]; then
+                [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
+            else
+                [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
+            fi
+            ;;
+        "Patchy sleet possible"* | "Light sleet"* | "Moderate or heavy sleet"*)
+            s=48
+            [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
+            ;;
+        "Patchy freezing drizzle possible"* | "Freezing drizzle"* | "Light freezing rain"*)
+            s=48
+            if [ "$ws" -lt 20 ]; then
+                [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
+            else
+                [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
+            fi
+            ;;
+        Blizzard*)
+            s=48
+            [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
+            ;;
+        "Patchy light drizzle"* | "Light drizzle"* | "Drizzle"*)
+            s=52
+            [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
+            ;;
+        "Heavy freezing drizzle"* | "Heavy rain"* | "Moderate or heavy freezing rain"* | "Torrential rain shower"*)
+            s=72
+            [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="歹" || icon="歹"
+            ;;
+        "Moderate rain"* | "Moderate or heavy rain shower"* | "Rain")
+            s=54
+            if [ "$ws" -lt 20 ]; then
+                [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
+            else
+                [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
+            fi
+            ;;
+        "Patchy moderate snow"* | "Moderate snow"* | "Patchy heavy snow"* | "Heavy snow"* | "Moderate or heavy snow showers"*)
+            s=48
+            if [ "$ws" -lt 20 ]; then
+                [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
+            else
+                [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
+            fi
+            ;;
+        "Ice pellets"*)
+            s=48
+            [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
+            ;;
+        *)
+            s=72
+            icon=""
+            ;;
+        esac
+    else
+        if [ -n "$fw" ]; then
+            echo "  weather info unavailable"
+            exit
         fi
-        ;;
-    Mist* | Fog* | "Freezing fog"* | "Shallow fog"* | Haze*)
-        s=48
-        [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
-        ;;
-    "Moderate or heavy rain with thunder"*)
-        s=48
-        [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
-        ;;
-    "Patchy light snow with thunder"* | "Moderate or heavy snow with thunder"*)
-        s=48
-        [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
-        ;;
-    "Patchy light rain with thunder"* | "Thundery outbreaks possible"* | "Thunderstorm in vicinity"*)
-        s=48
-        [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
-        ;;
-    "Patchy rain possible"* | "Patchy light rain"* | "Light rain"* | "Shower in vicinity"* | "Rain shower"*)
-        s=54
-        [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
-        ;;
-    "Patchy snow possible"* | "Blowing snow"* | "Light snow"* | "Patchy light snow"*)
-        s=48
-        if [ "$ws" -lt 20 ]; then
-            [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
-        else
-            [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
-        fi
-        ;;
-    "Patchy sleet possible"* | "Light sleet"* | "Moderate or heavy sleet"*)
-        s=48
-        [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
-        ;;
-    "Patchy freezing drizzle possible"* | "Freezing drizzle"* | "Light freezing rain"*)
-        s=48
-        if [ "$ws" -lt 20 ]; then
-            [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
-        else
-            [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
-        fi
-        ;;
-    Blizzard*)
-        s=48
-        [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
-        ;;
-    "Patchy light drizzle"* | "Light drizzle"* | "Drizzle"*)
-        s=52
-        [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
-        ;;
-    "Heavy freezing drizzle"* | "Heavy rain"* | "Moderate or heavy freezing rain"* | "Torrential rain shower"*)
-        s=72
-        [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="歹" || icon="歹"
-        ;;
-    "Moderate rain"* | "Moderate or heavy rain shower"* | "Rain")
-        s=54
-        if [ "$ws" -lt 20 ]; then
-            [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
-        else
-            [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
-        fi
-        ;;
-    "Patchy moderate snow"* | "Moderate snow"* | "Patchy heavy snow"* | "Heavy snow"* | "Moderate or heavy snow showers"*)
-        s=48
-        if [ "$ws" -lt 20 ]; then
-            [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
-        else
-            [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
-        fi
-        ;;
-    "Ice pellets"*)
-        s=48
-        [ "$dn" -le 5 ] || [ "$dn" -ge 20 ] && icon="" || icon=""
-        ;;
-    *)
-        s=72
-        icon=""
-        ;;
-    esac
+    fi
 else
     s=72
     icon=''
 fi
 
 if [ -n "$fw" ]; then
-    [ "$s" -gt 60 ] && echo "$icon  $w ($t°C)" || echo "$icon   $w ($t°C)"
+    [ "$s" -gt 55 ] && echo "$icon  $w ($t°C)" || echo "$icon   $w ($t°C)"
     exit
 fi
 
@@ -210,6 +219,7 @@ until [ "$z" = "$c" ]; do
     z=$((${z} + 1))
 done
 if [ -n "$r" ]; then
+    t=$(echo "$t" | sed 's/-/ /')
     dunstify -r "$i" -t 6000 -a 'fancy1' "$t°C" "$w" \
         -i /tmp/dunst_icon.png
     sleep 3
