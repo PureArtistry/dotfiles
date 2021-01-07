@@ -219,7 +219,7 @@ until [ "$z" = "$c" ]; do
     z=$((${z} + 1))
 done
 if [ -n "$r" ]; then
-    t=$(echo "$t" | sed 's/-/ /')
+    t=$(echo "$t" | sed 's/-/ /')
     dunstify -r "$i" -t 6000 -a 'fancy1' "$t°C" "$w" \
         -i /tmp/dunst_icon.png
     sleep 3
