@@ -542,7 +542,7 @@ mouse_support = yes
 #
 #state_flags_color = default:b
 #
-#main_window_color = yellow
+main_window_color = 8
 #
 #color1 = white
 #

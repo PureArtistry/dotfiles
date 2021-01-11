@@ -5,8 +5,9 @@ sxhkd		.config/sxhkd/sxhkdrc
 dunst 		.config/dunst/dunstrc
 neovim		.config/nvim/init.vim
 qutebrowser	.config/qutebrowser/config.py
-neofetch	.config/neofetch/config.conf
 newsboat URLs	.config/newsboat/urls
+ncmpcpp		.config/ncmpcpp/config.viz
+neofetch	.config/neofetch/config.conf
 xinitrc		.xinitrc
 zshenv		.config/zsh/.zshenv
 zshrc		.config/zsh/.zshrc

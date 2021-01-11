@@ -46,6 +46,7 @@ main() {
     count=0
     cycle=0
     state="running"
+    unset fg_color
     now_playing=$(mpc | awk 'NR==2{print $1}')
     [ ! "$now_playing" ] && other_info
     case "$now_playing" in
@@ -90,6 +91,7 @@ weather_check() {
 
 other_info() {
     general="Hello Dave. You're looking well today."
+    fg_color=$(sed -n 16p $XDG_CACHE_HOME/wal/colors)
     until [ "$state" = "update" ]; do
         if [ "$1" = 'pause' ]; then
             [ -n "$wp_timer" ] && unset wp_timer
@@ -123,7 +125,7 @@ other_info() {
                 message="$general"
                 fancy_font='Victor-Mono-Medium-Italic-Nerd-Font-Complete'
             fi
-            if [ "$max_cycle" = 3 ] && [ $(($(date +'%s') - ${wp_timer})) -gt 180 ]; then
+            if [ ! "$1" ] && [ $(($(date +'%s') - ${wp_timer})) -gt 180 ]; then
                 wp_timer=$(date +'%s')
                 wp_list=$(ls -1 $HOME/images/wallpapers)
                 rand_wall=$(shuf -i 1-$(echo "$wp_list" | wc -l) -n 1)
@@ -216,7 +218,7 @@ display_text() {
     bspc node "$fancy_writing_id" --flag hidden=on
     sleep 0.1
     clear
-    fg_color=$(sed -n 16p $XDG_CACHE_HOME/wal/colors)
+    [ ! "$fg_color" ] && fg_color=$(sed -n 16p $XDG_CACHE_HOME/wal/colors)
     length_check=$(echo -n "$message" | wc -c)
     [ "$length_check" -gt 39 ] && final_message=$(echo "$message" | cut -c 1-36 \
         | sed 's/$/.../') || final_message="$message"

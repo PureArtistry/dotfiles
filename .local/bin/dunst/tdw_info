@@ -182,7 +182,7 @@ else
 fi
 
 if [ -n "$fw" ]; then
-    [ "$s" -gt 55 ] && echo "$icon  $w ($t°C)" || echo "$icon   $w ($t°C)"
+    [ "$s" -gt 56 ] && echo "$icon  $w ($t°C)" || echo "$icon   $w ($t°C)"
     exit
 fi
 

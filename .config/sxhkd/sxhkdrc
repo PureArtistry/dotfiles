@@ -181,6 +181,10 @@ super + b
 super + shift + {F4,F5}
     backlight_info
 
+# network info
+super + shift + F2
+    net_info
+
 # }}}
 
 # misc {{{
