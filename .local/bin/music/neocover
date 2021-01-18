@@ -3,46 +3,12 @@
 # album art grabber (originally for neofetch)
 
 [ -f /tmp/startup.tmp ] && exit
-music_directory=$HOME/music
-now_playing=$(mpc -f %file% current)
-up_next=$(mpc -f %file% queued)
-
-rm /tmp/neocover.png
-rm /tmp/dartc.png
-rm /tmp/dartn.png
-
-art_check() {
-    path=$(ls -1 "$1")
-    case $path in
-    *cover.jpg) cp "$1"/cover.jpg /tmp/$2 && return ;;
-    *cover.jpeg) cp "$1"/cover.jpeg /tmp/$2 && return ;;
-    *cover.png) cp "$1"/cover.png /tmp/$2 && return ;;
-    *)
-        ffmpeg -i "$music_directory/$3" /tmp/$2 >/dev/null 2>&1
-        x=$(echo "$1" | grep -e 'Non-Album' -e 'TBS/songs')
-        [ ! "$x" ] && cp /tmp/"$2" "$1"/cover.png >/dev/null 2>&1
-        ;;
-    esac
-    return
-}
 
 random_wallpaper(){
     wp_list=$(ls -1 $HOME/images/wallpapers)
     rand_wall=$(shuf -i 1-$(echo "$wp_list" | wc -l) -n 1)
     wallpaper=$(echo "$wp_list" | sed -n ${rand_wall}p)
     cp $HOME/images/wallpapers/$wallpaper /tmp/neocover.png
-    return
-}
-
-copy_new() {
-    if [ ! "$now_playing" ]; then
-        [ -f /tmp/dartc.png ] || random_wallpaper
-    else
-        [ -f /tmp/dartc.png ] || cp $ARTISTRY/no_art.png /tmp/neocover.png
-    fi
-    [ -f /tmp/neocover.png ] || cp /tmp/dartc.png /tmp/neocover.png
-    [ -f /tmp/dartc.png ] || cp $ARTISTRY/no_art.png /tmp/dartc.png
-    [ -f /tmp/dartn.png ] || cp $ARTISTRY/no_art.png /tmp/dartn.png
     return
 }
 
@@ -60,6 +26,47 @@ make_square() {
     fi
     return
 }
+
+if [ -n "$1" ]; then
+    random_wallpaper
+    make_square neocover.png
+    exit
+fi
+
+art_check() {
+    path=$(ls -1 "$1")
+    case $path in
+    *cover.jpg) cp "$1"/cover.jpg /tmp/$2 && return ;;
+    *cover.jpeg) cp "$1"/cover.jpeg /tmp/$2 && return ;;
+    *cover.png) cp "$1"/cover.png /tmp/$2 && return ;;
+    *)
+        ffmpeg -i "$music_directory/$3" /tmp/$2 >/dev/null 2>&1
+        x=$(echo "$1" | grep -e 'Non-Album' -e 'TBS/songs')
+        [ ! "$x" ] && cp /tmp/"$2" "$1"/cover.png >/dev/null 2>&1
+        ;;
+    esac
+    return
+}
+
+copy_new() {
+    if [ ! "$now_playing" ]; then
+        [ -f /tmp/dartc.png ] || random_wallpaper
+    else
+        [ -f /tmp/dartc.png ] || cp $ARTISTRY/no_art.png /tmp/neocover.png
+    fi
+    [ -f /tmp/neocover.png ] || cp /tmp/dartc.png /tmp/neocover.png
+    [ -f /tmp/dartc.png ] || cp $ARTISTRY/no_art.png /tmp/dartc.png
+    [ -f /tmp/dartn.png ] || cp $ARTISTRY/no_art.png /tmp/dartn.png
+    return
+}
+
+music_directory=$HOME/music
+now_playing=$(mpc -f %file% current)
+up_next=$(mpc -f %file% queued)
+
+rm /tmp/neocover.png
+rm /tmp/dartc.png
+rm /tmp/dartn.png
 
 foo=${now_playing%/*}
 bar=${up_next%/*}

@@ -1,3 +1,7 @@
+# XDG vars
+export XDG_DATA_HOME=$HOME/.local/share
+export XDG_CACHE_HOME=$HOME/.cache
+
 # handy custom vars
 export ARTISTRY=$XDG_DATA_HOME/artistry
 export SCRIPTS=$HOME/.local/bin
@@ -41,15 +45,23 @@ export LESS_TERMCAP_us=$'\E[4;35m'	# begin underline
 export LESS_TERMCAP_ue=$'\E[0m'		# reset underline
 
 # standard linuxy stuff
-export SXHKD_SHELL=/bin/sh
+export PATH="$PATH:$(du "$HOME/.local/bin/" | cut -f2 | tr '\n' ':' | sed 's/:*$//')"
 export TERMINAL=alacritty
 # export TERM=
 export VISUAL=nvim
 export EDITOR=nvim
 export BROWSER=qutebrowser
 export FILE='alacritty -e ranger'
+export SUDO_ASKPASS=$HOME/.local/bin/rofi/askpass
+
+# other app specific options
+export SXHKD_SHELL=/bin/sh
 export QT_QPA_PLATFORMTHEME='qt5ct'
 export QT_QPA_PLATFORM_PLUGIN_PATH=/usr/lib/qt/plugins
 export FZF_DEFAULT_COMMAND="rg -uu -L '!.git'"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export SUDO_ASKPASS=$HOME/.local/bin/rofi/askpass
+export FZF_DEFAULT_OPTS="
+    $FZF_DEFAULT_OPTS
+    --color fg:15,hl:14,fg+:15,bg+:2,hl+:14
+    --color border:3,gutter:1,info:7,prompt:11,spinner:1,pointer:5,marker:5
+"

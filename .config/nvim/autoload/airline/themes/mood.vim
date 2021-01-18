@@ -5,7 +5,7 @@ let g:airline#themes#mood#palette = {}
 
 " NORMAL mode
 let s:N1 = ['#005f00', '#afdf00', 15, 4, 'bold']
-let s:N2 = ['#ffffff', '#444444', 15, 6, '']
+let s:N2 = ['#ffffff', '#444444', 15, 8, '']
 let s:N3 = ['#ffffff', '#121212', 7, '', 'italic']
 let s:W = ['#000000', '#8700df', 15, 1, '']
 let s:E = ['#000000', '#990000', 15, 9, '']

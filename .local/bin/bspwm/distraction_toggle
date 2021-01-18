@@ -23,14 +23,16 @@ dazzle_me() {
 }
 
 plz_stop() {
-    STOP_KILLING_RANDOM_SHIT "pretty colours"
-    STOP_KILLING_RANDOM_SHIT "fancy writing"
-    kill $(head -n1 /tmp/art_show_id)
+    kill $(head -n1 /tmp/pretty_colours.pid)
+    kill $(head -n1 /tmp/fancy_writing.pid)
+    kill $(head -n1 /tmp/art_show.pid)
     rm -f /tmp/kitty_control
+    rm -f /tmp/fancy_writing.pid
     rm -f /tmp/fancy_writing_id
+    rm -f /tmp/pretty_colours.pid
     rm -f /tmp/pretty_colours_id
     rm -f /tmp/pretty_colours_mode
-    rm -f /tmp/art_show_id
+    rm -f /tmp/art_show.pid
     exit
 }
 

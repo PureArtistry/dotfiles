@@ -3,24 +3,25 @@
 # triggers off mpd to update album art & song info
 
 if mkdir /tmp/mpd.trigger 2>/dev/null; then
-    [ -f /tmp/pretty_colours_mode ] || echo "clock" > /tmp/pretty_colours_mode
+    neocover >/dev/null 2>&1 &
+    [ -f /tmp/pretty_colours_mode ] || echo "clock" >/tmp/pretty_colours_mode
     pgrep fancy_writing >/dev/null && pkill fancy_writing --signal=USR1
     x=$(head -n1 /tmp/pretty_colours_mode)
     case "$MPD_PLAYER_STATE" in
-        play)
-            if [ "$x" = 'clock' ]; then
-                xdotool key --window $(head -n1 /tmp/pretty_colours_id) 8
-                echo "visualizer" > /tmp/pretty_colours_mode
-            fi
-            ;;
-        *)
-            if [ "$x" = 'visualizer' ]; then
-                xdotool key --window $(head -n1 /tmp/pretty_colours_id) 21
-                echo "clock" > /tmp/pretty_colours_mode
-            fi
-            ;;
+    play)
+        if [ "$x" = 'clock' ]; then
+            xdotool key --window $(head -n1 /tmp/pretty_colours_id) 8
+            echo "visualizer" >/tmp/pretty_colours_mode
+        fi
+        ;;
+    *)
+        if [ "$x" = 'visualizer' ]; then
+            xdotool key --window $(head -n1 /tmp/pretty_colours_id) 21
+            echo "clock" >/tmp/pretty_colours_mode
+        fi
+        ;;
     esac
-    neocover >/dev/null 2>&1
+    wait
 else
     exit
 fi

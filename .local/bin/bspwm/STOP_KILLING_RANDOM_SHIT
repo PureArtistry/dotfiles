@@ -1,6 +1,0 @@
-#!/bin/sh
-
-# title says it all
-
-DONT_FUCKING_MISS=$(ps aux | grep -w "$1" | grep -v $(basename $0) | grep -v grep | awk 'NR==1{print $2}')
-[ ! "$DONT_FUCKING_MISS" ] || kill "$DONT_FUCKING_MISS"

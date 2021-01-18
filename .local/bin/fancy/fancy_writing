@@ -36,9 +36,8 @@ trap catch_signal_usr1 USR1
 
 catch_signal_usr2() {
     trap catch_signal_usr2 USR2
-    state="update"
-    pm_run=1
-    break
+    unset wp_timer
+    neocover fancy >/dev/null 2>&1 &
 }
 trap catch_signal_usr2 USR2
 
@@ -62,9 +61,9 @@ net_check() {
 }
 
 update_check() {
-    if [ -z "$uc_interval" ] || [ $(($(date +'%s') - ${uc_interval})) -gt 1800 ] || [ -n "$pm_run" ]; then
+    if [ -z "$uc_interval" ] || [ $(($(date +'%s') - ${uc_interval})) -gt 1800 ] || [ -f /tmp/pm_run ]; then
         uc_interval=$(date +'%s')
-        [ -n "$pm_run" ] && unset pm_run
+        [ -f /tmp/pm_run ] && rm -f /tmp/pm_run >/dev/null 2>&1
         local p=$(checkupdates 2>/dev/null | wc -l)
         local y=$(yay -Qum 2>/dev/null | wc -l)
         [ ! "$p" ] && p=0
@@ -100,7 +99,7 @@ other_info() {
         fi
         if [ "$count" = 100 ]; then
             count=0
-            [ "$cycle" = 4 ] && cycle=0 || cycle=$((${cycle} + 1))
+            [ "$cycle" = 5 ] && cycle=0 || cycle=$((${cycle} + 1))
         fi
         if [ "$cycle" = 0 ]; then
             if [ "$1" = 'pause' ]; then
@@ -127,35 +126,34 @@ other_info() {
             fi
             if [ ! "$1" ] && [ $(($(date +'%s') - ${wp_timer})) -gt 180 ]; then
                 wp_timer=$(date +'%s')
-                wp_list=$(ls -1 $HOME/images/wallpapers)
-                rand_wall=$(shuf -i 1-$(echo "$wp_list" | wc -l) -n 1)
-                wallpaper=$(echo "$wp_list" | sed -n ${rand_wall}p)
-                wallpaper="${HOME}/images/wallpapers/${wallpaper}"
-                convert "$wallpaper" -resize 500x500^ \
-                    -gravity center -extent 500x500 \
-                    -flatten /tmp/albumart.png
+                neocover fancy >/dev/null 2>&1 &
             fi
             display_text
             loop
         elif [ "$cycle" = 2 ]; then
             net_check
             if [ "$net" -eq 0 ]; then
-                update_check
-                message="$update_status"
+                message=$(net_info fancy)
             else
                 message="  there's no internet!"
-                cycle=3
+                cycle=4
             fi
             fancy_font='Iosevka-Nerd-Font-Complete'
             display_text
             loop
         elif [ "$cycle" = 3 ]; then
+            update_check
+            message="$update_status"
+            fancy_font='Iosevka-Nerd-Font-Complete'
+            display_text
+            loop
+        elif [ "$cycle" = 4 ]; then
             weather_check
             message="$current_weather"
             fancy_font='Iosevka-Nerd-Font-Complete'
             display_text
             loop
-        elif [ "$cycle" = 4 ]; then
+        elif [ "$cycle" = 5 ]; then
             fancy_font='Iosevka-Nerd-Font-Complete'
             topjob=$(task 2>/dev/null)
             job_no=$(echo "$topjob" | awk 'NR==4{print $1}')
@@ -239,5 +237,4 @@ display_text() {
 
 fancy_writing_id=$(xwininfo -root -children | grep -w "fancy writing" | awk '{print $1}')
 echo "$fancy_writing_id" >/tmp/fancy_writing_id
-wp_timer=$(date +'%s')
 main

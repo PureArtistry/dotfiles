@@ -5,20 +5,24 @@ printf '\033[0m\033[1;91m:: \033[97mcleaning up temporary files for a fresh star
 for x in $(ls -1 /tmp/dunst_icon* 2>/dev/null); do rm -f -v "$x" 2>/dev/null; done
 for y in $(ls -1 /tmp/*_img.* 2>/dev/null); do rm -f -v "$y" 2>/dev/null; done
 [ -f /tmp/albumart.png ] && rm -f -v /tmp/albumart.png 2>/dev/null
-[ -f /tmp/art_show_id ] && rm -f -v /tmp/art_show_id 2>/dev/null
+[ -f /tmp/art_show.pid ] && rm -f -v /tmp/art_show.pid 2>/dev/null
 [ -f /tmp/yt_title ] && rm -f -v /tmp/yt_title 2>/dev/null
 [ -f /tmp/rofi_thumb.png ] && rm -f -v /tmp/rofi_thumb.png 2>/dev/null
 [ -f /tmp/mctl_id ] && rm -f -v /tmp/mctl_id 2>/dev/null
 [ -f /tmp/breadcrumbs ] && rm -f -v /tmp/breadcrumbs 2>/dev/null
 [ -f /tmp/dartc.png ] && rm -f -v /tmp/dartc.png 2>/dev/null
 [ -f /tmp/dartn.png ] && rm -f -v /tmp/dartn.png 2>/dev/null
+[ -f /tmp/pm_run ] && rm -f -v /tmp/pm_run 2>/dev/null
+[ -f /tmp/fancy_writing.pid ] && rm -f -v /tmp/fancy_writing.pid 2>/dev/null
 [ -f /tmp/fancy_writing_id ] && rm -f -v /tmp/fancy_writing_id 2>/dev/null
 [ -f /tmp/fancy_writing.png ] && rm -f -v /tmp/fancy_writing.png 2>/dev/null
 [ -f /tmp/companion_id ] && rm -f -v /tmp/companion_id 2>/dev/null
 [ -f /tmp/neocover.png ] && rm -f -v /tmp/neocover.png 2>/dev/null
+[ -f /tmp/pretty_colours.pid ] && rm -f -v /tmp/pretty_colours.pid 2>/dev/null
 [ -f /tmp/pretty_colours_id ] && rm -f -v /tmp/pretty_colours_id 2>/dev/null
 [ -f /tmp/pretty_colours_mode ] && rm -f -v /tmp/pretty_colours_mode 2>/dev/null
 [ -f /tmp/startup.tmp ] && rm -f -v /tmp/startup.tmp 2>/dev/null
 [ -f /tmp/my_sloc ] && rm -f -v /tmp/my_sloc 2>/dev/null
+[ -f /tmp/macro.pid ] && rm -f -v /tmp/macro.pid 2>/dev/null
 [ -e /tmp/kitty_control ] && rm -f -v /tmp/kitty_control 2>/dev/null
 [ -d /tmp/startup.lock ] && rm -rf -v /tmp/startup.lock 2>/dev/null

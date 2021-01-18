@@ -2,7 +2,6 @@
 
 x=$(cat $XDG_CONFIG_HOME/kitty/kitty_colors.conf)
 y=$(xbacklight -get)
-z=$(echo "$y" | head -n1)
 
 b=$(echo "$x" | awk 'NR==20{print $2}')
 f=$(echo "$x" | awk 'NR==2{print $2}')

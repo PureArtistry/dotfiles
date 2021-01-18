@@ -4,4 +4,4 @@
 
 bspc rule -a Sxiv:\* -o desktop=1 state=floating manage=on
 sxiv -g 500x500+1150+171 -p -b /tmp/albumart.png &
-echo $! >/tmp/art_show_id
+echo $! >/tmp/art_show.pid

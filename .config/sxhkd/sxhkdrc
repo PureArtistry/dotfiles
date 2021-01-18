@@ -205,6 +205,10 @@ super + v
 super + shift + v
     distraction_toggle
 
+# next wallpaper (in distraction window)
+super + ctrl + v
+    pkill fancy_writing --signal=USR2 >/dev/null 2>&1
+
 # wifi toggle
 super + F2
     wifi_toggle
