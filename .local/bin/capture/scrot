@@ -5,33 +5,28 @@ timer() {
     b=$(echo "$x" | awk 'NR==20{print $2}')
     f=$(echo "$x" | awk 'NR==2{print $2}')
     bd=$(echo "$x" | awk 'NR==18{print $2}')
-
     convert -size 90x90 xc:"$b" \
         -gravity center \
-        -pointsize "60" \
-        -font "Iosevka-Nerd-Font-Complete" \
+        -pointsize '60' \
+        -font 'Iosevka-Nerd-Font-Complete' \
         -fill "$f" \
         -bordercolor "$bd" \
         -border '5' \
-        -annotate +0+0 "" \
-        /tmp/dunst_icon.png >/dev/null 2>&1
+        -annotate +0+0 '' \
+        /tmp/MyDE/scrot_icon.png >/dev/null 2>&1
 
     i=$(shuf -i 1-10000 -n 1)
     c=0
     j=3
     z=3
-    pgrep dunst >/dev/null && killall -q dunst
-    dunst -shrink -alignment 'center' &
-    until [ "$c" = "$z" ]; do
-        dunstify -r "$i" -t 6000 -a 'fancy1' "$j" "until screenshot" \
-            -i /tmp/dunst_icon.png
+    until [ $c -eq $z ]; do
+        dunstify -r $i -u critical "$j" 'until screenshot' -i /tmp/MyDE/scrot_icon.png
         sleep 1
         c=$((${c} + 1))
         j=$((${j} - 1))
     done
-    dunstify -C "$i"
-    killall -q dunst
-    sleep 0.5
+    dunstify -C $i
+    sleep 0.3
     ffmpeg -f x11grab -video_size 1920x1080 -i "$DISPLAY" -vframes 1 \
         ~/working/scrot_$(date '+%Y%m%d-%H%M%S').png
     exit

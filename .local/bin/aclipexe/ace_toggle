@@ -1,27 +1,24 @@
 #!/bin/sh
 
-pgrep aclipexe >/dev/null && killall -q aclipexe || aclipexe &
-sleep 0.1
-
 x=$(cat $XDG_CONFIG_HOME/kitty/kitty_colors.conf)
 b=$(echo "$x" | awk 'NR==20{print $2}')
 f=$(echo "$x" | awk 'NR==2{print $2}')
 bd=$(echo "$x" | awk 'NR==18{print $2}')
-
 convert -size 90x90 xc:"$b" \
     -gravity center \
-    -pointsize "60" \
-    -font "Iosevka-Nerd-Font-Complete" \
+    -pointsize '60' \
+    -font 'Iosevka-Nerd-Font-Complete' \
     -fill "$f" \
     -bordercolor "$bd" \
     -border '5' \
-    -annotate +0+0 "" \
-    /tmp/dunst_icon.png >/dev/null 2>&1
+    -annotate +0+0 '' \
+    /tmp/MyDE/ace_icon.png >/dev/null 2>&1
 
-i=$(shuf -i 1-10000 -n 1)
-pgrep dunst >/dev/null && killall -q dunst
-dunst -shrink -alignment 'center' &
-pgrep aclipexe >/dev/null && dunstify -r "$i" -t 3000 -a 'fancy1' "enabled" \
-    "clipboard monitoring" -i /tmp/dunst_icon.png \
-    || dunstify -r "$i" -t 3000 -a 'fancy1' "disabled" "clipboard monitoring" \
-        -i /tmp/dunst_icon.png
+if [ -f /tmp/MyDE/aclipexe.pid ]; then
+    kill $(head -n1 /tmp/MyDE/aclipexe.pid)
+    rm -f /tmp/MyDE/aclipexe.pid
+    dunstify -r 4088010 'disabled' 'clipboard monitoring' -i /tmp/MyDE/ace_icon.png
+else
+    aclipexe &
+    dunstify -r 4088010 'enabled' 'clipboard monitoring' -i /tmp/MyDE/ace_icon.png
+fi

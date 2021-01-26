@@ -1,0 +1,28 @@
+#!/bin/sh
+
+# wrapper script to line up sxiv with rofi menus for thumbnails
+
+catch_signal_usr1() {
+    trap catch_signal_usr1 USR1
+    kill $!
+    rm -f /tmp/MyDE/rofi_image.pid
+    exit
+}
+trap catch_signal_usr1 USR1
+
+while [ -f /tmp/MyDE/rofi_image.pid ]; do sleep 0.1; done
+echo $$ >/tmp/MyDE/rofi_image.pid
+x=$(xwininfo -root -children | grep 'Rofi')
+while [ ! "$x" ]; do
+    sleep 0.1
+    x=$(xwininfo -root -children | grep 'Rofi')
+done
+x=$(echo "$x" | awk '{print $1}')
+x=$(xwininfo -id "$x")
+x=$(echo "$x" | tail -n1 | awk -F '+' '{print $NF}')
+x=$((${x} - 259))
+bspc rule -a Sxiv:\* -o state=floating manage=off
+sxiv -g 460x259+730+${x} -p -b /tmp/MyDE/rofi_thumb.png &
+while true; do
+    sleep 0.1
+done

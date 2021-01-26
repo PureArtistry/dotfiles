@@ -1,26 +1,26 @@
 #!/bin/sh
 
 get_unit() {
-    if [ "$1" -lt 2000 ]; then
+    if [ $1 -lt 2000 ]; then
         output="$1"
         su='b'
         ups='bps'
-        [ "$output" -eq 1 ] && unit='byte' || unit='bytes'
-    elif [ "$1" -ge 2000 ] && [ "$1" -lt 1200000 ]; then
+        [ $output -eq 1 ] && unit='byte' || unit='bytes'
+    elif [ $1 -ge 2000 ] && [ $1 -lt 1200000 ]; then
         output=$((${1} / 1000))
         su='Kb'
         ups='Kbps'
-        [ "$output" -eq 1 ] && unit='kilobyte' || unit='kilobytes'
-    elif [ "$1" -ge 1200000 ] && [ "$1" -lt 1200000000 ]; then
+        [ $output -eq 1 ] && unit='kilobyte' || unit='kilobytes'
+    elif [ $1 -ge 1200000 ] && [ $1 -lt 1200000000 ]; then
         output=$((${1} / 1000000))
         su='Mb'
         ups='Mbps'
-        [ "$output" -eq 1 ] && unit='megabyte' || unit='megabytes'
-    elif [ "$1" -ge 1200000000 ]; then
+        [ $output -eq 1 ] && unit='megabyte' || unit='megabytes'
+    elif [ $1 -ge 1200000000 ]; then
         output=$((${1} / 1000000000))
         su='Gb'
         ups='Gbps'
-        [ "$output" -eq 1 ] && unit='gigabyte' || unit='gigabytes'
+        [ $output -eq 1 ] && unit='gigabyte' || unit='gigabytes'
     fi
     return
 }
@@ -33,10 +33,10 @@ if [ -n "$1" ]; then
     get_unit $(echo "$ti" | awk '{print $10}')
     tul="  $output$su"
     case "$td" in
-    enp*) echo "  ethernet | $tdl | $tul" ;;
+    enp*) echo "  ethernet  $tdl  $tul" ;;
     wlp*)
         tid=$(nmcli connection show --active | grep 'wlp' | awk '{print $1}')
-        echo "  $tid | $tdl | $tul"
+        echo "  $tid  $tdl  $tul"
         ;;
     esac
     exit
@@ -46,10 +46,10 @@ calc() {
     crnt=$(cat /proc/net/dev | grep "$d")
     crx=$(echo "$crnt" | awk '{print $2}')
     ctx=$(echo "$crnt" | awk '{print $10}')
-    [ "$n" -eq 0 ] && sum=$((${crx} - ${brx})) || sum=$((${ctx} - ${btx}))
+    [ $n -eq 0 ] && sum=$((${crx} - ${brx})) || sum=$((${ctx} - ${btx}))
     get_unit "$sum"
-    [ "$output" -eq 0 ] && msg1='' || msg1="$output $ups"
-    [ "$n" -eq 0 ] && get_unit "$crx" || get_unit "$ctx"
+    [ $output -eq 0 ] && msg1='' || msg1="$output $ups"
+    [ $n -eq 0 ] && get_unit "$crx" || get_unit "$ctx"
     msg2="total: $output $unit"
     base="$crnt"
     brx="$crx"
@@ -57,22 +57,28 @@ calc() {
     return
 }
 
-bye() {
-    dunstify -C "$i"
-    killall -q dunst
-    exit
-}
-
 make_icon() {
     convert -size 90x90 xc:"$b" \
         -gravity center \
         -pointsize "$3" \
-        -font "Iosevka-Nerd-Font-Complete" \
+        -font 'Iosevka-Nerd-Font-Complete' \
         -fill "$f" \
         -bordercolor "$bd" \
         -border '5' \
         -annotate +0+0 "$1" \
-        /tmp/"$2".png >/dev/null 2>&1
+        /tmp/MyDE/$2.png >/dev/null 2>&1
+    return
+}
+
+busy() {
+    busy1=$(xwininfo -root -children | grep 'Dunst')
+    if [ -n "$busy1" ]; then
+        busy2=$(echo "$busy1" | awk '{print $1}' | xargs -I '{}' xwininfo -id {} | awk -F ': ' 'NR==20{print $2}')
+        while [ "$busy2" != 'IsUnMapped' ]; do
+            sleep 0.1
+            busy2=$(echo "$busy1" | awk '{print $1}' | xargs -I '{}' xwininfo -id {} | awk -F ': ' 'NR==20{print $2}')
+        done
+    fi
     return
 }
 
@@ -84,51 +90,48 @@ f=$(echo "$x" | awk 'NR==2{print $2}')
 bd=$(echo "$x" | awk 'NR==18{print $2}')
 
 if [ "$c" != 'full' ]; then
-    make_icon '' 'dunst_icon' '72'
+    make_icon '' 'net_icon' '72'
     msg1='no internet!'
     msg2='this is a problem'
 else
     d=$(ip route | grep default | awk '{print $5}')
     case "$d" in
     enp*)
-        make_icon '' 'dunst_icon' '72'
-        msg1='connected!'
+        make_icon '' 'net_icon' '72'
+        msg1='internet access'
         msg2='via ethernet'
         ;;
     wlp*)
         cid=$(echo "$cl" | grep 'wlp' | awk '{print $1}')
-        make_icon '' 'dunst_icon' '68'
-        msg1='connected!'
+        make_icon '' 'net_icon' '68'
+        msg1='internet access'
         msg2="via $cid"
         ;;
     esac
 fi
 
-pgrep dunst >/dev/null && killall -q dunst
-i=$(shuf -i 1-10000 -n 1)
-dunst -geometry "420x3-4+4" -alignment "center" &
-dunstify -r "$i" -t 6000 -a 'fancy1' "$msg1" "$msg2" -i /tmp/dunst_icon.png
+busy
+dunstify -r 4088003 -t 4500 "$msg1" "$msg2" -i /tmp/MyDE/net_icon.png
 if [ ! "$d" ]; then
-    sleep 4
-    bye
+    exit
 else
     sleep 3
-    make_icon '' 'dunst_icon0' '58'
-    make_icon '' 'dunst_icon1' '58'
+    make_icon '' 'net_icon0' '58'
+    make_icon '' 'net_icon1' '58'
     base=$(cat /proc/net/dev | grep "$d")
     brx=$(echo "$base" | awk '{print $2}')
     btx=$(echo "$base" | awk '{print $10}')
     sleep 1
     n=0
-    until [ "$n" -eq 2 ]; do
+    until [ $n -eq 2 ]; do
         j=0
-        until [ "$j" -gt 3 ]; do
+        until [ $j -gt 4 ]; do
             calc
-            dunstify -r "$i" -t 6000 -a 'fancy1' "$msg1" "$msg2" -i /tmp/dunst_icon"$n".png
+            dunstify -r 4088003 -t 5000 "$msg1" "$msg2" -i /tmp/MyDE/net_icon$n.png
             sleep 1
             j=$((${j} + 1))
         done
         n=$((${n} + 1))
     done
-    bye
+    dunstify -C 4088003
 fi

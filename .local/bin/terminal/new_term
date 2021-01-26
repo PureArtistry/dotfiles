@@ -3,7 +3,7 @@
 case "$@" in
 *"pretty colours"*)
     alacritty "$@" &
-    echo $! >/tmp/pretty_colours.pid
+    echo $! >/tmp/MyDE/pretty_colours.pid
     ;;
 *) alacritty "$@" & ;;
 esac

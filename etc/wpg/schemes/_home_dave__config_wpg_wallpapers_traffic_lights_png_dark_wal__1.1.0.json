@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/traffic_lights.png",
+    "alpha": "85",
+
+    "special": {
+        "background": "#0b090a",
+        "foreground": "#ffccc9",
+        "cursor": "#ffccc9"
+    },
+    "colors": {
+        "color0": "#0b090a",
+        "color1": "#50282E",
+        "color2": "#6C3035",
+        "color3": "#6E3B43",
+        "color4": "#6B4853",
+        "color5": "#992E32",
+        "color6": "#995359",
+        "color7": "#de9b99",
+        "color8": "#261f23",
+        "color9": "#6f2c36",
+        "color10": "#96343c",
+        "color11": "#99414f",
+        "color12": "#965267",
+        "color13": "#d32e34",
+        "color14": "#d65c66",
+        "color15": "#ffccc9"
+    }
+}

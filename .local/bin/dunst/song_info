@@ -4,57 +4,25 @@
 
 now_playing_check=$(mpc current)
 [ ! "$now_playing_check" ] && exit
-x=$(ps aux | grep 'pretty colours' | grep -v grep)
+x=$(xwininfo -root -children | grep 'pretty colours')
 [ ! "$x" ] && neocover >/dev/null 2>&1
+
+busy1=$(xwininfo -root -children | grep 'Dunst')
+if [ -n "$busy1" ]; then
+    busy2=$(echo "$busy1" | awk '{print $1}' | xargs -I '{}' xwininfo -id {} | awk -F ': ' 'NR==20{print $2}')
+    while [ "$busy2" != 'IsUnMapped' ]; do
+        sleep 0.1
+        busy2=$(echo "$busy1" | awk '{print $1}' | xargs -I '{}' xwininfo -id {} | awk -F ': ' 'NR==20{print $2}')
+    done
+fi
 
 song=$(mpc current -f "%title%")
 artist=$(mpc current -f "%artist%")
-duration=$(mpc current -f "%time%")
 nsong=$(mpc queued -f "%title%")
 nartist=$(mpc queued -f "%artist%")
 
-calc() {
-    y=$(mpc)
-    elapsed=$(echo "$y" | awk 'NR==2{print $3}' | sed 's/\/.*//')
-    perc=$(echo "$y" | awk 'NR==2{print $4}')
-    # this bit only works if the song is less than an hour
-    # I don't have anything over an hour to test the output of mpc
-    # I'll re-write this to something less hacky when needed.
-    i=$(echo "$elapsed" | awk -F ':' '{print $1}')
-    j=$(echo "$elapsed" | awk -F ':' '{print $2}')
-    i=$((${i} * 60))
-    i=$((${i} + ${j}))
-    k=$(echo "$duration" | awk -F ':' '{print $1}')
-    l=$(echo "$duration" | awk -F ':' '{print $2}')
-    k=$((${k} * 60))
-    k=$((${k} + ${l}))
-    remain=$((${k} - ${i}))
-    if [ "$remain" -le 2 ]; then
-        dunstify -C 2001
-        killall -q dunst
-        exit
-    else
-        remain=$(date -d@"$remain" -u +'%M:%S')
-    fi
-    return
-}
-
-z=0
-c=8
-pgrep dunst &>/dev/null && killall -q dunst
-until [ "$z" = "$c" ]; do
-    calc
-    dunstify -r 2001 -t 6000 -a 'fancy3' "   now playing" \
-        "\n  $song\n‎ﴁ‎  $artist\n神  $elapsed of $duration $perc" -i "/tmp/dartc.png"
-    sleep 0.5
-    z=$((${z} + 1))
-done
-z=0
-until [ "$z" = "$c" ]; do
-    calc
-    dunstify -r 2001 -t 6000 -a 'fancy3' "     up next" \
-        "\n  $nsong\n‎ﴁ‎  $nartist\n神  $remain until song begins" -i "/tmp/dartn.png"
-    sleep 0.5
-    z=$((${z} + 1))
-done
-dunstify -C 2001
+dunstify -r 4088011 -t 4500 -a 'song_info' "契 $song" "‎ﴁ‎  $artist" -i "/tmp/MyDE/dartc.png"
+sleep 4
+dunstify -r 4088011 -t 4500 -a 'song_info' "怜 $nsong" "‎ﴁ‎  $nartist" -i "/tmp/MyDE/dartn.png"
+sleep 4
+dunstify -C 4088011

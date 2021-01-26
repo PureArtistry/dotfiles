@@ -1,25 +1,24 @@
-#!/bin/bash
+#!/bin/sh
+SHELL_TYPE=$(readlink /bin/sh)
+case "$SHELL_TYPE" in
+*dash) utter='echo' ;;
+*) utter='echo -e' ;;
+esac
+
 # adapted from https://github.com/Enverex/arcade/blob/master/bin/liveStream
 # this needs to be re-written to include streaming and intel stuff.
 
-recording_check=$(ps aux | grep 'ffmpeg' | grep -v grep | grep '.mkv')
+recording_check=$(ps aux | grep 'ffmpeg' | grep -v grep | grep '.mkv' | sort -r | head -n1)
 if [ -n "$recording_check" ]; then
-    current_file=$(echo -e "$recording_check" | awk -F '/' '{print $NF}')
-    current_size=$(ls -lh $HOME/working/"$current_file" | awk '{print $5}')
-    bar=$(echo -e "  that's a wrap!" | rofi -theme 'video1' -lines 1 -fixed-num-lines 1 \
-        -p "  finished showing off?" \
+    current_file=$(echo "$recording_check" | awk -F '/' '{print $NF}')
+    current_size=$(ls -lh $HOME/working/$current_file | awk '{print $5}')
+    bar=$($utter "  that's a wrap!" | rofi -theme 'video1' -lines 1 -fixed-num-lines 1 \
+        -p '  finished showing off?' \
         -mesg "雷 file: $current_file | size: $current_size" \
         -dmenu -i -format i)
-    [ ! "$bar" ] && exit || killall -q ffmpeg
+    [ ! $bar ] && exit || kill $(echo "$recording_check" | awk '{print $2}')
     exit
 fi
-
-cgpu=$(optimus-manager --print-mode)
-case "$cgpu" in
-*intel*) exit ;; # temporarily disabled
-*nvidia*) rw='NVIDIA NVENC encoder' ;;
-*) exit ;;
-esac
 
 ## Options
 frameRate=60    # FPS
@@ -29,9 +28,18 @@ recordLocation=$HOME/working
 currentRes=$(xdpyinfo | grep dimensions | awk '{print $2}')
 encoderDevice=$(ls -1 /dev/dri/renderD* | sort -r | head -n1)
 
+cgpu=$(optimus-manager --print-mode)
+case "$cgpu" in
+*intel*) # temporarily disabled
+    dunstify 'disabled' 'nvidia only rn, sorry!'
+    exit
+    ;;
+*nvidia*) rw='NVIDIA NVENC encoder' ;;
+*) exit ;;
+esac
+
 # ifm() {
 #     sleep 0.3
-#     # dunstify -r 4088004 -t 4000 "(墳) recording 雷" "hi reddit שּ樓" -i "~/.config/dunst/scast.svg"
 #     ffmpeg -loglevel 16 -threads 4 -probesize 10M -framerate ${frameRate} -vsync 1 \
 #         -vaapi_device ${encoderDevice} -hwaccel vaapi -hwaccel_output_format vaapi \
 #         -thread_queue_size 512 -f x11grab -s ${currentRes} -r ${frameRate} -i :0.0 \
@@ -43,19 +51,16 @@ encoderDevice=$(ls -1 /dev/dri/renderD* | sort -r | head -n1)
 
 nfm() {
     sleep 0.3
-    # dunstify -r 4088004 -t 4000 "(墳) recording 雷" "hi reddit שּ樓" -i "~/.config/dunst/scast.svg"
     ffmpeg -loglevel 16 -threads 4 -probesize 10M -framerate ${frameRate} -vsync 1 \
         -thread_queue_size 512 -f x11grab -s ${currentRes} -r ${frameRate} -i :0.0 \
         -thread_queue_size 512 -f pulse -ac 2 -channel_layout stereo -i 0 \
         -c:a libopus -vbr on -compression_level ${audioQuality} \
         -c:v h264_nvenc -qp ${videoQuality} "${recordLocation}/$(date +%y%m%d%H%M%S).mkv"
-    wait
-    return
+    exit
 }
 
 # isa() {
 #     sleep 0.3
-#     # dunstify -r 4088004 -t 4000 "(婢) recording 雷" "hi reddit שּ樓" -i "~/.config/dunst/scast.svg"
 #     ffmpeg -loglevel 16 -threads 4 -probesize 10M -framerate ${frameRate} -vsync 1 \
 #         -vaapi_device ${encoderDevice} -hwaccel vaapi -hwaccel_output_format vaapi \
 #         -thread_queue_size 512 -f x11grab -s ${currentRes} -r ${frameRate} -i :0.0 \
@@ -66,17 +71,15 @@ nfm() {
 
 nsa() {
     sleep 0.3
-    # dunstify -r 4088004 -t 4000 "(婢) recording 雷" "hi reddit שּ樓" -i "~/.config/dunst/scast.svg"
     ffmpeg -loglevel 16 -threads 4 -probesize 10M -framerate ${frameRate} -vsync 1 \
         -thread_queue_size 512 -f x11grab -s ${currentRes} -r ${frameRate} -i :0.0 \
         -c:v h264_nvenc -qp ${videoQuality} "${recordLocation}/$(date +%y%m%d%H%M%S).mkv"
-    wait
-    return
+    exit
 }
 
-foo=$(echo -e "墳  full monty\n婢  sans audio" | rofi -theme 'video1' -lines 2 -fixed-num-lines 2 \
-    -p "  putting on a show?" \
+foo=$($utter '墳  full monty\n婢  sans audio' | rofi -theme 'video1' -lines 2 -fixed-num-lines 2 \
+    -p '  putting on a show?' \
     -mesg "雷 recording with ffmpeg and $rw" \
     -dmenu -i -format i)
-[ ! "$foo" ] && exit
-[ "$foo" = 0 ] && nfm || nsa
+[ ! $foo ] && exit
+[ $foo -eq 0 ] && nfm || nsa

@@ -157,16 +157,14 @@ super + Print
 
 # notifications {{{
 
-# close all dunst notifications
-super + alt + c
-    NOtifications
-
 # time/date/weather notification
 super + d
     tdw_info
+super + shift + d
+    tdw_info fast
 
 # volume popup
-super + shift + F6
+super + shift + {F6,F7,F8}
     volume_info
 
 # song info notification

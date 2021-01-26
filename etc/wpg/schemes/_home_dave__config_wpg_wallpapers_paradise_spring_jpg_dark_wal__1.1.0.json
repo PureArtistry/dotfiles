@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/paradise_spring.jpg",
+    "alpha": "85",
+
+    "special": {
+        "background": "#080A16",
+        "foreground": "#fffff0",
+        "cursor": "#fffff0"
+    },
+    "colors": {
+        "color0": "#080A16",
+        "color1": "#5E5D4F",
+        "color2": "#905C33",
+        "color3": "#8F6F52",
+        "color4": "#708A4A",
+        "color5": "#a29762",
+        "color6": "#bdb050",
+        "color7": "#dbd4c4",
+        "color8": "#141a3b",
+        "color9": "#85825b",
+        "color10": "#c77635",
+        "color11": "#c88f5b",
+        "color12": "#94c152",
+        "color13": "#e3cf6e",
+        "color14": "#fff256",
+        "color15": "#fffff0"
+    }
+}

@@ -25,20 +25,8 @@ api_key=$(head -n1 $HOME/.local/private/yt-api)
 
 listening() {
     need_mute=$(mpc current)
-    [ -n "$need_mute" ] && paused=$(mpc | awk 'NR==2{print $1}' | grep "paused")
+    [ -n "$need_mute" ] && paused=$(mpc | awk 'NR==2{print $1}' | grep 'paused')
     [ -n "$need_mute" ] && [ ! "$paused" ] && need_mute=yes
-    return
-}
-
-new_face_in_town() {
-    pgrep dunst >/dev/null && killall -q dunst
-    dunst -shrink -alignment "center" &
-    return
-}
-
-and_the_horse_you_rode_in_on() {
-    dunstify -C 43224
-    killall -q dunst
     return
 }
 
@@ -51,20 +39,20 @@ make_icon() {
     convert -size 90x90 xc:"$b" \
         -gravity center \
         -pointsize "$1" \
-        -font "Iosevka-Nerd-Font-Complete" \
+        -font 'Iosevka-Nerd-Font-Complete' \
         -fill "$f" \
         -bordercolor "$bd" \
         -border '5' \
         -annotate +0+0 "$2" \
-        /tmp/dunst_icon.png >/dev/null 2>&1
+        /tmp/MyDE/rofeo_icon.png >/dev/null 2>&1
     return
 }
 
 first() {
-    x=$(ls -1 "$VIDEO" | sed 's/^/  /g')
-    catnum=$(($("$utter" "$x" | wc -l) + 1))
-    vid_total=$(find "$VIDEO"/ -type f | wc -l) # <- needs to be tweaked to only find video files
-    catagory=$("$utter" "  search -->\n$x" | rofi -theme 'video1' \
+    x=$(ls -1 $VIDEO/ | sed 's/^/  /g')
+    catnum=$(($(echo "$x" | wc -l) + 1))
+    vid_total=$(fd -e mp4 -e mkv . $VIDEO/ | wc -l) # <- need to add more file extentions to this
+    catagory=$($utter "  search -->\n${x}" | rofi -theme 'video1' \
         -lines "$catnum" -fixed-num-lines "$catnum" \
         -p '  what do you fancy?' \
         -mesg "  contains $vid_total videos total" \
@@ -80,53 +68,51 @@ first() {
 }
 
 second() {
-    list=$(find "$VIDEO"/"$catagory" -type f -printf "%f|%h\n" | sort) # <- also needs to only search for video files
+    list=$(fd -e mp4 -e mkv . ${VIDEO}/${catagory}/ | sort) # <- also needs more file extentions added
     if [ ! "$list" ]; then
-        new_face_in_town
         make_icon 72 
-        dunstify -r 43224 -t 4000 -a 'fancy1' "no videos!" "folder $catagory is empty" -i /tmp/dunst_icon.png
+        dunstify -r 4088009 'empty' "$catagory has no videos" -i /tmp/MyDE/rofeo_icon.png
         first
     fi
     cat_vids=$(echo "$list" | wc -l)
-    choice=$("$utter" "$list" | awk -F '|' '{print $1}' | rofi -theme 'video2' \
+    choice=$($utter "$list" | awk -F '/' '{print $NF}' | rofi -theme 'video2' \
         -p "         contains $cat_vids videos to select from         " \
         -mesg '  pick a title...' \
         -dmenu -i -format d)
-    [ ! "$choice" ] && first
+    [ ! $choice ] && first
     final
 }
 
 final() {
-    file=$($utter "$list" | awk -F '|' '{print $2"/"$1}' | sed -n ${choice}p)
+    file=$(echo "$list" | sed -n ${choice}p)
     snap=$(shuf -i 20-80 -n 1)
-    ffmpegthumbnailer -i "$file" -o /tmp/rofi_thumb.png -s 460 -m -t "${snap}%"
+    ffmpegthumbnailer -i "$file" -o /tmp/MyDE/rofi_thumb.png -s 460 -m -t "${snap}%"
     duration=$(mediainfo "$file" | grep -m 1 'Duration' | awk -F ':' '{print $2}')
-    bspc rule -a Sxiv:\* -o state=floating manage=off
-    sxiv -g 460x259+730+260 -p -b /tmp/rofi_thumb.png &
-    experience=$($utter "  fullscreen\n  home screen\n金  standard" | rofi -theme 'video3' \
-        -p "  viewing experience?" \
+    rofi_image &
+    experience=$($utter '  fullscreen\n  home screen\n金  standard' | rofi -theme 'video3' \
+        -p '  viewing experience?' \
         -mesg "please enjoy the next$duration" \
         -lines 3 -fixed-num-lines 3 -dmenu -i -format d)
-    if [ ! "$experience" ]; then
-        kill "$!"
+    if [ ! $experience ]; then
+        kill -USR1 $(head -n1 /tmp/MyDE/rofi_image.pid)
         second
     fi
-    kill "$!"
+    kill -USR1 $(head -n1 /tmp/MyDE/rofi_image.pid)
     listening
-    case "$experience" in
+    case $experience in
     1)
         bspc rule -a mpv:\* -o desktop=10
         mpv "$file" --fs &
         bspc subscribe node_add -c 1
         bspc desktop 10 -f
-        [ "$need_mute" = "yes" ] && mpc pause
+        [ "$need_mute" = 'yes' ] && mpc pause
         ;;
     2)
         distraction_toggle off
         bspc rule -a mpv:\* -o desktop=1 state=floating rectangle=897x505+1005+287 center=false
         mpv "$file" &
         bspc subscribe node_add -c 1
-        [ "$need_mute" = "yes" ] && mpc pause
+        [ "$need_mute" = 'yes' ] && mpc pause
         bspc desktop 1 -f
         sleep 0.1
         xdotool mousemove 400 400
@@ -135,7 +121,7 @@ final() {
     3)
         mpv "$file" &
         bspc subscribe node_add -c 1
-        [ "$need_mute" = "yes" ] && mpc pause
+        [ "$need_mute" = 'yes' ] && mpc pause
         ;;
     esac
     exit
@@ -150,7 +136,7 @@ yt_search() {
         search_type=1
         st='q'
         unset channel_mode
-        search=$(rofi -theme 'entry' -dmenu -i -mesg "  keywords?")
+        search=$(rofi -theme 'entry' -dmenu -i -mesg '  keywords?')
         rpage=1
     else
         case "$1" in
@@ -182,18 +168,18 @@ yt_search() {
         esac
     fi
     [ ! "$search" ] && first
-    [ ! "$st" ] && st="q"
+    [ ! "$st" ] && st='q'
     search=$(echo "$search" | sed 's/ /+/g') # <- need to make this escape other special chars
-    if [ "$search_type" = 1 ]; then
+    if [ $search_type -eq 1 ]; then
         ytresults=$(curl -G 'https://www.googleapis.com/youtube/v3/search/' --data-urlencode "key=$api_key" \
-            --data-urlencode "part=snippet" --data-urlencode "type=video" \
-            --data-urlencode "fields=items(snippet/title,snippet/thumbnails,snippet/channelTitle,snippet/description,snippet/publishedAt,snippet/channelId,id/videoId),nextPageToken,prevPageToken" \
-            --data-urlencode "maxResults=$rnum" --data-urlencode "$st=$search" 2>/dev/null)
-    elif [ "$search_type" = 2 ]; then
+            --data-urlencode 'part=snippet' --data-urlencode 'type=video' \
+            --data-urlencode 'fields=items(snippet/title,snippet/thumbnails,snippet/channelTitle,snippet/description,snippet/publishedAt,snippet/channelId,id/videoId),nextPageToken,prevPageToken' \
+            --data-urlencode "maxResults=$rnum" --data-urlencode "${st}=${search}" 2>/dev/null)
+    elif [ $search_type -eq 2 ]; then
         ytresults=$(curl -G 'https://www.googleapis.com/youtube/v3/search/' --data-urlencode "key=$api_key" \
-            --data-urlencode "part=snippet" --data-urlencode "type=video" \
-            --data-urlencode "fields=items(snippet/title,snippet/thumbnails,snippet/channelTitle,snippet/description,snippet/publishedAt,snippet/channelId,id/videoId),nextPageToken,prevPageToken" \
-            --data-urlencode "maxResults=$rnum" --data-urlencode "$st=$search" \
+            --data-urlencode 'part=snippet' --data-urlencode 'type=video' \
+            --data-urlencode 'fields=items(snippet/title,snippet/thumbnails,snippet/channelTitle,snippet/description,snippet/publishedAt,snippet/channelId,id/videoId),nextPageToken,prevPageToken' \
+            --data-urlencode "maxResults=$rnum" --data-urlencode "${st}=${search}" \
             --data-urlencode "pageToken=$page_id" 2>/dev/null)
     fi
     rlist=$(echo "$ytresults" | jq -r '.items[] | .snippet.title + "  ->    " + .snippet.channelTitle' \
@@ -202,30 +188,30 @@ yt_search() {
 }
 
 yt_list() {
-    if [ "$rpage" -eq 1 ]; then
+    if [ $rpage -eq 1 ]; then
         bleh="$rlist\nnext page -->"
-        ytvid=$("$utter" "$bleh" | rofi -theme 'video2' -dmenu -i -no-custom -u "$rnum" \
+        ytvid=$($utter "$bleh" | rofi -theme 'video2' -dmenu -i -no-custom -u "$rnum" \
             -lines "$((${rnum} + 1))" -fixed-num-lines "$((${rnum} + 1))" -format i \
             -p "  returning $rnum results per page          | 龎  $rpage  " \
-            -mesg "  is it there?")
-        if [ ! "$ytvid" ]; then
+            -mesg '  is it there?')
+        if [ ! $ytvid ]; then
             yt_search
-        elif [ "$ytvid" = "$rnum" ]; then
+        elif [ $ytvid -eq $rnum ]; then
             yt_search next
         else
             yt_details
         fi
     else
         bleh="$rlist\n<-- previous page\nnext page -->"
-        ytvid=$("$utter" "$bleh" | rofi -theme 'video2' -dmenu -i -no-custom -a "$rnum" -u "$((${rnum} + 1))" \
+        ytvid=$($utter "$bleh" | rofi -theme 'video2' -dmenu -i -no-custom -a "$rnum" -u "$((${rnum} + 1))" \
             -lines "$((${rnum} + 2))" -fixed-num-lines "$((${rnum} + 2))" -format i \
             -p "  returning $rnum results per page          | 龎  $rpage  " \
-            -mesg "  find it yet?")
-        if [ ! "$ytvid" ]; then
+            -mesg '  find it yet?')
+        if [ ! $ytvid ]; then
             yt_search
-        elif [ "$ytvid" = "$rnum" ]; then
+        elif [ $ytvid -eq $rnum ]; then
             yt_search prev
-        elif [ "$ytvid" = "$((${rnum} + 1))" ]; then
+        elif [ $ytvid -eq $((${rnum} + 1)) ]; then
             yt_search next
         else
             yt_details
@@ -234,12 +220,13 @@ yt_list() {
 }
 
 yt_details() {
+    [ ! $ytvid ] && ytvid=0
     ytsel_id=$(echo "$ytresults" | jq -r ".items[$ytvid].id.videoId")
     ytsel_thumb=$(echo "$ytresults" | jq -r ".items[$ytvid].snippet.thumbnails.high.url")
-    wget -q -O /tmp/rofi_thumb.png "$ytsel_thumb" &
+    wget -q -O /tmp/MyDE/rofi_thumb.png "$ytsel_thumb" &
     ytsel_duration=$(curl -G 'https://www.googleapis.com/youtube/v3/videos/' \
-        --data-urlencode "key=$api_key" --data-urlencode "part=contentDetails" \
-        --data-urlencode "fields=items(contentDetails/duration)" \
+        --data-urlencode "key=$api_key" --data-urlencode 'part=contentDetails' \
+        --data-urlencode 'fields=items(contentDetails/duration)' \
         --data-urlencode "id=$ytsel_id" 2>/dev/null | jq -r '.items[0].contentDetails.duration' \
         | sed -e 's/P\|T\|S//g; s/D\|H\|M/:/g' -e 's/\<[0-9]\>/0&/g')
     ytsel_title=$(echo "$ytresults" | jq -r ".items[$ytvid].snippet.title" | sed -e "$tidy_output")
@@ -249,13 +236,12 @@ yt_details() {
     ytsel_chan_id=$(echo "$ytresults" | jq -r ".items[$ytvid].snippet.channelId")
     ytsel_desc=$(echo "$ytresults" | jq -r ".items[$ytvid].snippet.description" | sed -e "$tidy_output")
     ytsel_date=$(echo "$ytresults" | jq -r ".items[$ytvid].snippet.publishedAt" \
-        | xargs -I '{}' date -d '{}' "+%A %-d %B %Y")
+        | xargs -I '{}' date -d '{}' '+%A %-d %B %Y')
     wait
-    convert /tmp/rofi_thumb.png -resize 460x259^ \
+    convert /tmp/MyDE/rofi_thumb.png -resize 460x259^ \
         -gravity center -extent 460x259 \
-        -flatten /tmp/rofi_thumb.png
-    bspc rule -a Sxiv:\* -o state=floating manage=off
-    sxiv -g 460x259+730+162 -p -b /tmp/rofi_thumb.png &
+        -flatten /tmp/MyDE/rofi_thumb.png
+    rofi_image &
     yt_choice=$($utter "  download video\n  watch fullscreen\n  watch on home screen\n金  watch standard\n  more from $ytsel_chan_title" \
         | rofi -theme 'youtube' -p "神  $ytsel_duration |   $ytsel_date" \
             -mesg "<span>  $ytsel_title</span>
@@ -263,52 +249,47 @@ yt_details() {
 <span><small>
 <i>$ytsel_desc</i></small></span>" \
             -lines 5 -fixed-num-lines 5 -u 0 -a 4 -dmenu -i -format d)
-    if [ ! "$yt_choice" ]; then
+    if [ ! $yt_choice ]; then
         if [ ! "$skip_list" ]; then
-            kill "$!"
+            kill -USR1 $(head -n1 /tmp/MyDE/rofi_image.pid)
             yt_list
         else
-            kill "$!"
+            kill -USR1 $(head -n1 /tmp/MyDE/rofi_image.pid)
             exit
         fi
     else
-        kill "$!"
+        kill -USR1 $(head -n1 /tmp/MyDE/rofi_image.pid)
         selection="https://youtube.com/watch?v=${ytsel_id}"
         xclip -selection clipboard /dev/null
-        case "$yt_choice" in
+        case $yt_choice in
         1)
-            echo "$ytsel_title" >/tmp/yt_title
+            echo "$ytsel_title" >/tmp/MyDE/yt_title
             youtube-dl "$selection" &
             make_icon '60' ''
-            new_face_in_town
-            dunstify -r 43224 -t 4000 -a 'fancy1' "downloading" "$ytsel_title" -i /tmp/dunst_icon.png
+            dunstify -r 4088008 'downloading' "$ytsel_title" -i /tmp/MyDE/rofeo_icon.png
             ;;
         2)
             listening
             make_icon '66' ''
-            new_face_in_town
-            dunstify -r 43224 -t 4000 -a 'fancy1' "loading" "$ytsel_title" \
-                -i /tmp/dunst_icon.png
+            dunstify -r 4088009 'loading' "$ytsel_title" -i /tmp/MyDE/rofeo_icon.png
             bspc rule -a mpv:\* -o desktop=10
             mpv "$selection" --fs &
             bspc subscribe node_add -c 1
-            and_the_horse_you_rode_in_on
-            [ "$need_mute" = "yes" ] && mpc pause
+            dunstify -C 4088009
+            [ "$need_mute" = 'yes' ] && mpc pause
             bspc desktop 10 -f
             ;;
         3)
             listening
             make_icon '66' ''
-            new_face_in_town
-            dunstify -r 43224 -t 4000 -a 'fancy1' "loading" "$ytsel_title" \
-                -i /tmp/dunst_icon.png
+            dunstify -r 4088009 'loading' "$ytsel_title" -i /tmp/MyDE/rofeo_icon.png
             distraction_toggle off
             bspc rule -a mpv:\* -o desktop=1 state=floating \
                 rectangle=897x505+1005+287 center=false
             mpv "$selection" &
             bspc subscribe node_add -c 1
-            and_the_horse_you_rode_in_on
-            [ "$need_mute" = "yes" ] && mpc pause
+            dunstify -C 4088009
+            [ "$need_mute" = 'yes' ] && mpc pause
             bspc desktop 1 -f
             sleep 0.1
             xdotool mousemove 400 400
@@ -317,16 +298,14 @@ yt_details() {
         4)
             listening
             make_icon '66' ''
-            new_face_in_town
-            dunstify -r 43224 -t 4000 -a 'fancy1' "loading" "$ytsel_title" \
-                -i /tmp/dunst_icon.png
+            dunstify -r 4088009 'loading' "$ytsel_title" -i /tmp/MyDE/rofeo_icon.png
             mpv "$selection" &
             bspc subscribe node_add -c 1
-            and_the_horse_you_rode_in_on
-            [ "$need_mute" = "yes" ] && mpc pause
+            dunstify -C 4088009
+            [ "$need_mute" = 'yes' ] && mpc pause
             ;;
         5)
-            channel_mode="on"
+            channel_mode='on'
             yt_search "$ytsel_chan_id"
             ;;
         esac

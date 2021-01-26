@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/convergence.jpg",
+    "alpha": "85",
+
+    "special": {
+        "background": "#080308",
+        "foreground": "#ffe9ff",
+        "cursor": "#ffe9ff"
+    },
+    "colors": {
+        "color0": "#080308",
+        "color1": "#A9484E",
+        "color2": "#672E55",
+        "color3": "#51284F",
+        "color4": "#6B2C6F",
+        "color5": "#594A57",
+        "color6": "#903797",
+        "color7": "#d8b6d4",
+        "color8": "#2e0e2e",
+        "color9": "#eb4d57",
+        "color10": "#8f3272",
+        "color11": "#712c6d",
+        "color12": "#932f9a",
+        "color13": "#7e5578",
+        "color14": "#c63ad1",
+        "color15": "#ffe9ff"
+    }
+}

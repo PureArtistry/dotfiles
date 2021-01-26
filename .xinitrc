@@ -3,8 +3,8 @@
 
 # prep
 fresh_start
-touch /tmp/startup.tmp
-convert -size 500x500 xc:#222222 /tmp/albumart.png
+touch /tmp/MyDE/startup.tmp
+convert -size 500x500 xc:#222222 /tmp/MyDE/albumart.png
 
 # standard xinitrc stuff {{{
 userresources=$HOME/.Xresources

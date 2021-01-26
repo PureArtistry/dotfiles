@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/sunset_wheat.jpg",
+    "alpha": "85",
+
+    "special": {
+        "background": "#12101c",
+        "foreground": "#ffe5f3",
+        "cursor": "#ffe5f3"
+    },
+    "colors": {
+        "color0": "#12101c",
+        "color1": "#503989",
+        "color2": "#6D52A1",
+        "color3": "#7D66C0",
+        "color4": "#9866A6",
+        "color5": "#D37692",
+        "color6": "#9375C5",
+        "color7": "#ebc1cc",
+        "color8": "#26213c",
+        "color9": "#623dbe",
+        "color10": "#885ae1",
+        "color11": "#9971ff",
+        "color12": "#cf73e9",
+        "color13": "#ff84b5",
+        "color14": "#ba83ff",
+        "color15": "#ffe5f3"
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/bee_deep_in_pollen.jpg",
+    "alpha": "85",
+
+    "special": {
+        "background": "#091416",
+        "foreground": "#fffdde",
+        "cursor": "#fffdde"
+    },
+    "colors": {
+        "color0": "#091416",
+        "color1": "#A45120",
+        "color2": "#944E28",
+        "color3": "#50544B",
+        "color4": "#5B482F",
+        "color5": "#CF6E20",
+        "color6": "#F0992C",
+        "color7": "#c3bea7",
+        "color8": "#16343a",
+        "color9": "#e2651c",
+        "color10": "#cc6127",
+        "color11": "#697757",
+        "color12": "#7f5e34",
+        "color13": "#ff8d19",
+        "color14": "#ffc826",
+        "color15": "#fffdde"
+    }
+}

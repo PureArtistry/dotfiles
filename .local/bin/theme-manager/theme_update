@@ -1,50 +1,42 @@
 #!/bin/sh
-# vim:foldmethod=marker
 
+xrdb -merge $HOME/.Xresources
 neocover >/dev/null 2>&1
 wal_steam -w
-
-# tweak some configs post generation {{{
-x=$(cat "$XDG_CONFIG_HOME"/kitty/kitty_colors.conf)
-b=$(echo "$x" | awk 'NR==8{print $2}')
-f=$(echo "$x" | awk 'NR==2{print $2}')
-hl=$(echo "$x" | awk 'NR==28{print $2}')
-
-sed -i -e "2s/.*/Sxiv*background: $(echo "$x" | awk 'NR==16{print $2}')/" \
-    -e "3s/.*/Sxiv*foreground: $(echo "$x" | awk 'NR==18{print $2}')/" "$HOME"/.Xresources
-xrdb -merge "$HOME"/.Xresources
-
-sed -i -e "3s/.*/    background = \"$b\"/" \
-    -e "4s/.*/    foreground = \"$f\"/" \
-    -e "5s/.*/    frame_color = \"$(echo "$x" | awk 'NR==7{print $2}')\"/" \
-    -e "6s/.*/    separator_color = \"$b\"/" \
-    -e "8s/.*/    background = \"$b\"/" \
-    -e "9s/.*/    foreground = \"$f\"/" \
-    -e "12s/.*/    background = \"$b\"/" \
-    -e "13s/.*/    foreground = \"$f\"/" \
-    -e "16s/.*/    background = \"$b\"/" \
-    -e "17s/.*/    foreground = \"$f\"/" \
-    -e "18s/.*/    frame_color = \"$hl\"/" "$XDG_CONFIG_HOME"/dunst/dunstrc
-# }}}
-
 ripcord_check=$(pidof ripcord)
-[ ! "$ripcord_check" ] && sed -i '/preset_name=custom/d' "$XDG_DATA_HOME"/Ripcord/settings.ini
+[ ! "$ripcord_check" ] && sed -i '/preset_name=custom/d' $XDG_DATA_HOME/Ripcord/settings.ini
 
 # force apps to use new theme, except on startup to prevent doubling up
-[ -f /tmp/startup.tmp ] && exit
+[ -f /tmp/MyDE/startup.tmp ] && exit
 
 if [ -n "$ripcord_check" ]; then
     kill "$ripcord_check"
     while kill -0 "$ripcord_check" 2>/dev/null; do sleep 0.1; done
-    sed -i '/preset_name=custom/d' "$XDG_DATA_HOME"/Ripcord/settings.ini
+    sed -i '/preset_name=custom/d' $XDG_DATA_HOME/Ripcord/settings.ini
     restart_ripcord=yes
 fi
 
-pgrep fancy_writing >/dev/null && pkill fancy_writing --signal=USR1
-pgrep qutebrowser >/dev/null && qutebrowser :config-source :reload >/dev/null 2>&1
+[ -f /tmp/MyDE/fancy_writing.pid ] && kill -USR1 $(head -n1 /tmp/MyDE/fancy_writing.pid)
+pgrep qutebrowser >/dev/null 2>&1 && qutebrowser :config-source :reload >/dev/null 2>&1
 reinit_desktop
-[ "$restart_ripcord" = "yes" ] && sleep 0.2 && ripcord &
-follow=$(head -n1 /tmp/breadcrumbs)
-[ ! "$follow" ] && bspc desktop 1 -f || bspc desktop $(head -n1 /tmp/breadcrumbs) -f
-home_desktop=$(bspc query -d focused -T | jq -r '.name')
+
+if [ "$restart_ripcord" = 'yes' ]; then
+    sleep 0.2
+    ripcord &
+fi
+
+follow=$(head -n1 /tmp/MyDE/breadcrumbs)
+[ ! "$follow" ] && bspc desktop 1 -f || bspc desktop $(head -n1 /tmp/MyDE/breadcrumbs) -f
+rm -f /tmp/MyDE/breadcrumbs
+home_desktop=$(bspc query -d focused -D --names)
 [ "$home_desktop" = '1' ] && feng_shui
+
+busy1=$(xwininfo -root -children | grep 'Dunst')
+if [ -n "$busy1" ]; then
+    busy2=$(echo "$busy1" | awk '{print $1}' | xargs -I '{}' xwininfo -id {} | awk -F ': ' 'NR==20{print $2}')
+    while [ "$busy2" != 'IsUnMapped' ]; do
+        sleep 0.1
+        busy2=$(echo "$busy1" | awk '{print $1}' | xargs -I '{}' xwininfo -id {} | awk -F ': ' 'NR==20{print $2}')
+    done
+fi
+pgrep dunst >/dev/null 2>&1 && killall -q dunst

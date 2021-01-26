@@ -1,14 +1,13 @@
 #!/bin/sh
 
 x=$(cat $XDG_CONFIG_HOME/kitty/kitty_colors.conf)
-y=$(pactl list sink-inputs)
-z=$(pactl list sinks)
-
 b=$(echo "$x" | awk 'NR==20{print $2}')
 f=$(echo "$x" | awk 'NR==2{print $2}')
 bd=$(echo "$x" | awk 'NR==18{print $2}')
 s=72
 
+y=$(pactl list sink-inputs)
+z=$(pactl list sinks)
 v=$(echo "$z" | grep -m 1 'Volume:' | awk -F '/' '{print $2}' | sed 's/ //g;s/%//')
 vm=$(echo "$y" | grep 'Volume:' | awk -F '/' '{print $2}' | sed 's/ //g;s/%//')
 m=$(echo "$z" | grep 'Mute:' | awk '{print $2}')
@@ -17,16 +16,16 @@ an=$(echo "$y" | grep 'application.name =' | sed 's/.*= //;s/"//g')
 mc=$(echo "$an" | wc -l)
 
 pick_icon() {
-    if [ "$m" = 'yes' ] && [ "$2" = 1 ]; then
+    if [ "$m" = 'yes' ] && [ $2 -eq 1 ]; then
         vi='婢'
-        msg="MUTE"
-    elif [ "$1" = 0 ]; then
+        msg='MUTE'
+    elif [ $1 -eq 0 ]; then
         vi=''
-    elif [ "$1" -le 33 ] && [ "$1" != 0 ]; then
+    elif [ $1 -le 33 ] && [ $1 != 0 ]; then
         vi='奔'
-    elif [ "$1" -gt 33 ] && [ "$1" -le 66 ]; then
+    elif [ $1 -gt 33 ] && [ $1 -le 66 ]; then
         vi='墳'
-    elif [ "$1" -gt 66 ]; then
+    elif [ $1 -gt 66 ]; then
         vi=''
     fi
     return
@@ -36,56 +35,62 @@ make_icon() {
     convert -size 90x90 xc:"$b" \
         -gravity center \
         -pointsize "$s" \
-        -font "Iosevka-Nerd-Font-Complete" \
+        -font 'Iosevka-Nerd-Font-Complete' \
         -fill "$f" \
         -bordercolor "$bd" \
         -border '5' \
         -annotate +0+0 "$vi" \
-        /tmp/"$1".png >/dev/null 2>&1
+        /tmp/MyDE/$1.png >/dev/null 2>&1
+    return
+}
+
+busy() {
+    busy1=$(xwininfo -root -children | grep 'Dunst')
+    if [ -n "$busy1" ]; then
+        busy2=$(echo "$busy1" | awk '{print $1}' | xargs -I '{}' xwininfo -id {} | awk -F ': ' 'NR==20{print $2}')
+        while [ "$busy2" != 'IsUnMapped' ]; do
+            sleep 0.1
+            busy2=$(echo "$busy1" | awk '{print $1}' | xargs -I '{}' xwininfo -id {} | awk -F ': ' 'NR==20{print $2}')
+        done
+    fi
     return
 }
 
 pick_icon "$v" 1
-make_icon dunst_icon0
-
+make_icon volume_icon0
 if [ -n "$an" ]; then
-    if [ "$mc" -gt 1 ]; then
+    if [ $mc -gt 1 ]; then
         c=1
-        until [ "$c" -gt "$mc" ]; do
-            l=$(echo "$vm" | sed -n "$c"p)
+        until [ $c -gt $mc ]; do
+            l=$(echo "$vm" | sed -n ${c}p)
             pick_icon "$l"
-            make_icon dunst_icon"$c"
+            make_icon volume_icon$c
             c=$((${c} + 1))
         done
     else
         pick_icon "$vm"
-        make_icon dunst_icon1
+        make_icon volume_icon1
     fi
 fi
 
-pgrep dunst >/dev/null && killall -q dunst
-dunst -geometry "380x3-4+4" -alignment "center" &
-i=$(shuf -i 1-10000 -n 1)
-dunstify -r "$i" -t 6000 -a 'fancy1' "$v%" "$p" -i /tmp/dunst_icon0.png
-
+busy
+dunstify -r 4088005 -t 5000 "$v%" "$p" -i /tmp/MyDE/volume_icon0.png
 if [ -n "$an" ]; then
-    sleep 3
-    if [ "$mc" -gt 1 ]; then
+    sleep 4
+    if [ $mc -gt 1 ]; then
         c=1
-        until [ "$c" -gt "$mc" ]; do
-            l=$(echo "$an" | sed -n "$c"p)
-            k=$(echo "$vm" | sed -n "$c"p)
-            dunstify -r "$i" -t 6000 -a 'fancy1' "$k%" "$l" -i /tmp/dunst_icon"$c".png
-            sleep 3
+        until [ $c -gt $mc ]; do
+            l=$(echo "$an" | sed -n ${c}p)
+            k=$(echo "$vm" | sed -n ${c}p)
+            dunstify -r 4088005 -t 5000 "$k%" "$l" -i /tmp/MyDE/volume_icon$c.png
+            sleep 4
             c=$((${c} + 1))
         done
     else
-        dunstify -r "$i" -t 6000 -a 'fancy1' "$vm%" "$an" -i /tmp/dunst_icon1.png
-        sleep 3
+        dunstify -r 4088005 -t 5000 "$vm%" "$an" -i /tmp/MyDE/volume_icon1.png
+        sleep 4
     fi
 else
-    sleep 4
+    exit
 fi
-
-dunstify -C "$i"
-killall -q dunst
+dunstify -C 4088005

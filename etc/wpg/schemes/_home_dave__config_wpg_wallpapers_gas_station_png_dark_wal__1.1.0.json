@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/gas_station.png",
+    "alpha": "85",
+
+    "special": {
+        "background": "#1e071f",
+        "foreground": "#ffefff",
+        "cursor": "#ffefff"
+    },
+    "colors": {
+        "color0": "#1e071f",
+        "color1": "#543D82",
+        "color2": "#6B3B8A",
+        "color3": "#6B4E8A",
+        "color4": "#91609A",
+        "color5": "#90868a",
+        "color6": "#b572d3",
+        "color7": "#e6cbe5",
+        "color8": "#460f48",
+        "color9": "#6942b5",
+        "color10": "#8d3fc0",
+        "color11": "#8a57c1",
+        "color12": "#c76cd8",
+        "color13": "#cd9caf",
+        "color14": "#f37fff",
+        "color15": "#ffefff"
+    }
+}

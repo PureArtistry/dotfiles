@@ -1,6 +1,6 @@
 #!/bin/sh
 SHELL_TYPE=$(readlink /bin/sh)
-case $SHELL_TYPE in
+case "$SHELL_TYPE" in
 *dash) utter='echo' ;;
 *) utter='echo -e' ;;
 esac
@@ -12,11 +12,11 @@ case "$my_uptime" in
 *,) my_uptime=$(echo "> $my_uptime" | sed 's/.$//') ;;
 esac
 
-foo=$($utter " logout \n secure \n‎ﰇ‎ reboot " | rofi -theme 'exit' -no-cycle -dmenu -i \
+foo=$($utter ' logout \n secure \n‎ﰇ‎ reboot ' | rofi -theme 'exit' -no-cycle -dmenu -i \
     -mesg "  $(echo "$USER") |    $(head -n1 /etc/hostname) |   $my_uptime" \
     -p 'going somewhere..?' -selected-row 1 -format d)
-[ ! "$foo" ] && exit
-case "$foo" in
+[ ! $foo ] && exit
+case $foo in
 1)
     pgrep qutebrowser >/dev/null 2>&1 && qutebrowser :quit >/dev/null 2>&1
     bspc quit

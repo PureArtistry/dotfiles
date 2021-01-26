@@ -1,18 +1,17 @@
 #!/bin/sh
 
 x=$(cat $XDG_CONFIG_HOME/kitty/kitty_colors.conf)
-y=$(xbacklight -get)
-
 b=$(echo "$x" | awk 'NR==20{print $2}')
 f=$(echo "$x" | awk 'NR==2{print $2}')
 bd=$(echo "$x" | awk 'NR==18{print $2}')
 s=72
 
-if [ "$y" -le 25 ]; then
+y=$(xbacklight -get)
+if [ $y -le 25 ]; then
     icon=''
-elif [ "$y" -gt 25 ] && [ "$y" -lt 50 ]; then
+elif [ $y -gt 25 ] && [ $y -lt 50 ]; then
     icon=''
-elif [ "$y" -ge 50 ] && [ "$y" -lt 75 ]; then
+elif [ $y -ge 50 ] && [ $y -lt 75 ]; then
     icon=''
 else
     icon=''
@@ -21,17 +20,11 @@ fi
 convert -size 90x90 xc:"$b" \
     -gravity center \
     -pointsize "$s" \
-    -font "Iosevka-Nerd-Font-Complete" \
+    -font 'Iosevka-Nerd-Font-Complete' \
     -fill "$f" \
     -bordercolor "$bd" \
     -border '5' \
     -annotate +0+0 "$icon" \
-    /tmp/dunst_icon.png >/dev/null 2>&1
+    /tmp/MyDE/backlight_icon.png >/dev/null 2>&1
 
-i=$(shuf -i 1-10000 -n 1)
-pgrep dunst >/dev/null && killall -q dunst
-dunst -shrink -alignment "center" &
-dunstify -r "$i" -t 6000 -a 'fancy1' "$y%" "backlight intensity" -i /tmp/dunst_icon.png
-sleep 4
-dunstify -C "$i"
-killall -q dunst
+dunstify -r 4088004 "$y%" 'backlight intensity' -i /tmp/MyDE/backlight_icon.png

@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/gun_focus.png",
+    "alpha": "85",
+
+    "special": {
+        "background": "#0c0301",
+        "foreground": "#ffffd7",
+        "cursor": "#ffffd7"
+    },
+    "colors": {
+        "color0": "#0c0301",
+        "color1": "#992508",
+        "color2": "#CA2B04",
+        "color3": "#9B5922",
+        "color4": "#E15C07",
+        "color5": "#AB7848",
+        "color6": "#F2990C",
+        "color7": "#dac6a4",
+        "color8": "#3e0c01",
+        "color9": "#d02a01",
+        "color10": "#ff3501",
+        "color11": "#d5721f",
+        "color12": "#ff7501",
+        "color13": "#ee9b4d",
+        "color14": "#ffca01",
+        "color15": "#ffffd7"
+    }
+}

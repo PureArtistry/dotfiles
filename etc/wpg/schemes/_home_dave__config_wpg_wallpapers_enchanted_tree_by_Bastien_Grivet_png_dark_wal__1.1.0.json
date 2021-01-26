@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/enchanted_tree_by_Bastien_Grivet.png",
+    "alpha": "85",
+
+    "special": {
+        "background": "#090E1B",
+        "foreground": "#ffffc5",
+        "cursor": "#ffffc5"
+    },
+    "colors": {
+        "color0": "#090E1B",
+        "color1": "#4B4344",
+        "color2": "#942428",
+        "color3": "#2B3942",
+        "color4": "#CC692B",
+        "color5": "#9D562F",
+        "color6": "#77847C",
+        "color7": "#e7c896",
+        "color8": "#142141",
+        "color9": "#6a4d51",
+        "color10": "#cc2228",
+        "color11": "#304b5c",
+        "color12": "#ff8427",
+        "color13": "#d96b2f",
+        "color14": "#8abb9d",
+        "color15": "#ffffc5"
+    }
+}

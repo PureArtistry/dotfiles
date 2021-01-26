@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/forest.jpg",
+    "alpha": "85",
+
+    "special": {
+        "background": "#0F140A",
+        "foreground": "#ffffe5",
+        "cursor": "#ffffe5"
+    },
+    "colors": {
+        "color0": "#0F140A",
+        "color1": "#499733",
+        "color2": "#475037",
+        "color3": "#516C4C",
+        "color4": "#58644D",
+        "color5": "#516633",
+        "color6": "#65915D",
+        "color7": "#c1c3ad",
+        "color8": "#28351a",
+        "color9": "#57d135",
+        "color10": "#5e703e",
+        "color11": "#619856",
+        "color12": "#718d58",
+        "color13": "#6b8e38",
+        "color14": "#78cb69",
+        "color15": "#ffffe5"
+    }
+}

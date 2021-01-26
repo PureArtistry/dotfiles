@@ -1,8 +1,7 @@
 my scripts -->
-alias list	.local/share/artistry/alias_list
+alias list	.local/share/MyDE/alias_list
 bspwm		.config/bspwm/bspwmrc
 sxhkd		.config/sxhkd/sxhkdrc
-dunst 		.config/dunst/dunstrc
 neovim		.config/nvim/init.vim
 qutebrowser	.config/qutebrowser/config.py
 newsboat URLs	.config/newsboat/urls
@@ -11,4 +10,4 @@ neofetch	.config/neofetch/config.conf
 xinitrc		.xinitrc
 zshenv		.config/zsh/.zshenv
 zshrc		.config/zsh/.zshrc
-<-- this menu	.local/share/artistry/config_menu
+<-- this menu	.local/share/MyDE/config_menu

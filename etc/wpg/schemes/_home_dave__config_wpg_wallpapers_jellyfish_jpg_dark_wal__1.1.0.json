@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/jellyfish.jpg",
+    "alpha": "85",
+
+    "special": {
+        "background": "#090A14",
+        "foreground": "#dff9f7",
+        "cursor": "#dff9f7"
+    },
+    "colors": {
+        "color0": "#090A14",
+        "color1": "#68224A",
+        "color2": "#24565F",
+        "color3": "#5D5765",
+        "color4": "#4F2F4C",
+        "color5": "#96254D",
+        "color6": "#A23A53",
+        "color7": "#a7bab9",
+        "color8": "#171a37",
+        "color9": "#902361",
+        "color10": "#267584",
+        "color11": "#77648f",
+        "color12": "#6e3469",
+        "color13": "#cf2360",
+        "color14": "#e03d64",
+        "color15": "#dff9f7"
+    }
+}

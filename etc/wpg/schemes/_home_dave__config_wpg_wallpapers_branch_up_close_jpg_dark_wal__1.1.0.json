@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/branch_up_close.jpg",
+    "alpha": "85",
+
+    "special": {
+        "background": "#0D1A32",
+        "foreground": "#defbe3",
+        "cursor": "#defbe3"
+    },
+    "colors": {
+        "color0": "#0D1A32",
+        "color1": "#1C4A46",
+        "color2": "#2E504E",
+        "color3": "#346A55",
+        "color4": "#3B6862",
+        "color5": "#4F675A",
+        "color6": "#3D8261",
+        "color7": "#a6bcaa",
+        "color8": "#162e5a",
+        "color9": "#1d6660",
+        "color10": "#33706c",
+        "color11": "#399470",
+        "color12": "#429187",
+        "color13": "#5a9174",
+        "color14": "#42b57e",
+        "color15": "#defbe3"
+    }
+}

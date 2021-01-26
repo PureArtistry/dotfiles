@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/night_rail.jpg",
+    "alpha": "85",
+
+    "special": {
+        "background": "#0A1011",
+        "foreground": "#d2ffff",
+        "cursor": "#d2ffff"
+    },
+    "colors": {
+        "color0": "#0A1011",
+        "color1": "#515A60",
+        "color2": "#497193",
+        "color3": "#2F4B51",
+        "color4": "#326290",
+        "color5": "#265364",
+        "color6": "#96805C",
+        "color7": "#9ec2c8",
+        "color8": "#1c2d31",
+        "color9": "#5d7788",
+        "color10": "#5094cd",
+        "color11": "#346671",
+        "color12": "#347fc7",
+        "color13": "#286f8b",
+        "color14": "#d2aa67",
+        "color15": "#d2ffff"
+    }
+}

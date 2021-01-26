@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/waves.jpg",
+    "alpha": "85",
+
+    "special": {
+        "background": "#011016",
+        "foreground": "#e5ffff",
+        "cursor": "#e5ffff"
+    },
+    "colors": {
+        "color0": "#011016",
+        "color1": "#446C7A",
+        "color2": "#196D86",
+        "color3": "#32758A",
+        "color4": "#427D90",
+        "color5": "#39849D",
+        "color6": "#5794AA",
+        "color7": "#b1ced9",
+        "color8": "#013348",
+        "color9": "#4c92aa",
+        "color10": "#1693b8",
+        "color11": "#349ebf",
+        "color12": "#48a9c8",
+        "color13": "#3cb2da",
+        "color14": "#60c8ed",
+        "color15": "#e5ffff"
+    }
+}

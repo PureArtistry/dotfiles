@@ -8,9 +8,8 @@
 #window {
     children: [ message, listview, inputbar ];
     width: 460px;
-    height: 398px;
     location: 0;
-    y-offset: 80;
+    y-offset: 130;
 }
 
 message {

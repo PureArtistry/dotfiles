@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/night_bench.jpg",
+    "alpha": "85",
+
+    "special": {
+        "background": "#030E18",
+        "foreground": "#deffff",
+        "cursor": "#deffff"
+    },
+    "colors": {
+        "color0": "#030E18",
+        "color1": "#2E4953",
+        "color2": "#2B5562",
+        "color3": "#595F66",
+        "color4": "#8A7774",
+        "color5": "#7E8A67",
+        "color6": "#4F7686",
+        "color7": "#a7c0c3",
+        "color8": "#072746",
+        "color9": "#336274",
+        "color10": "#2e7388",
+        "color11": "#677a90",
+        "color12": "#c38e86",
+        "color13": "#a8c376",
+        "color14": "#589fbc",
+        "color15": "#deffff"
+    }
+}

@@ -51,9 +51,9 @@ bspc rule -a "pulsemixer" state=floating rectangle=800x600+0+0 center=true stick
 bspc rule -a "Ripcord" desktop=8
 
 # startup
-if [ -f /tmp/startup.tmp ]; then
-    if mkdir /tmp/startup.lock 2>/dev/null; then
+if [ -f /tmp/MyDE/startup.tmp ]; then
+    if mkdir /tmp/MyDE/startup.lock 2>/dev/null; then
         bspwm_init
-        rmdir /tmp/startup.lock 2>/dev/null
+        rmdir /tmp/MyDE/startup.lock 2>/dev/null
     fi
 fi

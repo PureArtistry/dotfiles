@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/eye_of_the_behemoth.jpg",
+    "alpha": "85",
+
+    "special": {
+        "background": "#0D0B17",
+        "foreground": "#e1e1dc",
+        "cursor": "#e1e1dc"
+    },
+    "colors": {
+        "color0": "#0D0B17",
+        "color1": "#1E445E",
+        "color2": "#433C41",
+        "color3": "#2A4D68",
+        "color4": "#24394E",
+        "color5": "#163761",
+        "color6": "#264458",
+        "color7": "#a5a5a1",
+        "color8": "#1f1a39",
+        "color9": "#1e5982",
+        "color10": "#5f4558",
+        "color11": "#2d6590",
+        "color12": "#274a6c",
+        "color13": "#144685",
+        "color14": "#295a7a",
+        "color15": "#e1e1dc"
+    }
+}

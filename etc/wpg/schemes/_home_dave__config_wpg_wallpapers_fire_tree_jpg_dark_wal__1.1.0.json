@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/fire_tree.jpg",
+    "alpha": "85",
+
+    "special": {
+        "background": "#0f1315",
+        "foreground": "#fffffc",
+        "cursor": "#fffffc"
+    },
+    "colors": {
+        "color0": "#0f1315",
+        "color1": "#CD4021",
+        "color2": "#718D97",
+        "color3": "#637C84",
+        "color4": "#9D6F55",
+        "color5": "#D25D23",
+        "color6": "#C39662",
+        "color7": "#c6c8c4",
+        "color8": "#232d32",
+        "color9": "#ff491b",
+        "color10": "#81bfd5",
+        "color11": "#71a8ba",
+        "color12": "#db8b5e",
+        "color13": "#ff731d",
+        "color14": "#ffc46c",
+        "color15": "#fffffc"
+    }
+}

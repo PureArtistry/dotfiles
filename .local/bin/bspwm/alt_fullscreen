@@ -3,27 +3,27 @@
 # workaround fullscreen for transparent windows
 
 enter_fullscreen() {
-    [ -f /tmp/breadcrumbs ] && rm -f /tmp/breadcrumbs
-    echo $(bspc query -d focused -D --names) >/tmp/breadcrumbs
+    [ -f /tmp/MyDE/fs_breadcrumbs ] && rm -f /tmp/MyDE/fs_breadcrumbs
+    echo $(bspc query -d focused -D --names) >/tmp/MyDE/fs_breadcrumbs
     state=$(bspc query -N -n any.\!floating.focused)
     bspc monitor -a fs
     bspc node -d fs --follow
-    [ ! "$state" ] && bspc node --state tiled && echo "floating" >>/tmp/breadcrumbs
+    [ ! "$state" ] && bspc node --state tiled && echo 'floating' >>/tmp/MyDE/fs_breadcrumbs
     bspc desktop -l monocle
     exit
 }
 
 exit_fullscreen() {
-    state=$(sed -n 2p /tmp/breadcrumbs)
-    [ "$state" = "floating" ] && bspc node --state floating
-    bspc node -d $(head -n1 /tmp/breadcrumbs) --follow
+    state=$(sed -n 2p /tmp/MyDE/fs_breadcrumbs)
+    [ "$state" = 'floating' ] && bspc node --state floating
+    bspc node -d $(head -n1 /tmp/MyDE/fs_breadcrumbs) --follow
     bspc monitor -d $BSPWM_DESKTOPS_1
     bspc wm -r
-    rm /tmp/breadcrumbs
+    rm /tmp/MyDE/fs_breadcrumbs
     exit
 }
 
-need_focus=$(bspc query -D --names | grep "fs")
+need_focus=$(bspc query -D --names | grep 'fs')
 fullscreen_check=$(bspc query -d focused -D --names)
 [ ! "$need_focus" ] && enter_fullscreen
 [ "$fullscreen_check" = 'fs' ] && exit_fullscreen || bspc desktop fs -f

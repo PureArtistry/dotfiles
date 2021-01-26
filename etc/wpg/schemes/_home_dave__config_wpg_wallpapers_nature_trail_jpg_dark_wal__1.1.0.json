@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/nature_trail.jpg",
+    "alpha": "85",
+
+    "special": {
+        "background": "#0b1011",
+        "foreground": "#e3ffdb",
+        "cursor": "#e3ffdb"
+    },
+    "colors": {
+        "color0": "#0b1011",
+        "color1": "#323C43",
+        "color2": "#38494A",
+        "color3": "#3B6946",
+        "color4": "#4C4F50",
+        "color5": "#5D625E",
+        "color6": "#887D70",
+        "color7": "#aabfa4",
+        "color8": "#1e2c2f",
+        "color9": "#394f5e",
+        "color10": "#406668",
+        "color11": "#429355",
+        "color12": "#586b72",
+        "color13": "#6c8b72",
+        "color14": "#c0a381",
+        "color15": "#e3ffdb"
+    }
+}

@@ -29,22 +29,24 @@ intro() { # <- this function is here to enable me/you to fold the banner
 
 catch_signal_usr1() {
     trap catch_signal_usr1 USR1
-    state="update"
+    state='update'
     break
 }
 trap catch_signal_usr1 USR1
 
 catch_signal_usr2() {
     trap catch_signal_usr2 USR2
-    unset wp_timer
-    neocover fancy >/dev/null 2>&1 &
+    if [ ! "$now_playing" ]; then
+        unset wp_timer
+        neocover fancy >/dev/null 2>&1 &
+    fi
 }
 trap catch_signal_usr2 USR2
 
 main() {
     count=0
     cycle=0
-    state="running"
+    state='running'
     unset fg_color
     now_playing=$(mpc | awk 'NR==2{print $1}')
     [ ! "$now_playing" ] && other_info
@@ -61,17 +63,17 @@ net_check() {
 }
 
 update_check() {
-    if [ -z "$uc_interval" ] || [ $(($(date +'%s') - ${uc_interval})) -gt 1800 ] || [ -f /tmp/pm_run ]; then
+    if [ -z "$uc_interval" ] || [ $(($(date +'%s') - ${uc_interval})) -gt 1800 ] || [ -f /tmp/MyDE/pm_run ]; then
         uc_interval=$(date +'%s')
-        [ -f /tmp/pm_run ] && rm -f /tmp/pm_run >/dev/null 2>&1
+        [ -f /tmp/MyDE/pm_run ] && rm -f /tmp/MyDE/pm_run >/dev/null 2>&1
         local p=$(checkupdates 2>/dev/null | wc -l)
-        local y=$(yay -Qum 2>/dev/null | wc -l)
-        [ ! "$p" ] && p=0
-        [ ! "$y" ] && y=0
+        local y=$(paru -Qum 2>/dev/null | wc -l)
+        [ ! $p ] && p=0
+        [ ! $y ] && y=0
         local t=$((${p} + ${y}))
-        if [ "$t" = 1 ]; then
+        if [ $t -eq 1 ]; then
             update_status="  there's an update available"
-        elif [ "$t" -gt 0 ]; then
+        elif [ $t -gt 0 ]; then
             update_status="  you have $t updates waiting"
         else
             update_status="  your system is up to date"
@@ -95,13 +97,13 @@ other_info() {
         if [ "$1" = 'pause' ]; then
             [ -n "$wp_timer" ] && unset wp_timer
         else
-            [ ! "$wp_timer" ] && wp_timer=$(date +'%s')
+            [ ! $wp_timer ] && wp_timer=$(date +'%s')
         fi
-        if [ "$count" = 100 ]; then
+        if [ $count -eq 100 ]; then
             count=0
-            [ "$cycle" = 5 ] && cycle=0 || cycle=$((${cycle} + 1))
+            [ $cycle -eq 5 ] && cycle=0 || cycle=$((${cycle} + 1))
         fi
-        if [ "$cycle" = 0 ]; then
+        if [ $cycle -eq 0 ]; then
             if [ "$1" = 'pause' ]; then
                 fancy_font='Iosevka-Nerd-Font-Complete'
                 message="  $(mpc current -f '%title%')"
@@ -110,16 +112,16 @@ other_info() {
             else
                 count=100
             fi
-        elif [ "$cycle" = 1 ]; then
-            if [ -f /tmp/fancy_message ]; then
-                local x=$(cat /tmp/fancy_message)
+        elif [ $cycle -eq 1 ]; then
+            if [ -f /tmp/MyDE/fancy_message ]; then
+                local x=$(cat /tmp/MyDE/fancy_message)
                 message=$(echo "$x" | head -n1)
                 local font=$(echo "$x" | sed -n 2p)
                 case "$font" in
                 1) fancy_font='Victor-Mono-Medium-Italic-Nerd-Font-Complete' ;;
                 *) fancy_font='Iosevka-Nerd-Font-Complete' ;;
                 esac
-                rm -f /tmp/fancy_message 2>/dev/null
+                rm -f /tmp/MyDE/fancy_message 2>/dev/null
             else
                 message="$general"
                 fancy_font='Victor-Mono-Medium-Italic-Nerd-Font-Complete'
@@ -130,9 +132,9 @@ other_info() {
             fi
             display_text
             loop
-        elif [ "$cycle" = 2 ]; then
+        elif [ $cycle -eq 2 ]; then
             net_check
-            if [ "$net" -eq 0 ]; then
+            if [ $net -eq 0 ]; then
                 message=$(net_info fancy)
             else
                 message="  there's no internet!"
@@ -141,19 +143,19 @@ other_info() {
             fancy_font='Iosevka-Nerd-Font-Complete'
             display_text
             loop
-        elif [ "$cycle" = 3 ]; then
+        elif [ $cycle -eq 3 ]; then
             update_check
             message="$update_status"
             fancy_font='Iosevka-Nerd-Font-Complete'
             display_text
             loop
-        elif [ "$cycle" = 4 ]; then
+        elif [ $cycle -eq 4 ]; then
             weather_check
             message="$current_weather"
             fancy_font='Iosevka-Nerd-Font-Complete'
             display_text
             loop
-        elif [ "$cycle" = 5 ]; then
+        elif [ $cycle -eq 5 ]; then
             fancy_font='Iosevka-Nerd-Font-Complete'
             topjob=$(task 2>/dev/null)
             job_no=$(echo "$topjob" | awk 'NR==4{print $1}')
@@ -176,26 +178,26 @@ song_info() {
     album=$(mpc current -f "%album%")
     date=$(mpc current -f "%date%")
     fancy_font='Iosevka-Nerd-Font-Complete'
-    until [ "$state" = "update" ]; do
-        if [ "$count" = 100 ]; then
+    until [ "$state" = 'update' ]; do
+        if [ $count -eq 100 ]; then
             count=0
-            [ "$cycle" = 3 ] && cycle=0 || cycle=$((${cycle} + 1))
+            [ $cycle -eq 3 ] && cycle=0 || cycle=$((${cycle} + 1))
         fi
-        if [ "$cycle" = 0 ]; then
-            [ ! "$song" ] && message="  missing IDv3 tags" || message="  $song"
+        if [ $cycle -eq 0 ]; then
+            [ ! "$song" ] && message='  missing IDv3 tags' || message="  $song"
             display_text
             loop
-        elif [ "$cycle" = 1 ]; then
-            [ ! "$artist" ] && message="  missing IDv3 tags" \
+        elif [ $cycle -eq 1 ]; then
+            [ ! "$artist" ] && message='  missing IDv3 tags' \
                 || message="‎ﴁ‎  $artist"
             display_text
             loop
-        elif [ "$cycle" = 2 ]; then
-            [ ! "$album" ] && message="  missing IDv3 tags" || message="  $album"
+        elif [ $cycle -eq 2 ]; then
+            [ ! "$album" ] && message='  missing IDv3 tags' || message="  $album"
             display_text
             loop
-        elif [ "$cycle" = 3 ]; then
-            [ ! "$date" ] && message="  missing IDv3 tags" \
+        elif [ $cycle -eq 3 ]; then
+            [ ! "$date" ] && message='  missing IDv3 tags' \
                 || message="‎ﮮ‎  $date"
             display_text
             loop
@@ -205,7 +207,7 @@ song_info() {
 }
 
 loop() {
-    while [ "$count" -lt 100 ] && [ "$state" != "update" ]; do
+    while [ $count -lt 100 ] && [ "$state" != 'update' ]; do
         sleep 0.2
         count=$((${count} + 1))
     done
@@ -218,23 +220,24 @@ display_text() {
     clear
     [ ! "$fg_color" ] && fg_color=$(sed -n 16p $XDG_CACHE_HOME/wal/colors)
     length_check=$(echo -n "$message" | wc -c)
-    [ "$length_check" -gt 39 ] && final_message=$(echo "$message" | cut -c 1-36 \
+    [ $length_check -gt 39 ] && final_message=$(echo "$message" | cut -c 1-36 \
         | sed 's/$/.../') || final_message="$message"
     [ "$fancy_font" = 'Victor-Mono-Medium-Italic-Nerd-Font-Complete' ] \
         && font_size=31 || font_size=34
-    convert -size 650x200 xc:"transparent" \
+    convert -size 650x200 xc:'transparent' \
         -gravity center \
         -pointsize "$font_size" \
         -font "$fancy_font" \
         -fill "$fg_color" \
         -annotate +0+65 "$final_message" \
-        /tmp/fancy_writing.png >/dev/null 2>&1
-    kitty +kitten icat /tmp/fancy_writing.png >/dev/null 2>&1
+        /tmp/MyDE/fancy_writing.png >/dev/null 2>&1
+    kitty +kitten icat /tmp/MyDE/fancy_writing.png >/dev/null 2>&1
     sleep 0.1
     bspc node "$fancy_writing_id" --flag hidden=off
     return
 }
 
 fancy_writing_id=$(xwininfo -root -children | grep -w "fancy writing" | awk '{print $1}')
-echo "$fancy_writing_id" >/tmp/fancy_writing_id
+echo "$fancy_writing_id" >/tmp/MyDE/fancy_writing_id
+echo $$ >/tmp/MyDE/fancy_writing.pid
 main

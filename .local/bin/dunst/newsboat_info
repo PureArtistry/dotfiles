@@ -4,29 +4,33 @@ x=$(cat $XDG_CONFIG_HOME/kitty/kitty_colors.conf)
 b=$(echo "$x" | awk 'NR==20{print $2}')
 f=$(echo "$x" | awk 'NR==2{print $2}')
 bd=$(echo "$x" | awk 'NR==18{print $2}')
-
 convert -size 90x90 xc:"$b" \
     -gravity center \
-    -pointsize "72" \
-    -font "Iosevka-Nerd-Font-Complete" \
+    -pointsize '72' \
+    -font 'Iosevka-Nerd-Font-Complete' \
     -fill "$f" \
     -bordercolor "$bd" \
     -border '5' \
-    -annotate +0+0 "" \
-    /tmp/dunst_icon.png >/dev/null 2>&1
+    -annotate +0+0 '' \
+    /tmp/MyDE/rss_icon.png >/dev/null 2>&1
 
 rp=$(echo "$1" | head -n1) # recent posts
 uf=$(echo "$1" | sed -n 2p) # unread feeds
 up=$(echo "$1" | sed -n 3p) # unread posts
 
-i=$(shuf -i 1-10000 -n 1)
-pgrep dunst >/dev/null && killall -q dunst
-dunst -geometry "320x3-4+4" -alignment 'center' &
-dunstify -r "$i" -t 6000 -a 'fancy1' "$rp" "recent posts" -i /tmp/dunst_icon.png
-sleep 3
-dunstify -r "$i" -t 6000 -a 'fancy1' "$uf" "unread feeds" -i /tmp/dunst_icon.png
-sleep 3
-dunstify -r "$i" -t 6000 -a 'fancy1' "$up" "unread posts" -i /tmp/dunst_icon.png
-sleep 3
-dunstify -C "$i"
-killall -q dunst
+busy1=$(xwininfo -root -children | grep 'Dunst')
+if [ -n "$busy1" ]; then
+    busy2=$(echo "$busy1" | awk '{print $1}' | xargs -I '{}' xwininfo -id {} | awk -F ': ' 'NR==20{print $2}')
+    while [ "$busy2" != 'IsUnMapped' ]; do
+        sleep 0.1
+        busy2=$(echo "$busy1" | awk '{print $1}' | xargs -I '{}' xwininfo -id {} | awk -F ': ' 'NR==20{print $2}')
+    done
+fi
+
+dunstify -r 4088007 -t 5000 "$rp" 'recent posts' -i /tmp/MyDE/rss_icon.png
+sleep 4
+dunstify -r 4088007 -t 5000 "$uf" 'unread feeds' -i /tmp/MyDE/rss_icon.png
+sleep 4
+dunstify -r 4088007 -t 5000 "$up" 'unread posts' -i /tmp/MyDE/rss_icon.png
+sleep 4
+dunstify -C 4088007

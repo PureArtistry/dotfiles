@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/starbow.jpg",
+    "alpha": "85",
+
+    "special": {
+        "background": "#0c0805",
+        "foreground": "#fcf0ef",
+        "cursor": "#fcf0ef"
+    },
+    "colors": {
+        "color0": "#0c0805",
+        "color1": "#2F3E60",
+        "color2": "#384A52",
+        "color3": "#364E69",
+        "color4": "#38646A",
+        "color5": "#47504F",
+        "color6": "#505B6C",
+        "color7": "#bfb6b5",
+        "color8": "#301f12",
+        "color9": "#334c86",
+        "color10": "#3f6373",
+        "color11": "#3b6492",
+        "color12": "#3e8994",
+        "color13": "#52716e",
+        "color14": "#5b7398",
+        "color15": "#fcf0ef"
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/abstract_purples.png",
+    "alpha": "85",
+
+    "special": {
+        "background": "#04030D",
+        "foreground": "#e4baff",
+        "cursor": "#e4baff"
+    },
+    "colors": {
+        "color0": "#04030D",
+        "color1": "#2C2B70",
+        "color2": "#471873",
+        "color3": "#47247A",
+        "color4": "#384377",
+        "color5": "#333985",
+        "color6": "#502B88",
+        "color7": "#a788be",
+        "color8": "#0e0a37",
+        "color9": "#2f2d9b",
+        "color10": "#5c169e",
+        "color11": "#5a24a8",
+        "color12": "#3d4fa6",
+        "color13": "#363fb8",
+        "color14": "#652cbc",
+        "color15": "#e4baff"
+    }
+}

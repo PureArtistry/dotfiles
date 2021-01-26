@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/autumn_leaves_art.jpeg",
+    "alpha": "85",
+
+    "special": {
+        "background": "#090E10",
+        "foreground": "#d2f1fb",
+        "cursor": "#d2f1fb"
+    },
+    "colors": {
+        "color0": "#090E10",
+        "color1": "#D86411",
+        "color2": "#A25619",
+        "color3": "#23708F",
+        "color4": "#59645F",
+        "color5": "#925D35",
+        "color6": "#CF9149",
+        "color7": "#9cb3ba",
+        "color8": "#1a2a30",
+        "color9": "#ff7f06",
+        "color10": "#de6e14",
+        "color11": "#2196c5",
+        "color12": "#678e7c",
+        "color13": "#ca7737",
+        "color14": "#ffbd4c",
+        "color15": "#d2f1fb"
+    }
+}

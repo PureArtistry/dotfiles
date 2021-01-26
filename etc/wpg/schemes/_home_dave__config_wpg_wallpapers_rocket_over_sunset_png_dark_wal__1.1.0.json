@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/rocket_over_sunset.png",
+    "alpha": "85",
+
+    "special": {
+        "background": "#080F37",
+        "foreground": "#e6f6ff",
+        "cursor": "#e6f6ff"
+    },
+    "colors": {
+        "color0": "#080F37",
+        "color1": "#A24952",
+        "color2": "#2F4775",
+        "color3": "#295890",
+        "color4": "#5A6E9E",
+        "color5": "#007CC3",
+        "color6": "#E85D5A",
+        "color7": "#afbbcc",
+        "color8": "#0d1a63",
+        "color9": "#e14f5e",
+        "color10": "#3258a2",
+        "color11": "#2971c7",
+        "color12": "#6488dd",
+        "color13": "#01a0fc",
+        "color14": "#ff6460",
+        "color15": "#e6f6ff"
+    }
+}

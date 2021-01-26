@@ -4,8 +4,8 @@
 
 xrandr --auto
 sleep 0.2
-external_display=$(xrandr --listmonitors | grep "HDMI")
-if [ ! $external_display ]; then
+external_display=$(xrandr --listmonitors | grep 'HDMI')
+if [ ! "$external_display" ]; then
     bspc monitor -d $BSP_DESKTOPS_1
     theme_change $(wpg -c)
     exit

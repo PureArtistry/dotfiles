@@ -3,7 +3,7 @@ export XDG_DATA_HOME=$HOME/.local/share
 export XDG_CACHE_HOME=$HOME/.cache
 
 # handy custom vars
-export ARTISTRY=$XDG_DATA_HOME/artistry
+export MyDE=$XDG_DATA_HOME/MyDE
 export SCRIPTS=$HOME/.local/bin
 export MUSIC=$HOME/music
 export VIDEO=$HOME/video
@@ -27,7 +27,7 @@ export ASPELL_CONF="per-conf $XDG_CONFIG_HOME/aspell/aspell.conf; personal $XDG_
 export CARGO_HOME=$XDG_DATA_HOME/cargo
 export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
 export PYLINTHOME=$XDG_CACHE_HOME/pylint
-export WGETRC=$XDG_CONFIG_HOME/wgetrc
+export WGETRC=$XDG_CONFIG_HOME/wget/wgetrc
 export CUDA_CACHE_PATH=$XDG_CACHE_HOME/.nv
 
 # brighten up commands

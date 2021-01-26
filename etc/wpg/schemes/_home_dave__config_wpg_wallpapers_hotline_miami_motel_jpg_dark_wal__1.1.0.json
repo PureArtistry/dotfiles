@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/hotline_miami_motel.jpg",
+    "alpha": "85",
+
+    "special": {
+        "background": "#0f1014",
+        "foreground": "#ffe1cd",
+        "cursor": "#ffe1cd"
+    },
+    "colors": {
+        "color0": "#0f1014",
+        "color1": "#863E46",
+        "color2": "#914349",
+        "color3": "#B0494F",
+        "color4": "#B36944",
+        "color5": "#D05156",
+        "color6": "#E35C56",
+        "color7": "#ebae9f",
+        "color8": "#242630",
+        "color9": "#ba4351",
+        "color10": "#ca4953",
+        "color11": "#f54e58",
+        "color12": "#f88348",
+        "color13": "#ff565e",
+        "color14": "#ff645b",
+        "color15": "#ffe1cd"
+    }
+}

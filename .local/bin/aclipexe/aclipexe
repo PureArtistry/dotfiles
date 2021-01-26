@@ -37,87 +37,72 @@ main() {
     done
 }
 
-new_face_in_town() {
-    pgrep dunst >/dev/null && killall -q dunst
-    dunst -shrink -alignment "center" &
-    return
-}
-
-and_the_horse_you_rode_in_on() {
-    dunstify -C 010101
-    killall -q dunst
-    [ "$1" = passthrough ] && main || return
-}
-
 make_icon() {
     x=$(cat $XDG_CONFIG_HOME/kitty/kitty_colors.conf)
     b=$(echo "$x" | awk 'NR==20{print $2}')
     f=$(echo "$x" | awk 'NR==2{print $2}')
     bd=$(echo "$x" | awk 'NR==18{print $2}')
-
     convert -size 90x90 xc:"$b" \
         -gravity center \
         -pointsize "$1" \
-        -font "Iosevka-Nerd-Font-Complete" \
+        -font 'Iosevka-Nerd-Font-Complete' \
         -fill "$f" \
         -bordercolor "$bd" \
         -border '5' \
         -annotate +0+0 "$2" \
-        /tmp/dunst_icon.png >/dev/null 2>&1
+        /tmp/MyDE/$3.png >/dev/null 2>&1
     return
 }
 
 listening() {
     need_mute=$(mpc current)
-    [ -n "$need_mute" ] && paused=$(mpc | awk 'NR==2{print $1}' | grep "paused")
+    [ -n "$need_mute" ] && paused=$(mpc | awk 'NR==2{print $1}' | grep 'paused')
     [ -n "$need_mute" ] && [ ! "$paused" ] && need_mute=yes
     return
 }
 
 youtube() {
     processed="$selection"
-    rofeo aclipexe "$(echo $selection | sed 's/\&.*//' | awk -F '=' '{print $NF}')"
+    rofeo aclipexe "$(echo "$selection" | sed 's/\&.*//' | awk -F '=' '{print $NF}')"
     main
 }
 
 twitch() {
     processed="$selection"
     local msg=$(echo "$selection" | wc -c)
-    [ "$msg" -ge 43 ] && msg=$(echo "$selection" | cut -c 1-40 | sed 's/$/.../') \
+    [ $msg -ge 43 ] && msg=$(echo "$selection" | cut -c 1-40 | sed 's/$/.../') \
         || msg="$selection"
     bar=$($utter "  fullscreen\n  home screen\n  interactive" | rofi -theme 'video1' \
-        -p "  viewing experience?" \
+        -p '  viewing experience?' \
         -mesg "  $msg" \
         -lines 3 -fixed-num-lines 3 -dmenu -i -format d)
-    [ ! "$bar" ] && main
+    [ ! $bar ] && main
     local name=$(echo "$selection" | awk -F '/' '{print $NF}')
-    case "$bar" in
+    case $bar in
     1)
         listening
-        make_icon '64' ''
-        new_face_in_town
-        dunstify -r 010101 -t 10000 -a 'fancy1' "loading" "$name" \
-            -i /tmp/dunst_icon.png
+        make_icon '64' '' 'twitch_icon'
+        local i=$(shuf -i 1-1000000 -n 1)
+        dunstify -r $i 'loading' "$name" -i /tmp/MyDE/twitch_icon.png
         bspc rule -a mpv:\* -o desktop=10 state=fullscreen
         streamlink -p mpv "$selection" best &
         bspc subscribe node_add -c 1
-        and_the_horse_you_rode_in_on
-        [ "$need_mute" = "yes" ] && mpc pause
+        dunstify -C $i
+        [ "$need_mute" = 'yes' ] && mpc pause
         bspc desktop 10 -f
         ;;
     2)
         listening
-        make_icon '64' ''
-        new_face_in_town
-        dunstify -r 010101 -t 10000 -a 'fancy1' "loading" "$name" \
-            -i /tmp/dunst_icon.png
+        make_icon '64' '' 'twitch_icon'
+        local i=$(shuf -i 1-1000000 -n 1)
+        dunstify -r $i 'loading' "$name" -i /tmp/MyDE/twitch_icon.png
         distraction_toggle off
         bspc rule -a mpv:\* -o desktop=1 state=floating \
             rectangle=897x505+1005+287 center=false
         streamlink -p mpv "$selection" best &
         bspc subscribe node_add -c 1
-        and_the_horse_you_rode_in_on
-        [ "$need_mute" = "yes" ] && mpc pause
+        dunstify -C $i
+        [ "$need_mute" = 'yes' ] && mpc pause
         bspc desktop 1 -f
         sleep 0.1
         xdotool mousemove 400 400
@@ -125,21 +110,20 @@ twitch() {
         ;;
     3)
         listening
-        make_icon '64' ''
-        new_face_in_town
-        dunstify -r 010101 -t 10000 -a 'fancy1' "loading" "$name" \
-            -i /tmp/dunst_icon.png
+        make_icon '64' '' 'twitch_icon'
+        local i=$(shuf -i 1-1000000 -n 1)
+        dunstify -r $i 'loading' "$name" -i /tmp/MyDE/twitch_icon.png
         bspc rule -a mpv:\* -o desktop=10 state=tiled
         streamlink -p mpv "$selection" best &
         bspc subscribe node_add -c 1
-        and_the_horse_you_rode_in_on
-        [ "$need_mute" = "yes" ] && mpc pause
+        dunstify -C $i
+        [ "$need_mute" = 'yes' ] && mpc pause
         bspc desktop 10 -f
         bspc node -p east
         bspc node -o 0.74
         chat=$($utter "$selection" | awk -F "/" '{print $4}')
         qutebrowser --target window \
-            https://www.twitch.tv/popout/"$chat"/chat?popout= &
+            https://www.twitch.tv/popout/$chat/chat?popout= &
         ;;
     esac
     xclip -selection clipboard /dev/null
@@ -149,9 +133,8 @@ twitch() {
 torrent() {
     processed="$selection"
     transmission-remote -a "$selection"
-    make_icon '60' ''
-    new_face_in_town
-    dunstify -t 4000 -a 'fancy1' "added" "to transmission queue" -i /tmp/dunst_icon.png
+    make_icon '60' '' 'torrent_icon'
+    dunstify 'added' 'to transmission queue' -i /tmp/MyDE/torrent_icon.png
     xclip -selection clipboard /dev/null
     main
 }
@@ -170,7 +153,7 @@ gitbit() {
     main
 }
 
-wall_change(){
+wall_change() {
     theme_change "$1" &
     return
 }
@@ -181,46 +164,40 @@ image_bit() {
     ext=$(echo "$selection" | awk -F '.' '{print $NF}')
     temp_name="$(date +'%s')_img.$ext"
     wp_total=$(ls -1 $HOME/images/wallpapers | wc -l)
-    wget -q -O /tmp/"$temp_name" "$selection"
-    convert /tmp/"$temp_name" -resize 460x259^ \
+    wget -q -O /tmp/MyDE/$temp_name "$selection"
+    convert /tmp/MyDE/$temp_name -resize 460x259^ \
         -gravity center -extent 460x259 \
-        -flatten /tmp/rofi_thumb.png
-    bspc rule -a Sxiv:\* -o state=floating manage=off
-    sxiv -g 460x259+730+260 -p -b /tmp/rofi_thumb.png &
-    thumb_pid="$!"
-    img_option=$(echo "  download image\n  set as wallpaper\n  open in gimp" \
+        -flatten /tmp/MyDE/rofi_thumb.png
+    rofi_image &
+    img_option=$($utter "  download image\n  set as wallpaper\n  open in gimp" \
         | rofi -theme 'image' -dmenu \
             -p "  $og_name" \
             -mesg "  you currently have $wp_total wallpapers" \
             -lines 3 -fixed-num-lines 3 -format d)
+    kill -USR1 $(head -n1 /tmp/MyDE/rofi_image.pid)
     xclip -selection clipboard /dev/null
-    if [ ! "$img_option" ]; then
-        kill "$thumb_pid"
-        main
-    fi
-    case "$img_option" in
+    [ ! $img_option ] && main
+    case $img_option in
     1)
+        rofi_image &
         new_name=$(rofi -theme 'entry' -dmenu -i -mesg '凜 are you naming this?')
-        kill "$thumb_pid"
-        [ ! "$new_name" ] && tn="$og_name" || tn="$(echo -n $new_name).$ext"
-        mv /tmp/"$temp_name" "$HOME"/images/download/"$tn"
-        make_icon '66' ''
-        new_face_in_town
-        dunstify -r 010101 -t 4000 -a 'fancy1' "copied" "$tn" -i /tmp/dunst_icon.png
+        kill -USR1 $(head -n1 /tmp/MyDE/rofi_image.pid)
+        [ ! "$new_name" ] && tn="$og_name" || tn="${new_name}.${ext}"
+        mv /tmp/MyDE/$temp_name $HOME/images/download/$tn
+        make_icon '66' '' 'image_icon'
+        dunstify 'copied' "$tn" -i /tmp/MyDE/image_icon.png
         ;;
     2)
         # this *might* still be buggy (sometimes crashes everything)
-        new_name=$(rofi -theme 'entry' -dmenu -i -mesg '凜 are you naming this?')
-        kill "$thumb_pid"
-        [ ! "$new_name" ] && tn="$og_name" || tn="$(echo -n $new_name).$ext"
-        mv /tmp/"$temp_name" "$HOME"/images/wallpapers/"$tn"
-        wpg -a "$HOME"/images/wallpapers/"$tn"
+        rofi_image &
+        new_name=$(rofi -theme 'entry' -dmenu -mesg '凜 are you naming this?')
+        kill -USR1 $(head -n1 /tmp/MyDE/rofi_image.pid)
+        [ ! "$new_name" ] && tn="$og_name" || tn="${new_name}.${ext}"
+        mv /tmp/MyDE/$temp_name $HOME/images/wallpapers/$tn
+        wpg -a $HOME/images/wallpapers/$tn
         wall_change "$tn"
         ;;
-    3)
-        kill "$thumb_pid"
-        gimp /tmp/"$temp_name" &
-        ;;
+    3) gimp /tmp/$temp_name & ;;
     esac
     main
 }
@@ -230,4 +207,6 @@ ignore() {
     main
 }
 
+[ -f /tmp/MyDE/aclipexe.pid ] && rm -f /tmp/MyDE/aclipexe.pid
+echo $$ >/tmp/MyDE/aclipexe.pid
 main

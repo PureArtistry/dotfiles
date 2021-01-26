@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/red_trees.jpg",
+    "alpha": "85",
+
+    "special": {
+        "background": "#0b0a18",
+        "foreground": "#ffd7dd",
+        "cursor": "#ffd7dd"
+    },
+    "colors": {
+        "color0": "#0b0a18",
+        "color1": "#5D284F",
+        "color2": "#5A475F",
+        "color3": "#9B0830",
+        "color4": "#E2122E",
+        "color5": "#9B2551",
+        "color6": "#E0254C",
+        "color7": "#dda4a9",
+        "color8": "#1a183b",
+        "color9": "#812b6a",
+        "color10": "#7b5186",
+        "color11": "#d2013a",
+        "color12": "#ff0730",
+        "color13": "#d62366",
+        "color14": "#ff1f58",
+        "color15": "#ffd7dd"
+    }
+}

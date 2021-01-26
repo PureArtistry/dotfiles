@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/smokey_bar.jpg",
+    "alpha": "85",
+
+    "special": {
+        "background": "#0d1013",
+        "foreground": "#ffffd3",
+        "cursor": "#ffffd3"
+    },
+    "colors": {
+        "color0": "#0d1013",
+        "color1": "#8F4E39",
+        "color2": "#AB5C3B",
+        "color3": "#C1743F",
+        "color4": "#9C5D42",
+        "color5": "#AC6D45",
+        "color6": "#C38F50",
+        "color7": "#ddc4a1",
+        "color8": "#212831",
+        "color9": "#c65e3d",
+        "color10": "#ed713d",
+        "color11": "#ff9341",
+        "color12": "#d97347",
+        "color13": "#ef8a4a",
+        "color14": "#ffbb56",
+        "color15": "#ffffd3"
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/neon_parking_lot.png",
+    "alpha": "85",
+
+    "special": {
+        "background": "#0f040a",
+        "foreground": "#ffdee2",
+        "cursor": "#ffdee2"
+    },
+    "colors": {
+        "color0": "#0f040a",
+        "color1": "#4A4153",
+        "color2": "#930833",
+        "color3": "#9B2050",
+        "color4": "#E21F5D",
+        "color5": "#9D546B",
+        "color6": "#E6546D",
+        "color7": "#e8b4b7",
+        "color8": "#380c24",
+        "color9": "#604a75",
+        "color10": "#c8013e",
+        "color11": "#d51d65",
+        "color12": "#ff1772",
+        "color13": "#db5d85",
+        "color14": "#ff5880",
+        "color15": "#ffdee2"
+    }
+}

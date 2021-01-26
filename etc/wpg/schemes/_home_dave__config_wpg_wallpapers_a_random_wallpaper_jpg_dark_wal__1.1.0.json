@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/a_random_wallpaper.jpg",
+    "alpha": "85",
+
+    "special": {
+        "background": "#0F0E0B",
+        "foreground": "#dcffdc",
+        "cursor": "#dcffdc"
+    },
+    "colors": {
+        "color0": "#0F0E0B",
+        "color1": "#0F5722",
+        "color2": "#5C4A30",
+        "color3": "#31494C",
+        "color4": "#615D4C",
+        "color5": "#9E411F",
+        "color6": "#976750",
+        "color7": "#a6c5a6",
+        "color8": "#2c291f",
+        "color9": "#0c7729",
+        "color10": "#806135",
+        "color11": "#37656a",
+        "color12": "#897f57",
+        "color13": "#d94e1b",
+        "color14": "#d38058",
+        "color15": "#dcffdc"
+    }
+}

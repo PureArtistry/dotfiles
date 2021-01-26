@@ -82,7 +82,7 @@ source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh
 source /usr/share/doc/pkgfile/command-not-found.zsh
 
-source $ARTISTRY/alias_list
+source $MyDE/alias_list
 
 # }}}
 # keybinds {{{
@@ -211,6 +211,6 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 
 # }}}
 
-[ -f /tmp/startup.tmp ] && neofetch && rm -f /tmp/startup.tmp
+[ -f /tmp/MyDE/startup.tmp ] && neofetch && rm -f /tmp/MyDE/startup.tmp
 
 # vim:foldmethod=marker

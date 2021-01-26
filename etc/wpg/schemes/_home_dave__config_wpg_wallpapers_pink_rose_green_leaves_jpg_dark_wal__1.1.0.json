@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/pink_rose_green_leaves.jpg",
+    "alpha": "85",
+
+    "special": {
+        "background": "#0F0F0F",
+        "foreground": "#fff9ff",
+        "cursor": "#fff9ff"
+    },
+    "colors": {
+        "color0": "#0F0F0F",
+        "color1": "#9E3A56",
+        "color2": "#62535D",
+        "color3": "#335051",
+        "color4": "#995c6c",
+        "color5": "#a77589",
+        "color6": "#747F8E",
+        "color7": "#c9c0c9",
+        "color8": "#282828",
+        "color9": "#db3d69",
+        "color10": "#8b607c",
+        "color11": "#396f71",
+        "color12": "#d66784",
+        "color13": "#eb85ae",
+        "color14": "#86a2c9",
+        "color15": "#fff9ff"
+    }
+}

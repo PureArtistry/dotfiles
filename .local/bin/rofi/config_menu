@@ -5,52 +5,53 @@
 # the ~/ is assumed, after that unfortunately vars won't be substituted
 
 goyo() {
-    bspc node $mctl_id -g hidden=on
+    bspc node "$mctl_id" -g hidden=on
     bspc rule -a vim -o desktop=1 state=floating rectangle=975x1050+12+12
-    if [ $1 = 'main' ]; then
-        alacritty --class 'vim','vim' --title 'vim' -e size_fix vim $HOME/$bar &
+    if [ "$1" = 'main' ]; then
+        alacritty --class 'vim','vim' --title 'vim' -e size_fix vim ${HOME}/${bar} &
         bspc subscribe node_add -c 1
         wait
-    elif [ $1 = 'other' ]; then
+    elif [ "$1" = 'other' ]; then
         alacritty --class 'vim','vim' --title 'vim' \
-            -e size_fix vim $(whereis $choice | cut -d ' ' -f2) &
+            -e size_fix vim $(echo "$my_code" | sed -n ${choice}p) &
         bspc subscribe node_add -c 1
         wait
     fi
-    bspc node $mctl_id -g hidden=off
-    bspc node $mctl_id -f
+    bspc node "$mctl_id" -g hidden=off
+    bspc node "$mctl_id" -f
     exit
 }
 
 scripts() {
-    [ -f /tmp/my_sloc ] && rm -f /tmp/my_sloc
-    for z in $(find $SCRIPTS/ -type f); do cat $z >>/tmp/my_sloc; done
-    lol=$(sed -e '/^\s*#.*$/d' -e '/^\s*$/d' /tmp/my_sloc | wc -l)
-    choice=$(find $SCRIPTS/ -type f -printf "%f\n" | sort | rofi -theme 'cfg_menu' \
-        -mesg "something wrong with my code!?!" \
+    [ -f /tmp/MyDE/my_sloc ] && rm -f /tmp/MyDE/my_sloc
+    my_code=$(fd -t x . $SCRIPTS)
+    for z in ${my_code}; do cat $z >>/tmp/MyDE/my_sloc; done
+    lol=$(sed -e '/^\s*#.*$/d' -e '/^\s*$/d' /tmp/MyDE/my_sloc | wc -l)
+    choice=$(echo "$my_code" | awk -F '/' '{print $NF}' | rofi -theme 'cfg_menu' \
+        -mesg 'something wrong with my code!?!' \
         -p " combined - code has only $lol potential errors! " \
-        -lines $x -fixed-num-lines $x -no-custom -dmenu -i)
+        -lines $x -fixed-num-lines $x -no-custom -dmenu -i -format d)
     [ ! $choice ] && exit
-    [ $home_desktop = '1' ] && [ $mctl_state = 'floating' ] && goyo other \
-        || alacritty -e size_fix vim $(whereis $choice | cut -d ' ' -f2) &
+    [ "$home_desktop" = '1' ] && [ "$mctl_state" = 'floating' ] && goyo other \
+        || alacritty -e size_fix vim $(echo "$my_code" | sed -n ${choice}p) &
     exit
 }
 
-[ -f $ARTISTRY/config_menu ] || exit
-home_desktop=$(bspc query -d focused -T | jq -r '.name')
-mctl_id=$(head -n1 /tmp/mctl_id)
-mctl_state=$(bspc query -T -n $mctl_id | jq -r '.client.state')
+[ -f $MyDE/config_menu ] || exit
+home_desktop=$(bspc query -d focused -D --names)
+mctl_id=$(head -n1 /tmp/MyDE/mctl_id)
+mctl_state=$(bspc query -T -n "$mctl_id" | jq -r '.client.state')
 cd $DOTFILES
 git_bit=$(echo $(git log -1) | sed 's/.*Date: //' | awk '{print $1, $2, $3, $4, $5, $6}')
-x=$(cat $ARTISTRY/config_menu | wc -l)
+x=$(cat $MyDE/config_menu | wc -l)
 y=$((${x} - 1))
 
-foo=$(cat $ARTISTRY/config_menu | cut -f1 | rofi -theme 'cfg_menu' -u 0 -a "$y" \
+foo=$(cat $MyDE/config_menu | cut -f1 | rofi -theme 'cfg_menu' -u 0 -a $y \
     -mesg '漣 what needs fiddling with?' \
     -p " last commit date: $git_bit " \
-    -lines "$x" -fixed-num-lines "$x" -no-custom -dmenu -i -format d)
+    -lines $x -fixed-num-lines $x -no-custom -dmenu -i -format d)
 [ ! $foo ] && exit
-[ $foo = 1 ] && scripts
-bar=$(awk NR==$foo{'print $2'} $ARTISTRY/config_menu)
-[ $home_desktop = '1' ] && [ $mctl_state = 'floating' ] \
-    && goyo main || alacritty -e size_fix vim $HOME/$bar &
+[ $foo -eq 1 ] && scripts
+bar=$(awk NR==$foo{'print $2'} $MyDE/config_menu)
+[ "$home_desktop" = '1' ] && [ "$mctl_state" = 'floating' ] \
+    && goyo main || alacritty -e size_fix vim ${HOME}/${bar} &

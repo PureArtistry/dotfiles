@@ -1,6 +1,5 @@
 #!/bin/sh
 
-[ -f /tmp/kitty_control ] && rm -f /tmp/kitty_control
-kitty --listen-on unix:/tmp/kitty_control --name "fancy writing" --class "fancy writing" \
-    --title "fancy writing" fancy_writing &
-echo $! > /tmp/fancy_writing.pid
+[ -f /tmp/MyDE/kitty_control ] && rm -f /tmp/MyDE/kitty_control
+kitty --listen-on unix:/tmp/MyDE/kitty_control --name 'fancy writing' --class 'fancy writing' \
+    --title 'fancy writing' fancy_writing &

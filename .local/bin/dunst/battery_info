@@ -1,33 +1,32 @@
 #!/bin/sh
 
 x=$(cat $XDG_CONFIG_HOME/kitty/kitty_colors.conf)
-y=$(acpi -V)
-z=$(echo "$y" | head -n1)
-
 b=$(echo "$x" | awk 'NR==20{print $2}')
 f=$(echo "$x" | awk 'NR==2{print $2}')
 bd=$(echo "$x" | awk 'NR==18{print $2}')
 s=60
 
-[ "$(echo "$y" | awk 'NR==3{print $3}')" = 'on-line' ] && ac=1 || ac=0
+y=$(acpi -V)
+z=$(echo "$y" | head -n1)
+[ $(echo "$y" | awk 'NR==3{print $3}') = 'on-line' ] && ac=1 || ac=0
 bp=$(echo "$z" | awk '{print $4}' | sed 's/%//;s/,//')
 ctr=$(echo "$z" | sed 's/.*: //' | awk -F ',' '{print $3}' | sed 's/ //')
 cs=$(echo "$z" | sed 's/.*: //' | awk '{print $1}' | sed 's/,//')
 
-if [ "$bp" -le 10 ]; then
-    [ "$ac" = 1 ] && icon='' || icon=''
-elif [ "$bp" -le 25 ] && [ "$bp" -gt 10 ]; then
-    [ "$ac" = 1 ] && icon='' || icon=''
-elif [ "$bp" -le 40 ] && [ "$bp" -gt 25 ]; then
-    [ "$ac" = 1 ] && icon='' || icon=''
-elif [ "$bp" -le 60 ] && [ "$bp" -gt 40 ]; then
-    [ "$ac" = 1 ] && icon='' || icon=''
-elif [ "$bp" -le 80 ] && [ "$bp" -gt 60 ]; then
-    [ "$ac" = 1 ] && icon='' || icon=''
-elif [ "$bp" -le 94 ] && [ "$bp" -gt 80 ]; then
-    [ "$ac" = 1 ] && icon='' || icon=''
-elif [ "$bp" -gt 94 ]; then
-    if [ "$ac" = 1 ]; then
+if [ $bp -le 10 ]; then
+    [ $ac = 1 ] && icon='' || icon=''
+elif [ $bp -le 25 ] && [ $bp -gt 10 ]; then
+    [ $ac = 1 ] && icon='' || icon=''
+elif [ $bp -le 40 ] && [ $bp -gt 25 ]; then
+    [ $ac = 1 ] && icon='' || icon=''
+elif [ $bp -le 60 ] && [ $bp -gt 40 ]; then
+    [ $ac = 1 ] && icon='' || icon=''
+elif [ $bp -le 80 ] && [ $bp -gt 60 ]; then
+    [ $ac = 1 ] && icon='' || icon=''
+elif [ $bp -le 94 ] && [ $bp -gt 80 ]; then
+    [ $ac = 1 ] && icon='' || icon=''
+elif [ $bp -gt 94 ]; then
+    if [ $ac = 1 ]; then
         case "$cs" in
         Unknown*)
             if [ -n "$ctr" ]; then
@@ -50,25 +49,19 @@ fi
 convert -size 90x90 xc:"$b" \
     -gravity center \
     -pointsize "$s" \
-    -font "Iosevka-Nerd-Font-Complete" \
+    -font 'Iosevka-Nerd-Font-Complete' \
     -fill "$f" \
     -bordercolor "$bd" \
     -border '5' \
     -annotate +0+0 "$icon" \
-    /tmp/dunst_icon.png >/dev/null 2>&1
+    /tmp/MyDE/battery_icon.png >/dev/null 2>&1
 
-[ ! "$ctr" ] && [ "$bp" -gt 94 ] && msg="Fully Charged" || msg="Remaining Unknown"
+[ ! "$ctr" ] && [ $bp -gt 94 ] && msg='Fully Charged' || msg='Remaining Unknown'
 if [ -n "$ctr" ]; then
     case "$ctr" in
-        "charging at zero rate"*) msg="battery is fucked!" ;;
-        *) msg="$ctr" ;;
+    "charging at zero rate"*) msg="battery is fucked!" ;;
+    *) msg="$ctr" ;;
     esac
 fi
 
-i=$(shuf -i 1-10000 -n 1)
-pgrep dunst >/dev/null && killall -q dunst
-dunst -shrink -alignment "center" &
-dunstify -r "$i" -t 6000 -a 'fancy1' "$bp%" "$msg" -i /tmp/dunst_icon.png
-sleep 4
-dunstify -C "$i"
-killall -q dunst
+dunstify -r 4088001 "$bp%" "$msg" -i /tmp/MyDE/battery_icon.png

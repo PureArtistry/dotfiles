@@ -6,15 +6,13 @@ dazzle_me() {
     bspc subscribe node_add -c 1 &
     art_show
     wait
-    [ -f /tmp/pretty_colours_id ] && rm -f /tmp/pretty_colours_id
+    [ -f /tmp/MyDE/pretty_colours_id ] && rm -f /tmp/MyDE/pretty_colours_id
     bspc subscribe node_add -c 1 &
-    sleep 0.01
     new_term --class 'pretty colours','pretty colours' --title 'pretty colours' \
         -e ncmpcpp -c $XDG_CONFIG_HOME/ncmpcpp/config.viz
-    sleep 0.05
     wait
-    pretty_colours_id=$(xwininfo -root -children | grep -w "pretty colours" | awk '{print $1}')
-    echo $pretty_colours_id >/tmp/pretty_colours_id
+    pretty_colours_id=$(xwininfo -root -children | grep -w 'pretty colours' | awk '{print $1}')
+    echo "$pretty_colours_id" >/tmp/MyDE/pretty_colours_id
     bspc subscribe node_add -c 1 &
     fancy_launch
     wait
@@ -23,18 +21,18 @@ dazzle_me() {
 }
 
 plz_stop() {
-    kill $(head -n1 /tmp/pretty_colours.pid)
-    kill $(head -n1 /tmp/fancy_writing.pid)
-    kill $(head -n1 /tmp/art_show.pid)
-    rm -f /tmp/kitty_control
-    rm -f /tmp/fancy_writing.pid
-    rm -f /tmp/fancy_writing_id
-    rm -f /tmp/pretty_colours.pid
-    rm -f /tmp/pretty_colours_id
-    rm -f /tmp/pretty_colours_mode
-    rm -f /tmp/art_show.pid
+    kill $(head -n1 /tmp/MyDE/pretty_colours.pid)
+    kill $(head -n1 /tmp/MyDE/fancy_writing.pid)
+    kill $(head -n1 /tmp/MyDE/art_show.pid)
+    rm -f /tmp/MyDE/kitty_control
+    rm -f /tmp/MyDE/fancy_writing.pid
+    rm -f /tmp/MyDE/fancy_writing_id
+    rm -f /tmp/MyDE/pretty_colours.pid
+    rm -f /tmp/MyDE/pretty_colours_id
+    rm -f /tmp/MyDE/pretty_colours_mode
+    rm -f /tmp/MyDE/art_show.pid
     exit
 }
 
-[ "$1" = "off" ] && plz_stop
-[ -f /tmp/fancy_writing_id ] && plz_stop || dazzle_me
+[ "$1" = 'off' ] && plz_stop
+[ -f /tmp/MyDE/fancy_writing_id ] && plz_stop || dazzle_me

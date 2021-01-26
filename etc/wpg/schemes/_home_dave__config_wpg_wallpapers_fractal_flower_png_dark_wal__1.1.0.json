@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/fractal_flower.png",
+    "alpha": "85",
+
+    "special": {
+        "background": "#0D0A19",
+        "foreground": "#e0fafa",
+        "cursor": "#e0fafa"
+    },
+    "colors": {
+        "color0": "#0D0A19",
+        "color1": "#253B43",
+        "color2": "#2E4D4D",
+        "color3": "#566154",
+        "color4": "#A15826",
+        "color5": "#B55920",
+        "color6": "#E5A839",
+        "color7": "#a8bbbb",
+        "color8": "#1f173d",
+        "color9": "#294f5d",
+        "color10": "#336c6c",
+        "color11": "#678961",
+        "color12": "#de6f24",
+        "color13": "#f9701b",
+        "color14": "#ffdf37",
+        "color15": "#e0fafa"
+    }
+}

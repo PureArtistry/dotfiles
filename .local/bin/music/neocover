@@ -2,27 +2,27 @@
 
 # album art grabber (originally for neofetch)
 
-[ -f /tmp/startup.tmp ] && exit
+[ -f /tmp/MyDE/startup.tmp ] && exit
 
 random_wallpaper(){
     wp_list=$(ls -1 $HOME/images/wallpapers)
     rand_wall=$(shuf -i 1-$(echo "$wp_list" | wc -l) -n 1)
     wallpaper=$(echo "$wp_list" | sed -n ${rand_wall}p)
-    cp $HOME/images/wallpapers/$wallpaper /tmp/neocover.png
+    cp $HOME/images/wallpapers/$wallpaper /tmp/MyDE/neocover.png
     return
 }
 
 make_square() {
-    if [ "$1" = "neocover.png" ]; then
-        convert /tmp/"$1" -resize 500x500^ \
+    if [ "$1" = 'neocover.png' ]; then
+        convert /tmp/MyDE/$1 -resize 500x500^ \
             -gravity center -extent 500x500 \
-            -flatten /tmp/albumart.png
+            -flatten /tmp/MyDE/albumart.png
     else
-        convert /tmp/"$1" -resize 500x500^ \
+        convert /tmp/MyDE/$1 -resize 500x500^ \
             -gravity center -extent 500x500 \
             -bordercolor "$(awk 'NR==18{print $2}' $XDG_CONFIG_HOME/kitty/kitty_colors.conf)" \
-            -border 5 \
-            -flatten /tmp/"$1"
+            -border 10 \
+            -flatten /tmp/MyDE/$1
     fi
     return
 }
@@ -35,14 +35,14 @@ fi
 
 art_check() {
     path=$(ls -1 "$1")
-    case $path in
-    *cover.jpg) cp "$1"/cover.jpg /tmp/$2 && return ;;
-    *cover.jpeg) cp "$1"/cover.jpeg /tmp/$2 && return ;;
-    *cover.png) cp "$1"/cover.png /tmp/$2 && return ;;
+    case "$path" in
+    *cover.jpg) cp "$1"/cover.jpg /tmp/MyDE/$2 && return ;;
+    *cover.jpeg) cp "$1"/cover.jpeg /tmp/MyDE/$2 && return ;;
+    *cover.png) cp "$1"/cover.png /tmp/MyDE/$2 && return ;;
     *)
-        ffmpeg -i "$music_directory/$3" /tmp/$2 >/dev/null 2>&1
+        ffmpeg -i "${music_directory}/$3" /tmp/MyDE/$2 >/dev/null 2>&1
         x=$(echo "$1" | grep -e 'Non-Album' -e 'TBS/songs')
-        [ ! "$x" ] && cp /tmp/"$2" "$1"/cover.png >/dev/null 2>&1
+        [ ! "$x" ] && cp /tmp/MyDE/$2 $1/cover.png >/dev/null 2>&1
         ;;
     esac
     return
@@ -50,13 +50,13 @@ art_check() {
 
 copy_new() {
     if [ ! "$now_playing" ]; then
-        [ -f /tmp/dartc.png ] || random_wallpaper
+        [ -f /tmp/MyDE/dartc.png ] || random_wallpaper
     else
-        [ -f /tmp/dartc.png ] || cp $ARTISTRY/no_art.png /tmp/neocover.png
+        [ -f /tmp/MyDE/dartc.png ] || cp $MyDE/no_art.png /tmp/MyDE/neocover.png
     fi
-    [ -f /tmp/neocover.png ] || cp /tmp/dartc.png /tmp/neocover.png
-    [ -f /tmp/dartc.png ] || cp $ARTISTRY/no_art.png /tmp/dartc.png
-    [ -f /tmp/dartn.png ] || cp $ARTISTRY/no_art.png /tmp/dartn.png
+    [ -f /tmp/MyDE/neocover.png ] || cp /tmp/MyDE/dartc.png /tmp/MyDE/neocover.png
+    [ -f /tmp/MyDE/dartc.png ] || cp $MyDE/no_art.png /tmp/MyDE/dartc.png
+    [ -f /tmp/MyDE/dartn.png ] || cp $MyDE/no_art.png /tmp/MyDE/dartn.png
     return
 }
 
@@ -64,9 +64,9 @@ music_directory=$HOME/music
 now_playing=$(mpc -f %file% current)
 up_next=$(mpc -f %file% queued)
 
-rm /tmp/neocover.png
-rm /tmp/dartc.png
-rm /tmp/dartn.png
+rm /tmp/MyDE/neocover.png
+rm /tmp/MyDE/dartc.png
+rm /tmp/MyDE/dartn.png
 
 foo=${now_playing%/*}
 bar=${up_next%/*}

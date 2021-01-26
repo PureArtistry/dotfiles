@@ -3,5 +3,5 @@
 # script to display album art on home workspace
 
 bspc rule -a Sxiv:\* -o desktop=1 state=floating manage=on
-sxiv -g 500x500+1150+171 -p -b /tmp/albumart.png &
-echo $! >/tmp/art_show.pid
+sxiv -g 500x500+1150+171 -p -b /tmp/MyDE/albumart.png &
+echo $! >/tmp/MyDE/art_show.pid

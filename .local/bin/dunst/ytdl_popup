@@ -13,15 +13,10 @@ convert -size 90x90 xc:"$b" \
     -bordercolor "$bd" \
     -border '5' \
     -annotate +0+0 '' \
-    /tmp/dunst_icon.png >/dev/null 2>&1
+    /tmp/MyDE/ytdl_icon.png >/dev/null 2>&1
 
-[ -f /tmp/yt_title ] && msg=$(head -n1 /tmp/yt_title) \
+[ -f /tmp/MyDE/yt_title ] && msg=$(head -n1 /tmp/MyDE/yt_title) \
     || msg=$(echo "$1" | awk -F '/' '{print $NF}')
-pgrep dunst >/dev/null && killall -q dunst
-dunst -shrink -alignment "center" &
-dunstify -r 43224 -t 6000 -a 'fancy1' 'ready!' "$msg" -i /tmp/dunst_icon.png
-sleep 4
-dunstify -C 43224
-killall -q dunst
-[ -f /tmp/yt_title ] && rm -f /tmp/yt_title
+dunstify -r 4088008 'complete' "$msg" -i /tmp/MyDE/ytdl_icon.png
+[ -f /tmp/MyDE/yt_title ] && rm -f /tmp/MyDE/yt_title
 return 0

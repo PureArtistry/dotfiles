@@ -1,8 +1,8 @@
 #!/bin/sh
 
-mctl_id=$(head -n1 /tmp/mctl_id)
+mctl_id=$(cat /tmp/MyDE/mctl_id)
 mctl_state=$(bspc query -T -n "$mctl_id" | jq -r '.client.state')
-home_desktop=$(bspc query -d focused -T | jq -r '.name')
+home_desktop=$(bspc query -d focused -D --names)
 if [ "$home_desktop" = '1' ] && [ "$mctl_state" = 'floating' ]; then
     if [ "$1" = 'size_fix' ]; then
         bspc rule -a "$2" -o desktop=1 state=floating rectangle=975x1050+12+12
@@ -24,7 +24,7 @@ if [ "$home_desktop" = '1' ] && [ "$mctl_state" = 'floating' ]; then
 else
     if [ "$1" = 'newsboat' ] || [ "$1" = 'ncmpcpp' ]; then
         w=$(bspc query -T -d | gron | grep className | wc -l)
-        if [ "$w" -eq 1 ]; then
+        if [ $w -eq 1 ]; then
             bspc node -p east
             bspc node -o 0.70
             alacritty --class "$1","$1" --title "$1" -e "$@" &

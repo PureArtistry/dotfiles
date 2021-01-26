@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/farlorn-closed-eye-visuals.jpg",
+    "alpha": "85",
+
+    "special": {
+        "background": "#080504",
+        "foreground": "#ffd1c5",
+        "cursor": "#ffd1c5"
+    },
+    "colors": {
+        "color0": "#080504",
+        "color1": "#4F3128",
+        "color2": "#6B3828",
+        "color3": "#704A2B",
+        "color4": "#8E5423",
+        "color5": "#584949",
+        "color6": "#66491E",
+        "color7": "#bc9a91",
+        "color8": "#2b1913",
+        "color9": "#6e3b2c",
+        "color10": "#94432a",
+        "color11": "#9b5f2d",
+        "color12": "#c46c21",
+        "color13": "#7c5454",
+        "color14": "#8d601e",
+        "color15": "#ffd1c5"
+    }
+}

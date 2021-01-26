@@ -314,11 +314,11 @@ colors:
 # The value `0.0` is completely transparent and `1.0` is opaque.
 background_opacity: 0.85
 
-#selection:
+selection:
   #semantic_escape_chars: ",│`|:\"' ()[]{{}}<>\t"
 
   # When set to `true`, selected text will be copied to the primary clipboard.
-  #save_to_clipboard: false
+  save_to_clipboard: true
 
 #cursor:
   # Cursor style
@@ -594,7 +594,7 @@ key_bindings:
 
   # Vi Mode
   #- {{ key: Space,  mods: Shift|Control, mode: Vi, action: ScrollToBottom          }}
-  #- {{ key: Space,  mods: Shift|Control,           action: ToggleViMode            }}
+  - {{ key: Space,  mods: Alt|Control,           action: ToggleViMode            }}
   #- {{ key: Escape,                      mode: Vi, action: ClearSelection          }}
   #- {{ key: I,                           mode: Vi, action: ScrollToBottom          }}
   #- {{ key: I,                           mode: Vi, action: ToggleViMode            }}
@@ -643,15 +643,15 @@ key_bindings:
   # (Windows, Linux, and BSD only)
   - {{ key: V,        mods: Control|Alt,           action: Paste            }}
   - {{ key: C,        mods: Control|Alt,           action: Copy             }}
-  #- {{ key: F,        mods: Control|Shift,           action: SearchForward    }}
-  #- {{ key: B,        mods: Control|Shift,           action: SearchBackward   }}
+  - {{ key: F,        mods: Control|Alt,           action: SearchForward    }}
+  - {{ key: B,        mods: Control|Alt,           action: SearchBackward   }}
   #- {{ key: C,        mods: Control|Shift, mode: Vi, action: ClearSelection   }}
   #- {{ key: Insert,   mods: Shift,                   action: PasteSelection   }}
-  - {{ key: Key0,     mods: Control|Alt,                 action: ResetFontSize    }}
-  - {{ key: Equals,   mods: Control|Alt,                 action: IncreaseFontSize }}
-  - {{ key: Add,      mods: Control|Alt,                 action: IncreaseFontSize }}
-  - {{ key: Subtract, mods: Control|Alt,                 action: DecreaseFontSize }}
-  - {{ key: Minus,    mods: Control|Alt,                 action: DecreaseFontSize }}
+  #- {{ key: Key0,     mods: Control,                 action: ResetFontSize    }}
+  #- {{ key: Equals,   mods: Control,                 action: IncreaseFontSize }}
+  #- {{ key: Add,      mods: Control,                 action: IncreaseFontSize }}
+  #- {{ key: Subtract, mods: Control,                 action: DecreaseFontSize }}
+  #- {{ key: Minus,    mods: Control,                 action: DecreaseFontSize }}
 
   # (Windows only)
   #- {{ key: Return,   mods: Alt,           action: ToggleFullscreen }}

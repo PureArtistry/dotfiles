@@ -1,20 +1,20 @@
 #!/bin/sh
 
-running=$(xdotool search --class "companion")
+running=$(xdotool search --class 'companion')
 if [ ! "$running" ]; then
     bspc subscribe node_add -c 1 &
     new_term --class 'companion','companion' --title 'companion'
     wait
-    companion_id=$(xwininfo -root -children | grep -w "companion" | awk '{print $1}')
-    echo "$companion_id" >/tmp/companion_id
-    bspc node $(head -n 1 /tmp/companion_id) --flag hidden=off -f
+    companion_id=$(xwininfo -root -children | grep -w 'companion' | awk '{print $1}')
+    echo "$companion_id" >/tmp/MyDE/companion_id
+    bspc node $(head -n 1 /tmp/MyDE/companion_id) --flag hidden=off -f
     exit
 fi
 
-visibility=$(xdotool search --all --onlyvisible --class "companion")
+visibility=$(xdotool search --all --onlyvisible --class 'companion')
 if [ ! "$visibility" ]; then
-    bspc node $(head -n 1 /tmp/companion_id) --flag hidden=off -f
+    bspc node $(head -n 1 /tmp/MyDE/companion_id) --flag hidden=off -f
 else
-    bspc node $(head -n 1 /tmp/companion_id) --flag hidden=on
+    bspc node $(head -n 1 /tmp/MyDE/companion_id) --flag hidden=on
     bspc node -f biggest.local
 fi

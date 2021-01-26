@@ -55,19 +55,37 @@ spaceship::deprecated() {
 #   spaceship::displaytime <seconds>
 spaceship::displaytime() {
   if [[ -n $2 ]]; then
-    [[ $1 -ge 1000 ]] && printf '%d\033[90mms\033[0m' $(( $1 / 1000 )) || printf '%d\033[90mμs\033[0m' $1
+    printf '\033[1;34m羽'
+    if [[ $1 -ge 1000 ]]; then
+      printf '\033[1;94m%d ' $(($1/1000))
+      [[ $(($1/1000)) -eq 1 ]] && printf '\033[1;34mmillisecond\033[0m' \
+        || printf '\033[1;34mmilliseconds\033[0m'
+    else
+      printf '\033[1;94m%d\033[3;34m microseconds\033[0m' $1
+    fi
   elif [[ $1 -lt 1 ]]; then
-    printf '\033[3mReady\033[0m'
+    printf '\033[1;34m羽\033[3;94mReady\033[0m'
   else
     local T=$1
     local D=$((T/60/60/24))
     local H=$((T/60/60%24))
     local M=$((T/60%60))
     local S=$((T%60))
-    [[ $D > 0 ]] && printf '%d\033[90md\033[33m ' $D
-    [[ $H > 0 ]] && printf '%d\033[90mh\033[33m ' $H
-    [[ $M > 0 ]] && printf '%d\033[90mm\033[33m ' $M
-    printf '%d\033[90ms\033[33m' $S
+    printf '\033[1;34m羽'
+    if [[ $D > 0 ]]; then
+      printf '\033[1;94m%d ' $D
+      [[ $D -eq 1 ]] && printf '\033[1;34mday,\033[0m ' || printf '\033[1;34mdays,\033[0m '
+    fi
+    if [[ $H > 0 ]]; then
+      printf '\033[1;94m%d ' $H
+      [[ $H -eq 1 ]] && printf '\033[1;34mhour,\033[0m ' || printf '\033[1;34mhours,\033[0m '
+    fi
+    if [[ $M > 0 ]]; then
+      printf '\033[1;94m%d ' $M
+      [[ $M -eq 1 ]] && printf '\033[1;34mminute,\033[0m ' || printf '\033[1;34mminutes,\033[0m '
+    fi
+    printf '\033[1;94m%d ' $S
+    [[ $S -eq 1 ]] && printf '\033[1;34msecond\033[0m' || printf '\033[1;34mseconds\033[0m'
   fi
 }
 

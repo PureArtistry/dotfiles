@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/out_of_time.jpg",
+    "alpha": "85",
+
+    "special": {
+        "background": "#0C0D16",
+        "foreground": "#fff4ff",
+        "cursor": "#fff4ff"
+    },
+    "colors": {
+        "color0": "#0C0D16",
+        "color1": "#AB4A64",
+        "color2": "#6A5C90",
+        "color3": "#646DB3",
+        "color4": "#94709e",
+        "color5": "#ce7899",
+        "color6": "#D98D72",
+        "color7": "#d3c2d0",
+        "color8": "#1d1f36",
+        "color9": "#ee507a",
+        "color10": "#8268ca",
+        "color11": "#6f7ffa",
+        "color12": "#ca80de",
+        "color13": "#ff86c1",
+        "color14": "#ffad7e",
+        "color15": "#fff4ff"
+    }
+}

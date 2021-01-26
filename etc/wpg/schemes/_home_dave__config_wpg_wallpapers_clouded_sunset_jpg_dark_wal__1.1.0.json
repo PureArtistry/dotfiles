@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/clouded_sunset.jpg",
+    "alpha": "85",
+
+    "special": {
+        "background": "#051117",
+        "foreground": "#ffd2b8",
+        "cursor": "#ffd2b8"
+    },
+    "colors": {
+        "color0": "#051117",
+        "color1": "#6D453A",
+        "color2": "#2B3742",
+        "color3": "#433F44",
+        "color4": "#4D4243",
+        "color5": "#694747",
+        "color6": "#9C4A2E",
+        "color7": "#d49d89",
+        "color8": "#0c2f41",
+        "color9": "#985340",
+        "color10": "#30475c",
+        "color11": "#5c4960",
+        "color12": "#6d4c4f",
+        "color13": "#935050",
+        "color14": "#d7592e",
+        "color15": "#ffd2b8"
+    }
+}

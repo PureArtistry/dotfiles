@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/neon_sunset.jpg",
+    "alpha": "85",
+
+    "special": {
+        "background": "#18030c",
+        "foreground": "#ffd5f8",
+        "cursor": "#ffd5f8"
+    },
+    "colors": {
+        "color0": "#18030c",
+        "color1": "#6A194A",
+        "color2": "#4D2546",
+        "color3": "#6F254D",
+        "color4": "#982357",
+        "color5": "#CD2864",
+        "color6": "#CD2293",
+        "color7": "#f2aecb",
+        "color8": "#460721",
+        "color9": "#921762",
+        "color10": "#6b285f",
+        "color11": "#992664",
+        "color12": "#d1216f",
+        "color13": "#ff237d",
+        "color14": "#ff1cc4",
+        "color15": "#ffd5f8"
+    }
+}

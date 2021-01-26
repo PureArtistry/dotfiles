@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/winter_SUV.png",
+    "alpha": "85",
+
+    "special": {
+        "background": "#08050D",
+        "foreground": "#d3d3e8",
+        "cursor": "#d3d3e8"
+    },
+    "colors": {
+        "color0": "#08050D",
+        "color1": "#5B3B4E",
+        "color2": "#433C57",
+        "color3": "#3D405F",
+        "color4": "#3C4364",
+        "color5": "#42405E",
+        "color6": "#6A5058",
+        "color7": "#9a9aaa",
+        "color8": "#1d1132",
+        "color9": "#804267",
+        "color10": "#52447a",
+        "color11": "#454a85",
+        "color12": "#43508c",
+        "color13": "#4c4884",
+        "color14": "#955b6d",
+        "color15": "#d3d3e8"
+    }
+}

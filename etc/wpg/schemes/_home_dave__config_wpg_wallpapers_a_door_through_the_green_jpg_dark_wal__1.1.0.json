@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/a_door_through_the_green.jpg",
+    "alpha": "85",
+
+    "special": {
+        "background": "#0c0e0c",
+        "foreground": "#feffe9",
+        "cursor": "#feffe9"
+    },
+    "colors": {
+        "color0": "#0c0e0c",
+        "color1": "#564A44",
+        "color2": "#9C6457",
+        "color3": "#138C39",
+        "color4": "#239850",
+        "color5": "#63B65E",
+        "color6": "#55A660",
+        "color7": "#c1cab1",
+        "color8": "#222922",
+        "color9": "#795c4e",
+        "color10": "#da7861",
+        "color11": "#0ec046",
+        "color12": "#21d165",
+        "color13": "#70fe68",
+        "color14": "#5ee870",
+        "color15": "#feffe9"
+    }
+}

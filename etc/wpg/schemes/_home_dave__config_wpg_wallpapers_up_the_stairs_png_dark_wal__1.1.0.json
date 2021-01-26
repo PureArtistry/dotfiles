@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/up_the_stairs.png",
+    "alpha": "85",
+
+    "special": {
+        "background": "#060913",
+        "foreground": "#fff7ff",
+        "cursor": "#fff7ff"
+    },
+    "colors": {
+        "color0": "#060913",
+        "color1": "#29398D",
+        "color2": "#2F658C",
+        "color3": "#536F94",
+        "color4": "#3D93AA",
+        "color5": "#6594A7",
+        "color6": "#9F9BAE",
+        "color7": "#dccfd8",
+        "color8": "#101a3a",
+        "color9": "#2942c3",
+        "color10": "#3085c2",
+        "color11": "#5c8ecf",
+        "color12": "#40c7ec",
+        "color13": "#71c7ea",
+        "color14": "#c2b4f7",
+        "color15": "#fff7ff"
+    }
+}

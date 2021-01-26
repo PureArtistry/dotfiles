@@ -9,7 +9,6 @@
     children: [ message, inputbar ];
     width: 460px;
     location: 0;
-    y-offset: -22;
     border: 0 0 12 0;
     border-color: @my-colour4;
 }

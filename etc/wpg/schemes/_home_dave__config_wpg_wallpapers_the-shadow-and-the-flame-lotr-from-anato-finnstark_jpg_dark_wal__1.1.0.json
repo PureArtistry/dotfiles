@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/the-shadow-and-the-flame-lotr-from-anato-finnstark.jpg",
+    "alpha": "85",
+
+    "special": {
+        "background": "#090403",
+        "foreground": "#ffff9e",
+        "cursor": "#ffff9e"
+    },
+    "colors": {
+        "color0": "#090403",
+        "color1": "#8D1B01",
+        "color2": "#8E2B02",
+        "color3": "#AF3301",
+        "color4": "#CD3800",
+        "color5": "#AB4809",
+        "color6": "#E65800",
+        "color7": "#f5c177",
+        "color8": "#31130d",
+        "color9": "#b72201",
+        "color10": "#ba3701",
+        "color11": "#e34201",
+        "color12": "#ff4901",
+        "color13": "#e95b01",
+        "color14": "#ff7201",
+        "color15": "#ffff9e"
+    }
+}

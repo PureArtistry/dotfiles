@@ -1,8 +1,8 @@
 :root {{
   /* colors */
   --background: {color0};
-  --foreground: {color7};
-  --clockcolor: {color7};
+  --foreground: {color15};
+  --clockcolor: {color15};
 
   /* fonts */
   --font-family: "Iosevka Nerd Font";
@@ -10,7 +10,7 @@
   --base-font-size: 18px;
   --font-weight-normal: 400;
   --font-weight-bold: 700;
-  --font-weight-date: 550;
+  --font-weight-date: 600;
 }}
 
 * {{

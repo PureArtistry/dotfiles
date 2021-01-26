@@ -3,12 +3,12 @@
 bspc desktop 1 -f
 pgrep mpv >/dev/null && xdotool mousemove 400 400 && bspc node pointed -f
 pgrep sxiv >/dev/null || exit
-visibility=$(xdotool search --all --onlyvisible --class "companion")
-if [ ! $visibility ]; then
-    bspc node $(head -n1 /tmp/pretty_colours_id) -f
+visibility=$(xdotool search --all --onlyvisible --class 'companion')
+if [ ! "$visibility" ]; then
+    bspc node $(head -n1 /tmp/MyDE/pretty_colours_id) -f
     xdotool mousemove 400 400
     bspc node pointed -f
 else
-    bspc node $(head -n1 /tmp/pretty_colours_id) -f
-    bspc node $(head -n1 /tmp/my_companion_id) -f
+    bspc node $(head -n1 /tmp/MyDE/pretty_colours_id) -f
+    bspc node $(head -n1 /tmp/MyDE/my_companion_id) -f
 fi

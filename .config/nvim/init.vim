@@ -159,13 +159,13 @@ let g:airline_right_sep=''
 let g:sh_fold_enabled= 5 " fold controls
 
 " Delete trailing white space on save, useful for some filetypes ;)
-" fun! CleanExtraSpaces()
-"     let save_cursor = getpos(".")
-"     let old_query = getreg('/')
-"     silent! %s/\s\+$//e
-"     call setpos('.', save_cursor)
-"     call setreg('/', old_query)
-" endfun
+fun! CleanExtraSpaces()
+    let save_cursor = getpos(".")
+    let old_query = getreg('/')
+    silent! %s/\s\+$//e
+    call setpos('.', save_cursor)
+    call setreg('/', old_query)
+endfun
 " if has("autocmd")
 "     autocmd BufWritePre * :call CleanExtraSpaces()
 " endif

@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/bokeh_road.jpg",
+    "alpha": "85",
+
+    "special": {
+        "background": "#090807",
+        "foreground": "#b5ffff",
+        "cursor": "#b5ffff"
+    },
+    "colors": {
+        "color0": "#090807",
+        "color1": "#AF5534",
+        "color2": "#1F515A",
+        "color3": "#5E5758",
+        "color4": "#3B7193",
+        "color5": "#9A728D",
+        "color6": "#D49C59",
+        "color7": "#88d5dd",
+        "color8": "#25211c",
+        "color9": "#f26734",
+        "color10": "#206e7c",
+        "color11": "#85656a",
+        "color12": "#3f95cc",
+        "color13": "#d982bd",
+        "color14": "#ffcc60",
+        "color15": "#b5ffff"
+    }
+}

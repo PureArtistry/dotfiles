@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/beach_in_winter.png",
+    "alpha": "85",
+
+    "special": {
+        "background": "#061723",
+        "foreground": "#e7ffff",
+        "cursor": "#e7ffff"
+    },
+    "colors": {
+        "color0": "#061723",
+        "color1": "#1C70A7",
+        "color2": "#4A769E",
+        "color3": "#3083BA",
+        "color4": "#518BB4",
+        "color5": "#378AC4",
+        "color6": "#62A6D7",
+        "color7": "#c7deef",
+        "color8": "#0c334e",
+        "color9": "#1794e5",
+        "color10": "#519adc",
+        "color11": "#2fadff",
+        "color12": "#58b7fa",
+        "color13": "#37b6ff",
+        "color14": "#6bdbff",
+        "color15": "#e7ffff"
+    }
+}

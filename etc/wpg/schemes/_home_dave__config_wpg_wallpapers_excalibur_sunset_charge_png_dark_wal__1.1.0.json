@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/dave/.config/wpg/wallpapers/excalibur_sunset_charge.png",
+    "alpha": "85",
+
+    "special": {
+        "background": "#0e090a",
+        "foreground": "#ffffa9",
+        "cursor": "#ffffa9"
+    },
+    "colors": {
+        "color0": "#0e090a",
+        "color1": "#DE3427",
+        "color2": "#A23F50",
+        "color3": "#912A1F",
+        "color4": "#AF3224",
+        "color5": "#DD5426",
+        "color6": "#EEA21F",
+        "color7": "#f5d680",
+        "color8": "#2c1c1f",
+        "color9": "#ff3421",
+        "color10": "#e1435e",
+        "color11": "#c82d1c",
+        "color12": "#f13520",
+        "color13": "#ff6420",
+        "color14": "#ffd716",
+        "color15": "#ffffa9"
+    }
+}

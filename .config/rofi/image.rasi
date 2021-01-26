@@ -9,7 +9,7 @@
     children: [ inputbar, listview, message ];
     width: 460px;
     location: 0;
-    y-offset: 80;
+    y-offset: 130;
 }
 
 inputbar {
