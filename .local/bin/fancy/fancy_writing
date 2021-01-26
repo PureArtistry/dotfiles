@@ -66,11 +66,8 @@ update_check() {
     if [ -z "$uc_interval" ] || [ $(($(date +'%s') - ${uc_interval})) -gt 1800 ] || [ -f /tmp/MyDE/pm_run ]; then
         uc_interval=$(date +'%s')
         [ -f /tmp/MyDE/pm_run ] && rm -f /tmp/MyDE/pm_run >/dev/null 2>&1
-        local p=$(checkupdates 2>/dev/null | wc -l)
-        local y=$(paru -Qum 2>/dev/null | wc -l)
-        [ ! $p ] && p=0
-        [ ! $y ] && y=0
-        local t=$((${p} + ${y}))
+        local t=$(paru -Qu 2>/dev/null | wc -l)
+        [ ! $t ] && t=0
         if [ $t -eq 1 ]; then
             update_status="  there's an update available"
         elif [ $t -gt 0 ]; then
