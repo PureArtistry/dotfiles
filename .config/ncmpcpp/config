@@ -262,7 +262,7 @@ song_window_title_format = my playlist
 ##   available.
 ##
 #
-song_columns_list_format = (30)[6]{a} (40)[8]{t|f:Title} (30)[2]{b}
+# song_columns_list_format = (30)[6]{a} (40)[8]{t|f:Title} (30)[2]{b}
 #
 ##### various settings #####
 #
@@ -309,7 +309,7 @@ playlist_display_mode = classic
 #
 #volume_change_step = 2
 #
-autocenter_mode = yes
+# autocenter_mode = yes
 #
 centered_cursor = yes
 #
@@ -317,7 +317,7 @@ centered_cursor = yes
 ## Note: You can specify third character which will be used to build 'empty'
 ## part of progressbar.
 ##
-progressbar_look = ""
+progressbar_look = " "
 #
 ## Available values: database, playlist.
 ##
@@ -520,7 +520,7 @@ use_console_editor = yes
 #
 #state_flags_color = default:b
 #
-#main_window_color = yellow
+main_window_color = 16
 #
 #color1 = white
 #

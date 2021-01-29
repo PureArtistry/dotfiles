@@ -56,7 +56,7 @@ spaceship::deprecated() {
 spaceship::displaytime() {
   if [[ -n $2 ]]; then
     printf '\033[1;34m羽'
-    if [[ $1 -ge 1000 ]]; then
+    if [[ $1 -gt 1500 ]]; then
       printf '\033[1;94m%d ' $(($1/1000))
       [[ $(($1/1000)) -eq 1 ]] && printf '\033[1;34mmillisecond\033[0m' \
         || printf '\033[1;34mmilliseconds\033[0m'

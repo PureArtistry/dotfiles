@@ -223,6 +223,8 @@ if [ $net -eq 0 ]; then
             echo '  weather info unavailable'
             exit
         fi
+        s=72
+        icon=''
     fi
 else
     s=72

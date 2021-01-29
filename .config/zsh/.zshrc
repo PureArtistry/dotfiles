@@ -67,11 +67,11 @@ zmodload zsh/complist
 compinit
 _comp_options+=(globdots)
 
-autoload bashcompinit
-bashcompinit
-_get_comp_words_by_ref() { :; }
-compopt() { :; }
-_filedir() { :; }
+# autoload bashcompinit
+# bashcompinit
+# _get_comp_words_by_ref() { :; }
+# compopt() { :; }
+# _filedir() { :; }
 # eval "$(beet completion)" # <- only useful when sorting music collection
 
 if command -v pazi &>/dev/null; then

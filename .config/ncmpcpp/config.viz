@@ -204,7 +204,7 @@ visualizer_color = 2, 10, 5, 13, 7, 15, 6, 14
 ## Note: colors can be nested.
 ##
 #
-#song_list_format = {$2$r ﴁ %a $/r$9 }{%t}|{$8%f$9}$R{$3(%b)$9}
+#song_list_format = 
 #
 #song_status_format = {{%a{ "%b"{ (%y)}} - }{%t}}|{%f}
 #

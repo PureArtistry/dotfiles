@@ -29,22 +29,35 @@ c.aliases = {'w': 'session-save', 'q': 'close', 'qa': 'quit', 'wq': 'quit --save
 ## Type: Int
 # c.auto_save.interval = 15000
 
-## Always restore open sites when qutebrowser is reopened.
+## Always restore open sites when qutebrowser is reopened. Without this
+## option set, `:wq` (`:quit --save`) needs to be used to save open tabs
+## (and restore them), while quitting qutebrowser in any other way will
+## not save/restore the session. By default, this will save to the
+## session which was last loaded. This behavior can be customized via the
+## `session.default_name` setting.
 ## Type: Bool
-c.auto_save.session = False
+# c.auto_save.session = False
 
 ## Backend to use to display websites. qutebrowser supports two different
-## web rendering engines / backends, QtWebKit and QtWebEngine. QtWebKit
-## was discontinued by the Qt project with Qt 5.6, but picked up as a
-## well maintained fork: https://github.com/annulen/webkit/wiki -
-## qutebrowser only supports the fork. QtWebEngine is Qt's official
-## successor to QtWebKit. It's slightly more resource hungry than
-## QtWebKit and has a couple of missing features in qutebrowser, but is
-## generally the preferred choice.
+## web rendering engines / backends, QtWebEngine and QtWebKit (not
+## recommended). QtWebEngine is Qt's official successor to QtWebKit, and
+## both the default/recommended backend. It's based on a stripped-down
+## Chromium and regularly updated with security fixes and new features by
+## the Qt project: https://wiki.qt.io/QtWebEngine QtWebKit was
+## qutebrowser's original backend when the project was started. However,
+## support for QtWebKit was discontinued by the Qt project with Qt 5.6 in
+## 2016. The development of QtWebKit was picked up in an official fork:
+## https://github.com/qtwebkit/qtwebkit - however, the project seems to
+## have stalled again. The latest release (5.212.0 Alpha 4) from March
+## 2020 is based on a WebKit version from 2016, with many known security
+## vulnerabilities. Additionally, there is no process isolation and
+## sandboxing. Due to all those issues, while support for QtWebKit is
+## still available in qutebrowser for now, using it is strongly
+## discouraged.
 ## Type: String
 ## Valid values:
-##   - webengine: Use QtWebEngine (based on Chromium).
-##   - webkit: Use QtWebKit (based on WebKit, similar to Safari).
+##   - webengine: Use QtWebEngine (based on Chromium - recommended).
+##   - webkit: Use QtWebKit (based on WebKit, similar to Safari - many known security issues!).
 # c.backend = 'webengine'
 
 ## This setting can be used to map keys to other keys. When the key used
@@ -55,6 +68,15 @@ c.auto_save.session = False
 ## the mapping is ignored.
 ## Type: Dict
 # c.bindings.key_mappings = {'<Ctrl-[>': '<Escape>', '<Ctrl-6>': '<Ctrl-^>', '<Ctrl-M>': '<Return>', '<Ctrl-J>': '<Return>', '<Ctrl-I>': '<Tab>', '<Shift-Return>': '<Return>', '<Enter>': '<Return>', '<Shift-Enter>': '<Return>', '<Ctrl-Enter>': '<Ctrl-Return>'}
+
+## When to show a changelog after qutebrowser was upgraded.
+## Type: String
+## Valid values:
+##   - major: Show changelog for major upgrades (e.g. v2.0.0 -> v3.0.0).
+##   - minor: Show changelog for major and minor upgrades (e.g. v2.0.0 -> v2.1.0).
+##   - patch: Show changelog for major, minor and patch upgrades (e.g. v2.0.0 -> v2.0.1).
+##   - never: Never show changelog after upgrades.
+# c.changelog_after_upgrade = 'minor'
 
 ## Background color of the completion widget category headers.
 ## Type: QssColor
@@ -149,7 +171,7 @@ c.colors.completion.scrollbar.fg = col_active
 
 ## Background color for the download bar.
 ## Type: QssColor
-c.colors.downloads.bar.bg = col_c0
+c.colors.downloads.bar.bg = col_c4
 
 ## Background color for downloads with errors.
 ## Type: QtColor
@@ -623,6 +645,57 @@ c.confirm_quit = ['downloads']
 ## Type: Bool
 # c.content.autoplay = True
 
+## List of URLs to ABP-style adblocking rulesets.  Only used when Brave's
+## ABP-style adblocker is used (see `content.blocking.method`).  You can
+## find an overview of available lists here:
+## https://adblockplus.org/en/subscriptions - note that the special
+## `subscribe.adblockplus.org` links aren't handled by qutebrowser, you
+## will instead need to find the link to the raw `.txt` file (e.g. by
+## extracting it from the `location` parameter of the subscribe URL and
+## URL-decoding it).
+## Type: List of Url
+# c.content.blocking.adblock.lists = ['https://easylist.to/easylist/easylist.txt', 'https://easylist.to/easylist/easyprivacy.txt']
+
+## Enable the ad/host blocker
+## Type: Bool
+# c.content.blocking.enabled = True
+
+## List of URLs to host blocklists for the host blocker.  Only used when
+## the simple host-blocker is used (see `content.blocking.method`).  The
+## file can be in one of the following formats:  - An `/etc/hosts`-like
+## file - One host per line - A zip-file of any of the above, with either
+## only one file, or a file   named `hosts` (with any extension).  It's
+## also possible to add a local file or directory via a `file://` URL. In
+## case of a directory, all files in the directory are read as adblock
+## lists.  The file `~/.config/qutebrowser/blocked-hosts` is always read
+## if it exists.
+## Type: List of Url
+# c.content.blocking.hosts.lists = ['https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts']
+
+## Which method of blocking ads should be used.  Support for Adblock Plus
+## (ABP) syntax blocklists using Brave's Rust library requires the
+## `adblock` Python package to be installed, which is an optional
+## dependency of qutebrowser. It is required when either `adblock` or
+## `both` are selected.
+## Type: String
+## Valid values:
+##   - auto: Use Brave's ABP-style adblocker if available, host blocking otherwise
+##   - adblock: Use Brave's ABP-style adblocker
+##   - hosts: Use hosts blocking
+##   - both: Use both hosts blocking and Brave's ABP-style adblocker
+# c.content.blocking.method = 'auto'
+
+## A list of patterns that should always be loaded, despite being blocked
+## by the ad-/host-blocker. Local domains are always exempt from
+## adblocking. Note this whitelists otherwise blocked requests, not
+## first-party URLs. As an example, if `example.org` loads an ad from
+## `ads.example.org`, the whitelist entry could be
+## `https://ads.example.org/*`. If you want to disable the adblocker on a
+## given page, use the `content.blocking.enabled` setting with a URL
+## pattern instead.
+## Type: List of UrlPattern
+# c.content.blocking.whitelist = []
+
 ## Enable support for the HTML 5 web application cache feature. An
 ## application cache acts like an HTTP cache in some sense. For documents
 ## that use the application cache via JavaScript, the loader engine will
@@ -753,31 +826,6 @@ c.content.default_encoding = 'utf-8'
 ## JavaScript requires a restart.
 ## Type: FormatString
 # c.content.headers.user_agent = 'Mozilla/5.0 ({os_info}) AppleWebKit/{webkit_version} (KHTML, like Gecko) {qt_key}/{qt_version} {upstream_browser_key}/{upstream_browser_version} Safari/{webkit_version}'
-
-## Enable host blocking.
-## Type: Bool
-# c.content.host_blocking.enabled = True
-
-## List of URLs of lists which contain hosts to block.  The file can be
-## in one of the following formats:  - An `/etc/hosts`-like file - One
-## host per line - A zip-file of any of the above, with either only one
-## file, or a file   named `hosts` (with any extension).  It's also
-## possible to add a local file or directory via a `file://` URL. In case
-## of a directory, all files in the directory are read as adblock lists.
-## The file `~/.config/qutebrowser/blocked-hosts` is always read if it
-## exists.
-## Type: List of Url
-# c.content.host_blocking.lists = ['https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts']
-
-## A list of patterns that should always be loaded, despite being ad-
-## blocked. Note this whitelists blocked hosts, not first-party URLs. As
-## an example, if `example.org` loads an ad from `ads.example.org`, the
-## whitelisted host should be `ads.example.org`. If you want to disable
-## the adblocker on a given page, use the `content.host_blocking.enabled`
-## setting with a URL pattern instead. Local domains are always exempt
-## from hostblocking.
-## Type: List of UrlPattern
-# c.content.host_blocking.whitelist = []
 
 ## Enable hyperlink auditing (`<a ping>`).
 ## Type: Bool
