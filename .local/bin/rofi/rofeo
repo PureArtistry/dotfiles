@@ -108,10 +108,10 @@ final() {
         [ "$need_mute" = 'yes' ] && mpc pause
         ;;
     2)
-        distraction_toggle off
         bspc rule -a mpv:\* -o desktop=1 state=floating rectangle=897x505+1005+287 center=false
         mpv "$file" &
         bspc subscribe node_add -c 1
+        distraction_toggle off
         [ "$need_mute" = 'yes' ] && mpc pause
         bspc desktop 1 -f
         sleep 0.1
@@ -283,13 +283,13 @@ yt_details() {
             listening
             make_icon '66' ''
             dunstify -r 4088009 'loading' "$ytsel_title" -i /tmp/MyDE/rofeo_icon.png
-            distraction_toggle off
             bspc rule -a mpv:\* -o desktop=1 state=floating \
                 rectangle=897x505+1005+287 center=false
             mpv "$selection" &
             bspc subscribe node_add -c 1
-            dunstify -C 4088009
+            distraction_toggle off
             [ "$need_mute" = 'yes' ] && mpc pause
+            dunstify -C 4088009
             bspc desktop 1 -f
             sleep 0.1
             xdotool mousemove 400 400

@@ -478,7 +478,7 @@ c.colors.tabs.selected.odd.fg = col_c15
 ## Background color for webpages if unset (or empty to use the theme's
 ## color).
 ## Type: QtColor
-c.colors.webpage.bg = col_c0
+c.colors.webpage.bg = col_c3
 
 ## Which algorithm to use for modifying how colors are rendered with
 ## darkmode.

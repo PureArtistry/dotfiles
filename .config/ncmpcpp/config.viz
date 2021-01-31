@@ -204,7 +204,7 @@ visualizer_color = 2, 10, 5, 13, 7, 15, 6, 14
 ## Note: colors can be nested.
 ##
 #
-#song_list_format = 
+song_list_format = {$(16)%t}|{$8%f$9}$R{$(15)(%l)$9}
 #
 #song_status_format = {{%a{ "%b"{ (%y)}} - }{%t}}|{%f}
 #
@@ -214,17 +214,17 @@ visualizer_color = 2, 10, 5, 13, 7, 15, 6, 14
 #
 #alternative_header_second_line_format = {{$4$b%a$/b$9}{ - $7%b$9}{ ($4%y$9)}}|{%D}
 #
-#current_item_prefix = $(yellow)$r
+current_item_prefix = $b
 #
-#current_item_suffix = $/r$(end)
+current_item_suffix = $/b$(end)
 #
-#current_item_inactive_column_prefix = $(white)$r
+current_item_inactive_column_prefix = $b
 #
-#current_item_inactive_column_suffix = $/r$(end)
+current_item_inactive_column_suffix = $/b$(end)
 #
-#now_playing_prefix = $b
+now_playing_prefix = "$9$(16_red) --> $(end)$9 "
 #
-#now_playing_suffix = $/b$5$r!$/r$9
+now_playing_suffix =
 #
 #browser_playlist_prefix = "$2playlist$9 "
 #
@@ -313,7 +313,7 @@ execute_on_player_state_change = "update_player > /dev/null 2>&1 &"
 ##
 ## Note: Possible display modes: classic, columns.
 ##
-#playlist_display_mode = classic
+playlist_display_mode = classic
 #
 #browser_display_mode = columns
 #
@@ -333,7 +333,7 @@ execute_on_player_state_change = "update_player > /dev/null 2>&1 &"
 #
 #autocenter_mode = no
 #
-#centered_cursor = no
+centered_cursor = yes
 #
 ##
 ## Note: You can specify third character which will be used to build 'empty'
@@ -494,11 +494,11 @@ mouse_support = yes
 #
 #search_engine_default_search_mode = 1
 #
-#external_editor = nano
+external_editor = vim
 #
 ## Note: set to yes if external editor is a console application.
 ##
-#use_console_editor = yes
+use_console_editor = yes
 #
 ##### colors definitions #####
 ##
@@ -542,7 +542,7 @@ mouse_support = yes
 #
 #state_flags_color = default:b
 #
-main_window_color = 8
+main_window_color = 16
 #
 #color1 = white
 #

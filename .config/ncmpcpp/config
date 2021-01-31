@@ -200,7 +200,7 @@ current_item_inactive_column_prefix = $b
 #
 current_item_inactive_column_suffix = $/b$(end)
 #
-now_playing_prefix = "$9$(white_red) --> $(end)$9 "
+now_playing_prefix = "$9$(16_red) --> $(end)$9 "
 #
 now_playing_suffix =
 #
@@ -472,7 +472,7 @@ mouse_support = yes
 #
 #search_engine_default_search_mode = 1
 #
-external_editor = micro
+external_editor = vim
 #
 ## Note: set to yes if external editor is a console application.
 ##

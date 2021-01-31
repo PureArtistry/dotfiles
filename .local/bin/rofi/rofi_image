@@ -21,8 +21,7 @@ x=$(echo "$x" | awk '{print $1}')
 x=$(xwininfo -id "$x")
 x=$(echo "$x" | tail -n1 | awk -F '+' '{print $NF}')
 x=$((${x} - 259))
+while pgrep wget >/dev/null 2>&1; do sleep 0.1; done
 bspc rule -a Sxiv:\* -o state=floating manage=off
 sxiv -g 460x259+730+${x} -p -b /tmp/MyDE/rofi_thumb.png &
-while true; do
-    sleep 0.1
-done
+while true; do sleep 0.1; done

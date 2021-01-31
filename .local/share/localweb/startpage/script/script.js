@@ -266,10 +266,14 @@ class Clock {{
     this._start();
   }}
 
-  _setTime() {{
-    const utime = Date.now() / 1000 | 0;
-    this._el.innerHTML = `${{utime}}<span class="loldate"><p><i>{loldate}</i></p></span>`;
-  }}
+    _setTime() {{
+        const utime = (Date.now() / 1000) | 0;
+        fetch("script/loldate.txt")
+            .then((r) => r.text())
+            .then((x) => {{
+                this._el.innerHTML = `${{utime}}<span class="loldate"><p><i>${{x}}</i></p></span>`;
+            }});
+    }}
 
   _start() {{
     this._setTime();

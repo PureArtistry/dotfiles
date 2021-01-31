@@ -34,5 +34,7 @@ plz_stop() {
     exit
 }
 
-[ "$1" = 'off' ] && plz_stop
+if [ "$1" = 'off' ]; then
+    [ -f /tmp/MyDE/fancy_writing_id ] && plz_stop || exit
+fi
 [ -f /tmp/MyDE/fancy_writing_id ] && plz_stop || dazzle_me

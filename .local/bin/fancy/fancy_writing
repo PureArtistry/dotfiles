@@ -234,7 +234,7 @@ display_text() {
     return
 }
 
-fancy_writing_id=$(xwininfo -root -children | grep -w "fancy writing" | awk '{print $1}')
+fancy_writing_id=$(xwininfo -root -children | grep -w 'fancy writing' | awk '{print $1}')
 echo "$fancy_writing_id" >/tmp/MyDE/fancy_writing_id
 echo $$ >/tmp/MyDE/fancy_writing.pid
 main

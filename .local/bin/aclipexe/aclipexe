@@ -96,12 +96,12 @@ twitch() {
         make_icon '64' '' 'twitch_icon'
         local i=$(shuf -i 1-1000000 -n 1)
         dunstify -r $i 'loading' "$name" -i /tmp/MyDE/twitch_icon.png
-        distraction_toggle off
         bspc rule -a mpv:\* -o desktop=1 state=floating \
             rectangle=897x505+1005+287 center=false
         streamlink -p mpv "$selection" best &
         bspc subscribe node_add -c 1
         dunstify -C $i
+        distraction_toggle off
         [ "$need_mute" = 'yes' ] && mpc pause
         bspc desktop 1 -f
         sleep 0.1
@@ -121,7 +121,7 @@ twitch() {
         bspc desktop 10 -f
         bspc node -p east
         bspc node -o 0.74
-        chat=$($utter "$selection" | awk -F "/" '{print $4}')
+        chat=$(echo "$selection" | awk -F "/" '{print $4}')
         qutebrowser --target window \
             https://www.twitch.tv/popout/$chat/chat?popout= &
         ;;
