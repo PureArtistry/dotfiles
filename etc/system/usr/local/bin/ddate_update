@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# edit this to the absolute path of your startpage root directory
+my_path='/home/dave/.local/share/localweb/startpage'
+echo $(ddate +"It's %{%A, the %e of %B%} (YOLD %Y)%N<br><br>Celebrate %H!") > ${my_path}/script/loldate.txt

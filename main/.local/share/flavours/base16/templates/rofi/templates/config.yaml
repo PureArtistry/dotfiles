@@ -1,0 +1,15 @@
+default:
+    extension: .rasi
+    output: themes
+
+colors:
+    extension: .rasi
+    output: colors
+
+old:
+    extension: .config
+    output: themes
+
+custom:
+    extension: .rasi
+    output: colors

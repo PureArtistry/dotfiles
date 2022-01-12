@@ -1,0 +1,11 @@
+#!/bin/sh
+
+paccache -rk2 2>/dev/null
+paccache -ruk0 2>/dev/null
+
+printf '%b:: %bUpdating pacman stats for fetch script...%b\n' '[1;34m' '[1;37m' '[0m'
+n=$(pacman -Qn --color never | wc -l)
+m=$(pacman -Qm --color never | wc -l)
+echo "$n $m" > /home/dave/.cache/moodfetch/pkg_stats
+
+return 0

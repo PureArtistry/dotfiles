@@ -1,0 +1,7 @@
+[Unit]
+Description=Daily ddate update for browser startpage
+
+[Service]
+Type=simple
+ExecStart=/bin/sh /usr/local/bin/ddate_update
+Restart=on-abnormal

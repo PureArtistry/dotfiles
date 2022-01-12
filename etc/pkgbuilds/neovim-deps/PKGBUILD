@@ -1,0 +1,8 @@
+pkgname='nvim-deps'
+pkgver='1.0'
+pkgrel=1
+pkgdesc='Neovim build dependency package'
+arch=('x86_64')
+depends=('cmake' 'gperf' 'lua51-mpack' 'lua51-lpeg')
+
+package() { :; }

@@ -1,0 +1,10 @@
+add_newline = false
+
+[battery]
+disabled = true
+
+[cmd_duration]
+disabled = true
+
+[directory]
+truncation_symbol = "…/"

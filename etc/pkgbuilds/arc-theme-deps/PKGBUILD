@@ -1,0 +1,8 @@
+pkgname='arc-theme-deps'
+pkgver='1.0'
+pkgrel=1
+pkgdesc='Arc theme build dependency package'
+arch=('x86_64')
+depends=('inkscape' 'meson' 'sassc' 'gtk4' 'gtk-engine-murrine' 'gtk-engines' 'gnome-themes-extra')
+
+package() { :; }

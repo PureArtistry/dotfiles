@@ -1,0 +1,8 @@
+[Unit]
+Description=Daily ddate update for browser startpage
+
+[Timer]
+OnCalendar=daily
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+[ -p /dev/stdin ] && x=$(cat) || x="$@"
+[ -z "$x" ] && exit || echo "$x" | xclip -selection clipboard

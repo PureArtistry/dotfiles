@@ -1,0 +1,55 @@
+[[item]]
+file = "~/.config/alacritty/alacritty.yml"
+template = "alacritty"
+subtemplate = "default-256"
+
+[[item]]
+file = "~/.config/awesome/config/flavours.lua"
+template = "awesome"
+subtemplate = "default"
+rewrite = true
+
+[[item]]
+file = "~/.config/nvim/lua/flavours.lua"
+template = "vim"
+subtemplate = "default"
+rewrite = true
+
+[[item]]
+file = "~/.config/highlight/flavours.theme"
+template = "highlight"
+subtemplate = "default"
+start = "-- Start flavours"
+end = "-- End flavours"
+
+[[item]]
+file = "~/.config/qutebrowser/flavours.py"
+template = "qutebrowser"
+subtemplate = "default"
+rewrite = true
+
+# [[item]]
+# file = "~/.config/bottom/bottom.toml"
+# template = "bottom"
+# subtemplate = "default"
+
+[[item]]
+file = "~/.local/share/localweb/startpage/style/style.css"
+template = "startpage"
+subtemplate = "style"
+start = "  /* start flavours */"
+end = "  /* end flavours */"
+
+[[item]]
+file = "~/.local/share/localweb/startpage/script/script.js"
+template = "startpage"
+subtemplate = "script"
+start = "// Start flavours"
+end = "// End flavours"
+
+[[item]]
+file = "~/.config/X11/xresources"
+template = "xresources"
+subtemplate = "custom"
+start = "! Start flavours"
+end = "! End flavours"

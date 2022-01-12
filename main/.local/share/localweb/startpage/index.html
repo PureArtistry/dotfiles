@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex"/>
+  <script>
+      (function () {
+      'use strict';
+      var loc     = location;
+      var host    = loc.hostname + (loc.port ? ':' + loc.port : '');
+      var timeout = setTimeout;
+      var ref, check, xhr, lastModified, time;
+      if (loc.host === host) {
+        ref = new Date().getTime();
+        check = function () {
+          xhr = new XMLHttpRequest();
+          xhr.onload = function () {
+            lastModified = this.getResponseHeader('Last-Modified');
+            time = new Date(lastModified).getTime();
+            if (time > ref) {
+              loc.reload(true);
+            } else {
+              timeout(check, 1000);
+            }
+          };
+          xhr.open('HEAD', loc.href + '?t=' + new Date().getTime(), true);
+          xhr.setRequestHeader('pragma', 'no-cache');
+          xhr.send();
+        };
+        timeout(check, 1000);
+      }
+    }());
+  </script>
+  <link rel="stylesheet" href="style/style.css?ver=63817">
+  <style>
+    body {
+      background-image: url("style/cwplnk?ver=63817");
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+  </style>
+  <title>~/</title>
+</head>
+
+<body>
+  <div class="clockpos"><time class="clock" id="clock"></time></div>
+
+  <form autocomplete="off" class="center overlay search-form" id="search-form" spellcheck="false">
+    <div>
+      <input class="search-input" id="search-input" title="search" type="text" />
+      <ul class="search-suggestions" id="search-suggestions"></ul>
+    </div>
+  </form>
+
+  <aside class="center help overlay" id="help"></aside>
+  <script src="script/script.js?ver=63817"></script>
+</body>
+</html>

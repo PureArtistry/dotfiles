@@ -1,0 +1,10 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Operation = Remove
+Type = Package
+Target = *
+[Action]
+Description = keeping things tidy...
+When = PostTransaction
+Exec = /usr/local/bin/pmcleanup

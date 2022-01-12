@@ -1,0 +1,6 @@
+style:
+  extension: .css
+  output: style
+script:
+  extension: .js
+  output: script

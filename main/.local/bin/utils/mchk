@@ -1,0 +1,4 @@
+#!/bin/sh
+
+ps -eo rss,pid,euser,args:100 --sort %mem | grep -v grep | grep -v $$ | grep -i $@ \
+    | awk '{printf "[0m[1m" $1/1024 "[0m[95m(mb) [37m->	[96m" $2 "[0m	" $3 "[37m	"; for (i=4; i <= NF; i++) printf $i""FS; print""}'

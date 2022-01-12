@@ -1,0 +1,58 @@
+! Start flavours
+#define base00 #262436
+#define base01 #4a4557
+#define base02 #6e6777
+#define base03 #928898
+#define base04 #b6a9b8
+#define base05 #dacad8
+#define base06 #dfd2de
+#define base07 #e5dae4
+#define base08 #93735b
+#define base09 #697c78
+#define base0A #6c7b79
+#define base0B #b254af
+#define base0C #8b7279
+#define base0D #7873a4
+#define base0E #8d7177
+#define base0F #8597af
+
+*foreground:   base05
+*background:   base00
+*cursorColor:  base05
+
+*color0:       base00
+*color1:       base08
+*color2:       base0B
+*color3:       base0A
+*color4:       base0D
+*color5:       base0E
+*color6:       base0C
+*color7:       base05
+
+*color8:       base03
+*color9:       base08
+*color10:      base0B
+*color11:      base0A
+*color12:      base0D
+*color13:      base0E
+*color14:      base0C
+*color15:      base07
+
+*color16:      base09
+*color17:      base0F
+*color18:      base01
+*color19:      base02
+*color20:      base04
+*color21:      base06
+
+Sxiv*background: base00
+Sxiv*foreground: base09
+! End flavours
+
+Xft.autohint: 0
+Xft.lcdfilter: lcddefault
+Xft.hintstyle: hintslight
+Xft.hinting: 1
+Xft.antialias: 1
+Xft.rgba: rgb
+Xft.dpi: 96
