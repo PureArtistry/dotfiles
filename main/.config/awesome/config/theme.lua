@@ -6,6 +6,7 @@ local beautiful = require('beautiful')
 local wibox = require('wibox')
 
 local root = require('gears.filesystem').get_configuration_dir()
+local symlink = root .. 'assets/wallpaper'
 local xresources = require('beautiful.xresources')
 local dpi = xresources.apply_dpi
 
@@ -25,7 +26,7 @@ theme.fg_urgent           = FLAVOURS.base07
 theme.fg_minimize         = theme.fg_normal
 theme.border_width        = dpi(0)
 theme.border_color        = FLAVOURS.base01
-theme.wallpaper           = root .. '/assets/wallpaper'
+theme.wallpaper           = symlink
 theme.border_color_marked = FLAVOURS.base0E
 theme.border_color_active = FLAVOURS.base09
 theme.border_color_normal = theme.border_color
@@ -526,18 +527,18 @@ beautiful.init(theme)
 screen.connect_signal('request::wallpaper', function(s)
     awful.wallpaper {
         screen = s,
-        -- bg = FLAVOURS.base00,
-        widget = {
-            {
-                image     = beautiful.wallpaper,
-                upscale   = true,
-                downscale = true,
-                widget    = wibox.widget.imagebox
-            },
-            valign = 'center',
-            halign = 'center',
-            tiled  = false,
-            widget = wibox.container.tile
-        }
+        bg = FLAVOURS.base00,
+    --     widget = {
+    --         image                 = beautiful.wallpaper,
+    --         resize                = true,
+    --         upscale               = true,
+    --         downscale             = true,
+    --         scaling_quality       = 'best',
+    --         horizontal_fit_policy = 'fit',
+    --         vertical_fit_policy   = 'fit',
+    --         widget                = wibox.widget.imagebox
+        -- }
+        widget = wibox.container.tile
     }
+    require('config.deprecated').set_wall(symlink)
 end)

@@ -23,7 +23,7 @@ xrandr --auto
 xrandr --dpi 96
 xset r rate 300 40
 unclutter &
-picom -b --experimental-backends --config $XDG_CONFIG_HOME/compton/compton.conf
-python3 -m http.server 4088 --bind 127.0.0.1 --directory $XDG_DATA_HOME/localweb/startpage &
+picom -b --experimental-backends
+python3 -m http.server 4088 --bind 127.0.0.1 --directory $STARTPAGE &
 
 exec awesome

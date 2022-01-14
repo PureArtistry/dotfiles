@@ -36,13 +36,13 @@ font:
 colors:
   # Default colors
   primary:
-    background: '0x262436'
-    foreground: '0xdacad8'
+    background: '0x2f2420'
+    foreground: '0xdacdcb'
 
   # Colors the cursor will use if `custom_cursor_colors` is true
   cursor:
-    text: '0xe5dae4'
-    cursor: '0x697c78'
+    text: '0xe5dcda'
+    cursor: '0x747791'
 
   # Colors which should be used to draw the selection area.
   #selection:
@@ -51,33 +51,33 @@ colors:
 
   # Normal colors
   normal:
-    black:   '0x262436'
-    red:     '0x93735b'
-    green:   '0xb254af'
-    yellow:  '0x6c7b79'
-    blue:    '0x7873a4'
-    magenta: '0x8d7177'
-    cyan:    '0x8b7279'
-    white:   '0xdacad8'
+    black:   '0x2f2420'
+    red:     '0x6179a1'
+    green:   '0x956e78'
+    yellow:  '0xd83979'
+    blue:    '0x6e6ecb'
+    magenta: '0x4f7ca4'
+    cyan:    '0xb17d3a'
+    white:   '0xdacdcb'
 
   # Bright colors
   bright:
-    black:   '0x928898'
-    red:     '0x93735b'
-    green:   '0xb254af'
-    yellow:  '0x6c7b79'
-    blue:    '0x7873a4'
-    magenta: '0x8d7177'
-    cyan:    '0x8b7279'
-    white:   '0xe5dae4'
+    black:   '0x968987'
+    red:     '0x6179a1'
+    green:   '0x956e78'
+    yellow:  '0xd83979'
+    blue:    '0x6e6ecb'
+    magenta: '0x4f7ca4'
+    cyan:    '0xb17d3a'
+    white:   '0xe5dcda'
 
   indexed_colors:
-    - { index: 16, color: '0x697c78' }
-    - { index: 17, color: '0x8597af' }
-    - { index: 18, color: '0x4a4557' }
-    - { index: 19, color: '0x6e6777' }
-    - { index: 20, color: '0xb6a9b8' }
-    - { index: 21, color: '0xdfd2de' }
+    - { index: 16, color: '0x747791' }
+    - { index: 17, color: '0x6f98b8' }
+    - { index: 18, color: '0x524542' }
+    - { index: 19, color: '0x746764' }
+    - { index: 20, color: '0xb8aba9' }
+    - { index: 21, color: '0xdfd4d2' }
 # End flavours
 
 # Bell

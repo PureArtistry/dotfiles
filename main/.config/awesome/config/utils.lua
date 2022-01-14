@@ -1,9 +1,10 @@
 ---@diagnostic disable-next-line
-local screen = screen
+-- local screen = screen
 
-local awful = require('awful')
+local spawn = require('awful.spawn')
 local folder = os.getenv('WALLPAPERS')
 local symlink = require('gears.filesystem').get_configuration_dir() .. 'assets/wallpaper'
+local alert = require('naughty').notification
 
 local function phase3()
     require('config.flavours')
@@ -17,18 +18,18 @@ local function phase2(wallpaper)
             package.loaded[k] = nil
         end
     end
-    awful.spawn('ln -sf ' .. wallpaper .. ' ' .. symlink)
-    awful.spawn('ln -sf ' .. wallpaper .. ' ' .. os.getenv('STARTPAGE') .. '/style/cwplnk')
-    awful.spawn.with_line_callback('update_theme.sh', { exit = function (_) phase3() end })
+    spawn('ln -sf ' .. wallpaper .. ' ' .. symlink)
+    spawn('ln -sf ' .. wallpaper .. ' ' .. os.getenv('STARTPAGE') .. '/style/cwplnk')
+    spawn.with_line_callback('update_theme.sh', { exit = function (_) phase3() end })
 end
 
 local function apply(wallpaper)
-    awful.spawn.with_line_callback(
-        'update_theme.sh ' .. wallpaper,
+    spawn.with_line_callback(
+        'flavours generate dark ' .. wallpaper,
         {
             exit = function (_, r)
                 if r ~= 0 then
-                    require('naughty').notification({ message = r .. ' -> ' .. 'ERROR:\nfailed to generate colour palette!' })
+                    alert({ message = r .. ' -> ' .. 'ERROR:\nfailed to generate colour palette!' })
                     return
                 end
                 phase2(wallpaper)
@@ -41,25 +42,28 @@ local M = {}
 
 function M.random_wall()
     local list = {}
-    local h = io.popen('ls -1 ' .. folder, 'r')
-    for x in h:lines("*l") do
-        table.insert(list, x)
-    end
-    h:close()
-    if next(list) == nil then
-        require('naughty').notification({ message = 'ERROR:\nno wallpapers found!' })
-        return
-    end
-    math.randomseed(os.time())
-    local i = math.random(1, #list)
-    apply(folder .. '/' .. list[i])
+    spawn.with_line_callback(
+        'ls -1 ' .. folder,
+        {
+            stdout = function (x) table.insert(list, x) end,
+            output_done = function ()
+                if next(list) == nil then
+                    alert({ message = 'ERROR:\nno wallpapers found!' })
+                    return
+                end
+                math.randomseed(os.time())
+                local i = math.random(1, #list)
+                apply(folder .. '/' .. list[i])
+            end
+        }
+    )
 end
 
 function M.select_wall()
     local wallpaper
-    awful.spawn.easy_async('sxiv -otb -N wallpapers ' .. folder, function (stdout, _, _, exit_code)
+    spawn.easy_async('sxiv -otb -N wallpapers ' .. folder, function (stdout, _, _, exit_code)
         if exit_code ~= 0 then
-            require('naughty').notification({ message = 'ERROR!' })
+            alert({ message = 'ERROR!' })
             return
         end
         if not stdout:match '([^/]-([^.]+))$' then

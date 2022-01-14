@@ -1,10 +1,5 @@
 #!/bin/sh
 
-if [ -n "$1" ]; then
-    flavours generate dark "$@"
-    exit $?
-fi
-
 update_startpage() {
     j=$(shuf -i1-1000000 -n1)
     sed -i "s/ver=.*\"/ver=${j}\"/g" $STARTPAGE/index.html

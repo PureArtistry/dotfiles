@@ -1,22 +1,22 @@
 // adapted from Tilde Enhanced (https://github.com/Ozencb/tilde-enhanced)
 
 // Start flavours
-const c_base00 = '#312415'
-const c_base01 = '#504436'
-const c_base02 = '#6f6556'
-const c_base03 = '#8f8577'
-const c_base04 = '#aea698'
-const c_base05 = '#cec6b9'
-const c_base06 = '#d5cec3'
-const c_base07 = '#ddd7ce'
-const c_base08 = '#9b8b8c'
-const c_base09 = '#8c736a'
-const c_base0A = '#927165'
-const c_base0B = '#90725e'
-const c_base0C = '#8b7558'
-const c_base0D = '#84775d'
-const c_base0E = '#c1b096'
-const c_base0F = '#9fa082'
+const c_base00 = '#2f2420'
+const c_base01 = '#524542'
+const c_base02 = '#746764'
+const c_base03 = '#968987'
+const c_base04 = '#b8aba9'
+const c_base05 = '#dacdcb'
+const c_base06 = '#dfd4d2'
+const c_base07 = '#e5dcda'
+const c_base08 = '#6179a1'
+const c_base09 = '#747791'
+const c_base0A = '#d83979'
+const c_base0B = '#956e78'
+const c_base0C = '#b17d3a'
+const c_base0D = '#6e6ecb'
+const c_base0E = '#4f7ca4'
+const c_base0F = '#6f98b8'
 // End flavours
 
 const CONFIGObj = {

@@ -1,8 +1,8 @@
 [[ $- != *i* ]] && return
 
-# dy() {
-#     yt-dlp "$(xclip -selection clipboard -o)"
-# }
+dy() {
+    yt-dlp "$(xclip -selection clipboard -o)"
+}
 
 HISTFILE=$ZDOTDIR/.histfile
 HISTSIZE=100000

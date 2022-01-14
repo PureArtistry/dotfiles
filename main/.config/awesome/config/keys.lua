@@ -2,6 +2,7 @@
 local awesome, client = awesome, client
 
 local awful = require('awful')
+local utils = require('config.utils')
 
 local hotkeys_popup = require('awful.hotkeys_popup')
 require('config.external_hotkeys')
@@ -48,19 +49,13 @@ awful.keyboard.append_global_keybindings({
     awful.key(
         { 'Mod4' },
         'n',
-        function ()
-            local utils = require('config.utils')
-            utils.random_wall()
-        end,
+        function () utils.random_wall() end,
         { description = '--> random new wallpaper', group = 'awesome: theme' }
     ),
     awful.key(
         { 'Mod4', 'Shift' },
         'n',
-        function ()
-            local utils = require('config.utils')
-            utils.select_wall()
-        end,
+        function () utils.select_wall() end,
         { description = '--> select new wallpaper', group = 'awesome: theme' }
     )
 })
