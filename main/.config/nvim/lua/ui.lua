@@ -323,7 +323,7 @@ local j = 1
 gls.mid[j] = {
     DiagLine = {
         provider = function()
-            local w = vim.fn.winwidth(0) - 80
+            local w = vim.fn.winwidth(0) - 185
             if w < 11 then w = 11 end
             local function msg(s)
                 if string.len(s) < w then return s end
@@ -451,91 +451,5 @@ gls.short_line_left[2] = {
         provider = function () return '' end,
         condition = function() return use_alt_line() end,
         highlight = { 'none', 'none', 'none' }
-    }
-}
-
-local use_mpd
-local mpd_h = io.popen('pgrep mpd', 'r')
-local mpd_check = mpd_h:read("*l")
-mpd_h:close()
-if mpd_check == nil then use_mpd = false end
-if use_mpd == nil then
-    local mpc_h = io.popen('command -v mpc', 'r')
-    local mpc_check = mpc_h:read("*l")
-    mpc_h:close()
-    if mpc_check == nil then use_mpd = false
-    else use_mpd = true
-    end
-end
-
-local function check_mpd(ret)
-    if not use_mpd then return false end
-    local h = io.popen('mpc current', 'r')
-    local r = h:read("*l")
-    h:close()
-    if r ~= nil then
-        if ret then return r else return true end
-    end
-    return false
-end
-
-gls.short_line_right[1] = {
-    MiscInfo1 = {
-        provider = function()
-            local r = check_mpd(true)
-            if r ~= false then return '     ' .. r .. '  ' end
-        end,
-        condition = function()
-            if vim.bo.filetype ~= 'NvimTree' then return true end
-            return false
-        end,
-        highlight = { FLAVOURS.base04, FLAVOURS.base01, 'none' }
-    }
-}
-gls.short_line_right[2] = {
-    MiscInfo2 = {
-        provider = function()
-            if check_mpd(false) then
-                local h = io.popen('mpc status "%currenttime% (%totaltime%)"', 'r')
-                local r = h:read("*l")
-                h:close()
-                return '    ' .. r .. ' '
-            end
-        end,
-        condition = function()
-            if vim.bo.filetype ~= 'NvimTree' then return true end
-            return false
-        end,
-        highlight = { FLAVOURS.base05, FLAVOURS.base02, 'bold' }
-    }
-}
-gls.short_line_right[3] = {
-    MiscInfo3 = {
-        provider = function()
-            if check_mpd(false) then
-                local h = io.popen('mpc status %percenttime%', 'r')
-                local r = h:read("*l")
-                h:close()
-                r = r:gsub('%%', '')
-                r = tonumber(r)
-
-                local chars = {'__', '▁▁', '▂▂', '▃▃', '▄▄', '▅▅', '▆▆', '▇▇', '██'}
-                if r <= 1 then return chars[1]
-                elseif r <= 5 then return chars[2]
-                elseif r <= 12 then return chars[3]
-                elseif r <= 22 then return chars[4]
-                elseif r <= 33 then return chars[5]
-                elseif r <= 50 then return chars[6]
-                elseif r <= 66 then return chars[7]
-                elseif r <= 80 then return chars[8]
-                else return chars[9]
-                end
-            end
-        end,
-        condition = function()
-            if vim.bo.filetype ~= 'NvimTree' then return true end
-            return false
-        end,
-        highlight = { FLAVOURS.base0F, FLAVOURS.base02, 'bold' }
     }
 }

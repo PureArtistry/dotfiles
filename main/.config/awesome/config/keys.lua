@@ -1,7 +1,9 @@
 ---@diagnostic disable-next-line
 local awesome, client = awesome, client
 
+-- local alert = require('naughty').notification
 local awful = require('awful')
+local spawn = awful.spawn
 local utils = require('config.utils')
 
 local hotkeys_popup = require('awful.hotkeys_popup')
@@ -41,6 +43,26 @@ awful.keyboard.append_global_keybindings({
         'q',
         awesome.quit,
         { description = '--> quit awesome', group = 'awesome: main' }
+    ),
+    awful.key(
+        { 'Mod4' },
+        'BackSpace',
+        function ()
+            for _, c in ipairs(client.get()) do
+                if c.class == 'companion' then
+                    c.sticky = true
+                    if c.active then
+                        c.hidden = true
+                        return
+                    end
+                    c.hidden = false
+                    c:activate({})
+                    return
+                end
+            end
+            spawn(terminal .. " --class 'companion','companion' --title 'companion'")
+        end,
+        { description = '--> toggle companion terminal', group = 'awesome: main' }
     )
 })
 
@@ -103,19 +125,19 @@ awful.keyboard.append_global_keybindings({
     awful.key(
         { 'Mod4' },
         'Return',
-        function () awful.spawn(terminal) end,
+        function () spawn(terminal) end,
         { description = '--> ' .. terminal .. ' (terminal)', group = 'launch' }
     ),
     awful.key(
         { 'Mod4', 'Mod1' },
         'Return',
-        function () awful.spawn(browser) end,
+        function () spawn(browser) end,
         { description = '--> qutebrowser (browser)', group = 'launch' }
     ),
     awful.key(
         { 'Mod4', 'Shift' },
         'Return',
-        function () awful.spawn(terminal .. ' -e lf') end,
+        function () spawn(terminal .. ' -e lf') end,
         { description = '--> lf (file manager)', group = 'launch' }
     ),
 })
@@ -124,7 +146,7 @@ for n = 6,8,1 do
         awful.key(
         { 'Mod4', 'Mod1' },
         'F' .. n,
-        function () awful.spawn(terminal .. ' -e ncpamixer') end,
+        function () spawn(terminal .. " --class 'ncpamixer','ncpamixer' --title 'ncpamixer' -e ncpamixer") end,
         { description = '--> ncpamixer (audio mixer)', group = 'launch' }
         )
     })
@@ -136,43 +158,45 @@ awful.keyboard.append_global_keybindings({
     awful.key(
         { 'Mod4' },
         'F4',
-        function () awful.spawn.with_shell('xbacklight -dec 5') end, -- TODO: add notification
+        function () spawn.with_shell('xbacklight -dec 5') end, -- TODO: add notification
         { description = '--> decrease backlight intensity by 5%', group = 'system: backlight' }
     ),
     awful.key(
         { 'Mod4' },
         'F5',
-        function () awful.spawn.with_shell('xbacklight -inc 5') end, -- TODO: add notification
+        function () spawn.with_shell('xbacklight -inc 5') end, -- TODO: add notification
         { description = '--> increase backlight intensity by 5%', group = 'system: backlight' }
     ),
     -- volume
     awful.key(
         { 'Mod4' },
         'F6',
-        function () awful.spawn.with_shell('pactl set-sink-mute @DEFAULT_SINK@ toggle') end, -- TODO: add notification
+        function () spawn.with_shell('pactl set-sink-mute @DEFAULT_SINK@ toggle') end, -- TODO: add notification
         { description = '--> toggle volume mute', group = 'system: volume' }
     ),
     awful.key(
         { 'Mod4' },
         'F7',
-        function () awful.spawn.with_shell('pactl set-sink-volume @DEFAULT_SINK@ -5%') end, -- TODO: add notification
+        function () spawn.with_shell('pactl set-sink-volume @DEFAULT_SINK@ -5%') end, -- TODO: add notification
         { description = '--> decrease volume by 5%', group = 'system: volume' }
     ),
     awful.key(
         { 'Mod4' },
         'F8',
-        function () awful.spawn.with_shell('pactl set-sink-volume @DEFAULT_SINK@ +5%') end, -- TODO: add notification
+        function () spawn.with_shell('pactl set-sink-volume @DEFAULT_SINK@ +5%') end, -- TODO: add notification
         { description = '--> increase volume by 5%', group = 'system: volume' }
     ),
     awful.key(
         { },
         'Print',
-        function () awful.spawn.with_shell('ffmpeg -f x11grab -video_size 1920x1080 -i "$DISPLAY" -vframes 1 ~/stuff/images/capture/scrot_$(date \'+%Y%m%d-%H%M%S\').png') end,
+        function () spawn.with_shell('ffmpeg -f x11grab -video_size 1920x1080 -i "$DISPLAY" -vframes 1 ~/stuff/images/capture/scrot_$(date \'+%Y%m%d-%H%M%S\').png') end,
         { description = '--> take a screenshot', group = 'system: capture' }
     ),
 })
 
 -- mpd keys
+local mpc_cmd = 'mpc -q '
+-- local mpc_cmd = 'mpc --host=/tmp/mpd.sock -q '
 local mpc = {
     { k = 'F9',  m = 'toggle', d = 'toggle mpd playback' },
     { k = 'F10', m = 'stop',   d = 'stop mpd playback' },
@@ -184,7 +208,7 @@ for _, x in pairs(mpc) do
         awful.key(
             { 'Mod4' },
             x.k,
-            function () awful.spawn.with_shell('mpc -q ' .. x.m) end,
+            function () spawn.with_shell(mpc_cmd .. x.m) end,
             { description = '--> ' .. x.d, group = 'mpd' }
         )
     })
@@ -193,9 +217,15 @@ awful.keyboard.append_global_keybindings({
     awful.key(
         { 'Mod4', 'Shift' },
         'F11',
-        function () awful.spawn.with_shell('mpc -q seek 0') end,
+        function () spawn.with_shell(mpc_cmd .. 'seek 0') end,
         { description = '--> restart song', group = 'mpd' }
     ),
+    awful.key(
+        { 'Mod4' },
+        'm',
+        function () spawn('rinse') end,
+        { description = '--> select a song', group = 'mpd' }
+    )
 })
 
 ---------------------------------------------------------------------------------------------
@@ -357,12 +387,12 @@ client.connect_signal("request::default_keybindings", function()
                 c.minimized = true
             end ,
             {description = "minimize", group = "client"}),
-        awful.key({ 'Mod4',           }, "m",
-            function (c)
-                c.maximized = not c.maximized
-                c:raise()
-            end ,
-            {description = "(un)maximize", group = "client"}),
+        -- awful.key({ 'Mod4',           }, "m",
+        --     function (c)
+        --         c.maximized = not c.maximized
+        --         c:raise()
+        --     end ,
+        --     {description = "(un)maximize", group = "client"}),
         awful.key({ 'Mod4', "Control" }, "m",
             function (c)
                 c.maximized_vertical = not c.maximized_vertical

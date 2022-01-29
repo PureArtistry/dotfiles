@@ -55,7 +55,7 @@ if ibl_ok[1] then
         char_list = { '|', '¦', '┆', '┊' },
         use_treesitter = true,
         show_trailing_blankline_indent = false,
-        show_foldtext = false,
+        show_foldtext = true,
         filetype_exclude = {
             'help',
             'dashboard',

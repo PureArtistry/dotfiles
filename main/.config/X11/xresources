@@ -1,20 +1,20 @@
 ! Start flavours
-#define base00 #2f2420
-#define base01 #524542
-#define base02 #746764
-#define base03 #968987
-#define base04 #b8aba9
-#define base05 #dacdcb
-#define base06 #dfd4d2
-#define base07 #e5dcda
-#define base08 #6179a1
-#define base09 #747791
-#define base0A #d83979
-#define base0B #956e78
-#define base0C #b17d3a
-#define base0D #6e6ecb
-#define base0E #4f7ca4
-#define base0F #6f98b8
+#define base00 #112923
+#define base01 #2d4540
+#define base02 #4a625c
+#define base03 #667e79
+#define base04 #839a96
+#define base05 #9fb7b3
+#define base06 #aec2be
+#define base07 #bcccca
+#define base08 #688135
+#define base09 #638142
+#define base0A #977222
+#define base0B #45855e
+#define base0C #937334
+#define base0D #2b8593
+#define base0E #91743c
+#define base0F #328577
 
 *foreground:   base05
 *background:   base00

@@ -14,7 +14,7 @@ gs.setup {
     numhl      = false,
     linehl     = false,
     word_diff  = false,
-    watch_index = {
+    watch_gitdir = {
         interval = 1000,
         follow_files = true
     },

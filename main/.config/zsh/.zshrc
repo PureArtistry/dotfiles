@@ -1,5 +1,29 @@
 [[ $- != *i* ]] && return
 
+tlink() {
+    error() {
+        printf '%berror:%b not in a valid directory!%b\n' '[1;31m' '[97m' '[0m'
+    }
+
+    if [ -f Cargo.toml ]; then
+        local BIN_NAME=$(basename $(pwd))
+        if [ -x ./target/release/${BIN_NAME} ]; then
+            ln -sv ${PROJECTS}/${BIN_NAME}/target/release/${BIN_NAME} ${PROJECTS}/testing/${BIN_NAME}
+            rehash
+        else
+            error
+        fi
+        unset BIN_NAME
+    else
+        error
+    fi
+}
+
+ct() {
+    clear
+    eval $(basename $(pwd))
+}
+
 dy() {
     yt-dlp "$(xclip -selection clipboard -o)"
 }

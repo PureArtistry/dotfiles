@@ -2,22 +2,22 @@ Description = "Flavours"
 Categories = {"dark", "base16", "lsp"}
 
 -- Start flavours
-base00 = "#2f2420" --> Default Background
-base01 = "#524542" --> Lighter Background (Used for status bars)
-base02 = "#746764" --> Selection Background
-base03 = "#968987" --> Comments, Invisibles, Line Highlighting
-base04 = "#b8aba9" --> Dark Foreground (Used for status bars)
-base05 = "#dacdcb" --> Default Foreground, Caret, Delimiters, Operators
-base06 = "#dfd4d2" --> Light Foreground (Not often used)
-base07 = "#e5dcda" --> Light Background (Not often used)
-base08 = "#6179a1" --> Variables, XML Tags, Markup Link Text, Markup Lists, Diff Deleted
-base09 = "#747791" --> Integers, Boolean, Constants, XML Attributes, Markup Link Url
-base0A = "#d83979" --> Classes, Markup Bold, Search Text Background
-base0B = "#956e78" --> Strings, Inherited Class, Markup Code, Diff Inserted
-base0C = "#b17d3a" --> Support, Regular Expressions, Escape Characters, Markup Quotes
-base0D = "#6e6ecb" --> Functions, Methods, Attribute IDs, Headings
-base0E = "#4f7ca4" --> Keywords, Storage, Selector, Markup Italic, Diff Changed
-base0F = "#6f98b8" --> Deprecated, Opening/Closing Embedded Language Tags, e.g. <?php ?>
+base00 = "#112923" --> Default Background
+base01 = "#2d4540" --> Lighter Background (Used for status bars)
+base02 = "#4a625c" --> Selection Background
+base03 = "#667e79" --> Comments, Invisibles, Line Highlighting
+base04 = "#839a96" --> Dark Foreground (Used for status bars)
+base05 = "#9fb7b3" --> Default Foreground, Caret, Delimiters, Operators
+base06 = "#aec2be" --> Light Foreground (Not often used)
+base07 = "#bcccca" --> Light Background (Not often used)
+base08 = "#688135" --> Variables, XML Tags, Markup Link Text, Markup Lists, Diff Deleted
+base09 = "#638142" --> Integers, Boolean, Constants, XML Attributes, Markup Link Url
+base0A = "#977222" --> Classes, Markup Bold, Search Text Background
+base0B = "#45855e" --> Strings, Inherited Class, Markup Code, Diff Inserted
+base0C = "#937334" --> Support, Regular Expressions, Escape Characters, Markup Quotes
+base0D = "#2b8593" --> Functions, Methods, Attribute IDs, Headings
+base0E = "#91743c" --> Keywords, Storage, Selector, Markup Italic, Diff Changed
+base0F = "#328577" --> Deprecated, Opening/Closing Embedded Language Tags, e.g. <?php ?>
 -- End flavours
 
 Canvas         = { Colour = base00, Italic = false, Bold = false }
